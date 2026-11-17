@@ -16,7 +16,7 @@ BLOG_URL = "https://sohtani.pythonanywhere.com/"
 FETCH_TIMEOUT_SECONDS = 5
 # 同じインスタンス内での再取得を避けるメモリ内キャッシュ（エージェントのツールからも呼ばれるため）
 CACHE_TTL_SECONDS = 3600
-_cache: tuple[float, list["BlogPost"]] | None = None
+_cache: tuple[float, list[BlogPost]] | None = None
 
 
 @dataclass

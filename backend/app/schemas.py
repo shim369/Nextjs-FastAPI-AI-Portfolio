@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.config import get_settings
 
-
 Lang = Literal["ja", "en"]
 
 

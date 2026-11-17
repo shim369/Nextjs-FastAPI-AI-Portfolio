@@ -26,7 +26,7 @@ from app.region import COUNTRY_HEADER, is_restricted
 from app.schemas import ChatRequest, ContactRequest, InputError
 from app.tools import TOOL_SPECS
 
-app = FastAPI(title="Python-AI-Chat-Portfolio", docs_url=None, redoc_url=None)
+app = FastAPI(title="Nextjs-FastAPI-AI-Portfolio", docs_url=None, redoc_url=None)
 
 EMPTY_REPLY = {
     "ja": "すみません、うまく回答を生成できませんでした。質問を変えてお試しください。",

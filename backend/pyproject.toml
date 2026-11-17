@@ -1,7 +1,7 @@
 [project]
-name = "python-ai-chat-portfolio"
+name = "nextjs-fastapi-ai-portfolio"
 version = "0.1.0"
-description = "Python-AI-Chat-Portfolio: 自己紹介ページ + Gemini関数呼び出しエージェントのAIチャット"
+description = "Nextjs-FastAPI-AI-Portfolio: 総合ポートフォリオの API（AIチャット・お問い合わせ・ブログ取得）"
 requires-python = ">=3.14"
 dependencies = [
     "fastapi>=0.162.0",
@@ -11,7 +11,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "mypy>=2.4.1",
     "pytest>=9.1.1",
+    "ruff>=0.17.5",
     "uvicorn>=0.54.0",
 ]
 
@@ -26,3 +28,22 @@ filterwarnings = [
     "ignore:Using `httpx` with `starlette.testclient` is deprecated",
     "ignore:'_UnionGenericAlias' is deprecated",
 ]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# 日本語の説明文・ツールの description は1行が長くなるため、行の長さは見ない
+ignore = ["E501"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI の依存性注入は引数の既定値に Depends() を書く
+extend-immutable-calls = ["fastapi.Depends"]
+
+[tool.mypy]
+python_version = "3.14"
+files = ["app", "tests"]
+check_untyped_defs = true
+warn_unused_ignores = true

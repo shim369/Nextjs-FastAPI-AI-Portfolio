@@ -19,4 +19,4 @@ COUNTRY_HEADER = "x-vercel-ip-country"
 
 
 def is_restricted(country: str | None) -> bool:
-    return bool(country) and country.strip().upper() in RESTRICTED_COUNTRIES
+    return country is not None and country.strip().upper() in RESTRICTED_COUNTRIES

@@ -43,7 +43,9 @@ async def verify_recaptcha(token: str, settings: Settings) -> float:
             res.raise_for_status()
             result = res.json()
     except httpx.HTTPError as e:
-        raise ContactError("contact_failed", 502, "reCAPTCHA verification request failed", f"{type(e).__name__}: {e}")
+        raise ContactError(
+            "contact_failed", 502, "reCAPTCHA verification request failed", f"{type(e).__name__}: {e}"
+        ) from e
 
     score = float(result.get("score") or 0.0)
     if not result.get("success") or result.get("action") != RECAPTCHA_ACTION or score < settings.recaptcha_min_score:
@@ -79,4 +81,4 @@ def send_mail(msg: EmailMessage, settings: Settings) -> None:
                 smtp.login(settings.smtp_user, settings.smtp_pass)
                 smtp.send_message(msg)
     except (smtplib.SMTPException, OSError) as e:
-        raise ContactError("contact_failed", 502, "failed to send mail", f"{type(e).__name__}: {e}")
+        raise ContactError("contact_failed", 502, "failed to send mail", f"{type(e).__name__}: {e}") from e
