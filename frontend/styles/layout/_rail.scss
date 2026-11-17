@@ -1,0 +1,165 @@
+@use "../mixins" as *;
+
+// 左：縦書きの目次（スマホでは画面下のバー）
+@layer layout {
+  .rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--rail);
+    z-index: 30;
+    border-right: 1px solid var(--line);
+    background: var(--shiro);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    justify-items: center;
+    padding: 24px 0;
+
+    .mark {
+      width: 46px;
+      height: 46px;
+      color: var(--sumi);
+      display: block;
+      transition: transform .6s var(--ease);
+
+      svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--sumi);
+      }
+
+      &:hover {
+        transform: rotate(-12deg);
+      }
+    }
+
+    nav {
+      align-self: center;
+      display: grid;
+      gap: 4px;
+    }
+
+    nav a {
+      writing-mode: vertical-rl;
+      font: 500 14px/1 var(--min);
+      letter-spacing: .45em;
+      color: var(--nezumi);
+      padding: 12px 10px;
+      position: relative;
+      transition: color .3s;
+
+      // 今いるセクションを示す朱の線
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 12px;
+        bottom: 12px;
+        width: 2px;
+        background: var(--shu);
+        transform: scaleY(0);
+        transform-origin: 50% 0;
+        transition: transform .5s var(--ease);
+      }
+
+      &:hover,
+      &.on {
+        color: var(--sumi);
+      }
+
+      &.on::after {
+        transform: scaleY(1);
+      }
+    }
+
+    // 読み進めた割合
+    .prog {
+      writing-mode: vertical-rl;
+      font: 400 11px/1 var(--mono);
+      color: var(--nezumi);
+      letter-spacing: .1em;
+    }
+  }
+
+  @include down(tab) {
+    :root {
+      --rail: 0px;
+    }
+
+    .rail {
+      inset: auto 0 0 0;
+      width: 100%;
+      height: 58px;
+      grid-template-rows: none;
+      grid-template-columns: auto 1fr;
+      padding: 0 12px;
+      border: 0;
+      border-top: 1px solid var(--sumi);
+      align-items: center;
+
+      nav {
+        grid-auto-flow: column;
+        justify-self: end;
+        gap: 0;
+      }
+
+      nav a {
+        writing-mode: horizontal-tb;
+        letter-spacing: .08em;
+        font-size: 13px;
+        padding: 10px 9px;
+
+        &::after {
+          left: 9px;
+          right: 9px;
+          top: auto;
+          bottom: 4px;
+          width: auto;
+          height: 2px;
+          transform: scaleX(0);
+        }
+
+        &.on::after {
+          transform: scaleX(1);
+        }
+      }
+
+      .prog {
+        display: none;
+      }
+    }
+  }
+
+  @include down(xs) {
+    .rail nav a:nth-child(n+5) {
+      display: none;
+    }
+  }
+}
+
+// 英語表示：縦書きの欧文は等幅の小さめの文字で詰めて組む（デザイン案にない状態）
+@layer parts {
+  .rail nav a:lang(en) {
+    font: 400 11px/1 var(--mono);
+    letter-spacing: .06em;
+    padding: 8px 10px;
+
+    &::after {
+      top: 8px;
+      bottom: 8px;
+    }
+  }
+
+  @include down(tab) {
+    .rail nav a:lang(en) {
+      font: 500 12px/1 var(--go);
+      letter-spacing: .02em;
+      padding: 10px 7px;
+
+      &::after {
+        top: auto;
+        left: 7px;
+        right: 7px;
+      }
+    }
+  }
+}

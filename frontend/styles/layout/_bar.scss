@@ -1,0 +1,140 @@
+@use "../mixins" as *;
+
+// 上：誌面の柱（名前・職種・東京の時刻・言語・「AIに聞く・移動」）
+@layer layout {
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    margin-left: var(--rail);
+    height: var(--bar);
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr auto auto;
+    border-bottom: 1px solid var(--sumi);
+    background: color-mix(in srgb, var(--shiro) 90%, transparent);
+    backdrop-filter: blur(8px);
+    font: 400 11.5px/1 var(--mono);
+    letter-spacing: .06em;
+
+    > * {
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      border-right: 1px solid var(--line);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    b {
+      font-weight: 500;
+    }
+
+    .clock::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--shu);
+      margin-right: 10px;
+      animation: blink 2s steps(1) infinite;
+    }
+
+    .cmd {
+      border: 0;
+      gap: 14px;
+      background: var(--sumi);
+      color: var(--kami);
+      font: 700 13px/1 var(--go);
+      letter-spacing: .06em;
+
+      kbd {
+        font: 400 11px/1 var(--mono);
+        padding: 4px 6px;
+        border: 1px solid rgba(255, 255, 255, .3);
+      }
+
+      &:hover {
+        background: var(--shu);
+      }
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: .2;
+    }
+  }
+
+  @include down(bar) {
+    .bar {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+
+      > :nth-child(2),
+      > :nth-child(3) {
+        display: none;
+      }
+    }
+  }
+}
+
+@layer parts {
+  @include down(hero) {
+    .bar .pf {
+      display: none;
+    }
+  }
+
+  // 言語の切り替え（デザイン案にない部品。柱の右端の手前に置く）
+  .bar {
+    .lang {
+      gap: 6px;
+      padding: 0 14px;
+      font: 500 11.5px/1 var(--mono);
+      letter-spacing: .08em;
+
+      button {
+        padding: 6px 4px;
+        color: var(--nezumi);
+
+        &[aria-pressed="true"] {
+          color: var(--sumi);
+          border-bottom: 1.5px solid var(--shu);
+        }
+
+        &:hover {
+          color: var(--shu);
+        }
+      }
+
+      span {
+        color: var(--line);
+      }
+    }
+
+    // ⌘K / Ctrl K の表記は表示後に入る（サーバーの HTML では空）
+    .cmd kbd:empty {
+      display: none;
+    }
+  }
+
+  @include down(xs) {
+    .bar {
+      > :first-child {
+        padding-inline: 12px;
+      }
+
+      .lang {
+        padding: 0 8px;
+      }
+
+      .cmd {
+        padding: 0 12px;
+        gap: 8px;
+
+        kbd {
+          display: none;
+        }
+      }
+    }
+  }
+}

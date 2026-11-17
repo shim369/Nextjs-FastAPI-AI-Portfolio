@@ -1,0 +1,23 @@
+// デザイン案（portfolio-a2-kumihan）の CSS を Sass の partial に分けたもの。
+// カスケードレイヤーは base → layout → parts の順（後ろほど強い。順番の宣言は base/_base.scss の先頭）。
+// 各 partial は自分のレイヤーの中に書く
+
+@use "../styles/base/base";
+
+@use "../styles/layout/rail";
+@use "../styles/layout/bar";
+@use "../styles/layout/section";
+@use "../styles/layout/footer";
+
+@use "../styles/parts/ornaments";
+@use "../styles/parts/reveal";
+@use "../styles/parts/hero";
+@use "../styles/parts/skills";
+@use "../styles/parts/works";
+@use "../styles/parts/jamstack";
+@use "../styles/parts/blog";
+@use "../styles/parts/architecture";
+@use "../styles/parts/contact";
+@use "../styles/parts/palette";
+@use "../styles/parts/chat";
+@use "../styles/parts/feedback";

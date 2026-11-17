@@ -1,0 +1,221 @@
+@use "../mixins" as *;
+
+// ヒーロー：組版で見せる
+@layer parts {
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(36px, 5vw, 64px) clamp(24px, 5vw, 80px) 0;
+    min-height: calc(100vh - var(--bar));
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .h-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font: 400 11.5px/1 var(--mono);
+    letter-spacing: .1em;
+    color: var(--nezumi);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .h-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(16px, 3vw, 48px);
+    align-items: center;
+    padding-block: clamp(16px, 3vh, 40px);
+    position: relative;
+  }
+
+  // 名前：Ohtani は白抜き、末尾の「.」だけ朱
+  .h-name {
+    margin: 0;
+    font: 800 clamp(64px, 14.4vw, 236px)/.8 var(--min);
+    letter-spacing: -.035em;
+
+    .l {
+      display: block;
+      overflow: hidden;
+      padding-bottom: .16em;
+      margin-bottom: -.16em;
+
+      > span {
+        display: inline-block;
+        animation: up 1.2s var(--ease) both;
+      }
+
+      &:nth-child(2) {
+        padding-left: .55em;
+
+        > span {
+          animation-delay: .12s;
+        }
+      }
+    }
+
+    .o {
+      color: transparent;
+      -webkit-text-stroke: clamp(1px, .12vw, 2px) var(--sumi);
+    }
+
+    .dot {
+      color: var(--shu);
+      -webkit-text-stroke: 0;
+    }
+  }
+
+  @keyframes up {
+    from {
+      translate: 0 100%;
+    }
+  }
+
+  // 縦書きのキャッチ
+  .h-catch {
+    writing-mode: vertical-rl;
+    margin: 0;
+    font: 800 clamp(22px, 2.3vw, 36px)/1.55 var(--min);
+    letter-spacing: .14em;
+    border-right: 2px solid var(--shu);
+    padding-right: 16px;
+    height: max-content;
+    max-height: 62vh;
+    animation: drop 1.4s .5s var(--ease) both;
+
+    span {
+      display: block;
+    }
+
+    &:lang(en) {
+      letter-spacing: .04em;
+      line-height: 1.35;
+    }
+  }
+
+  @keyframes drop {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  // AIに聞くバー
+  .h-ask {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: 24px 48px;
+    align-items: end;
+    padding: 26px 0 36px;
+
+    .lead {
+      margin: 0;
+      font: 500 clamp(16px, 1.45vw, 19px)/2 var(--min);
+    }
+  }
+
+  .askbar {
+    display: grid;
+    gap: 12px;
+
+    form {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      background: var(--kami);
+      border: 1.5px solid var(--sumi);
+      box-shadow: 6px 6px 0 var(--sumi);
+      transition: box-shadow .3s, translate .3s;
+
+      &:focus-within {
+        box-shadow: 3px 3px 0 var(--shu);
+        translate: 3px 3px;
+      }
+
+      > b {
+        padding: 0 14px;
+        font: 800 18px/1 var(--min);
+        color: var(--shu);
+      }
+    }
+
+    input {
+      border: 0;
+      background: transparent;
+      padding: 18px 4px;
+      font-size: 15px;
+      outline: none;
+      min-width: 0;
+    }
+
+    button[type="submit"] {
+      align-self: stretch;
+      padding: 0 20px;
+      background: var(--sumi);
+      color: var(--kami);
+      font: 700 13px/1 var(--go);
+      letter-spacing: .08em;
+
+      &:hover {
+        background: var(--shu);
+      }
+    }
+
+    // サンプル質問のチップ
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+
+      button {
+        font-size: 12px;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        background: var(--kami);
+
+        &:hover {
+          border-color: var(--sumi);
+        }
+      }
+    }
+  }
+
+  @include down(hero) {
+    .h-main {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .h-catch {
+      writing-mode: horizontal-tb;
+      border: 0;
+      border-left: 2px solid var(--shu);
+      padding: 0 0 0 14px;
+      font-size: 20px;
+      max-height: none;
+
+      span {
+        display: inline;
+      }
+    }
+
+    .h-name {
+      font-size: 19vw;
+    }
+
+    .h-ask {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero {
+      min-height: 0;
+    }
+  }
+}

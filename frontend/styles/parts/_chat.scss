@@ -1,0 +1,258 @@
+@use "../mixins" as *;
+
+// AIチャット：右からスライドして出るパネル
+@layer parts {
+  #chat-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(440px, 100vw);
+    z-index: 50;
+    background: var(--kami);
+    border-left: 1.5px solid var(--sumi);
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+    transform: translateX(102%);
+    visibility: hidden;
+    transition: transform .6s var(--ease), visibility 0s .6s;
+
+    &.open {
+      transform: none;
+      visibility: visible;
+      transition: transform .6s var(--ease);
+    }
+  }
+
+  // 後ろの幕
+  .chat-veil {
+    position: fixed;
+    inset: 0;
+    background: rgba(29, 29, 27, .25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s;
+    z-index: 45;
+
+    &.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .c-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1.5px solid var(--sumi);
+
+    h2 {
+      margin: 0;
+      font: 800 19px/1 var(--min);
+      letter-spacing: .1em;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      i {
+        width: 26px;
+        height: 26px;
+        background: var(--shu);
+        color: var(--kami);
+        display: grid;
+        place-items: center;
+        font: 800 13px/1 var(--min);
+        font-style: normal;
+      }
+    }
+
+    button {
+      font-size: 13px;
+      color: var(--nezumi);
+      padding: 6px 2px;
+
+      &:hover {
+        color: var(--shu);
+      }
+    }
+  }
+
+  .c-log {
+    overflow: auto;
+    padding: 22px;
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .c-msg {
+    max-width: 88%;
+    font-size: 14px;
+    line-height: 1.85;
+
+    p {
+      margin: 0;
+    }
+
+    .c-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 6px;
+    }
+  }
+
+  .c-bot {
+    justify-self: start;
+    padding: 2px 0 2px 14px;
+    border-left: 2px solid var(--shu);
+  }
+
+  .c-user {
+    justify-self: end;
+    background: var(--sumi);
+    color: var(--kami);
+    padding: 10px 14px;
+  }
+
+  // 使ったツール名
+  .c-tool {
+    display: inline-block;
+    font: 400 11px/1 var(--mono);
+    padding: 5px 8px;
+    background: var(--shu-soft);
+    color: var(--shu);
+    margin-bottom: 8px;
+  }
+
+  // 考え中（末尾の点が増える）
+  .c-loading {
+    color: var(--nezumi);
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 1.2em;
+      text-align: left;
+      animation: dots 1.4s steps(4) infinite;
+    }
+  }
+
+  @keyframes dots {
+    0% {
+      content: "";
+    }
+
+    25% {
+      content: ".";
+    }
+
+    50% {
+      content: "..";
+    }
+
+    75% {
+      content: "...";
+    }
+  }
+
+  // 補足の通知（時間切れなど）
+  .c-sub {
+    margin-top: 6px !important;
+    font-size: 12px;
+    color: var(--nezumi);
+  }
+
+  // エラー（再試行ボタン・エラーID）
+  .c-err {
+    justify-self: start;
+    max-width: 92%;
+    padding: 10px 14px;
+    border: 1px solid var(--shu);
+    background: var(--shu-soft);
+    font-size: 13.5px;
+
+    small {
+      display: block;
+      margin-top: 4px;
+      font: 400 11px/1.4 var(--mono);
+      color: var(--nezumi);
+    }
+
+    button {
+      margin-top: 8px;
+      font: 700 12.5px/1 var(--go);
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 3px;
+
+      &:hover {
+        color: var(--shu);
+      }
+    }
+  }
+
+  // サンプル質問
+  .c-qs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 22px 12px;
+
+    button {
+      font-size: 12px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      background: var(--shiro);
+
+      &:hover {
+        border-color: var(--sumi);
+      }
+    }
+  }
+
+  .c-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-top: 1.5px solid var(--sumi);
+  }
+
+  .c-input {
+    border: 0;
+    background: transparent;
+    padding: 16px 18px;
+    resize: none;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .c-send {
+    padding: 0 22px;
+    background: var(--sumi);
+    color: var(--kami);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .1em;
+
+    &:hover {
+      background: var(--shu);
+    }
+
+    &:disabled {
+      opacity: .5;
+    }
+  }
+
+  .c-note {
+    margin: 0;
+    padding: 10px 18px 14px;
+    font-size: 11px;
+    color: var(--nezumi);
+    line-height: 1.6;
+  }
+
+  @include reduced-motion {
+    .c-loading::after {
+      content: "…";
+    }
+  }
+}

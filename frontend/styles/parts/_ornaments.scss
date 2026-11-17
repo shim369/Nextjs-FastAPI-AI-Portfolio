@@ -1,0 +1,96 @@
+@use "../mixins" as *;
+
+// 霞（すやり霞）と筆の線。どちらも SVG コンポーネント（components/svg/）に当てる
+@layer parts {
+  // すやり霞：屏風絵の霞が、ゆっくり横に流れる
+  .kasumi {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    animation: kfade 2.4s .6s ease forwards;
+
+    // 同じ速さで、間隔をそろえて流す（320s を5本で等分した遅れ。どの瞬間も偏らない）
+    g {
+      animation: flow 320s linear var(--dl, 0s) infinite;
+
+      @for $i from 2 through 5 {
+        &:nth-child(#{$i}) {
+          --dl: #{-64s * ($i - 1)};
+        }
+      }
+    }
+  }
+
+  @keyframes flow {
+    from {
+      translate: -620px 0;
+    }
+
+    to {
+      translate: 1240px 0;
+    }
+  }
+
+  @keyframes kfade {
+    to {
+      opacity: 1;
+    }
+  }
+
+  // 一筆で引いた墨の線。.stroke の clip-path を左から開いて「描く」
+  .fude {
+    display: block;
+    width: 100%;
+    height: 22px;
+    margin-bottom: -6px;
+    overflow: visible;
+
+    path {
+      fill: var(--sumi);
+    }
+
+    .stroke {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  .hero .fude .stroke {
+    animation: fude 1.6s 1.1s cubic-bezier(.6, 0, .2, 1) forwards;
+  }
+
+  .sec.in .fude .stroke {
+    animation: fude 1.4s .35s cubic-bezier(.6, 0, .2, 1) forwards;
+  }
+
+  @keyframes fude {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  // セクション内の筆の線（技能・仕組・連絡）
+  .focus h3 + .fude {
+    width: min(100%, 560px);
+    height: 16px;
+    margin: -14px 0 0;
+  }
+
+  .sec-fude {
+    width: min(100%, 640px) !important;
+    height: 16px !important;
+    margin: 32px 0 0 !important;
+  }
+
+  // 動きを減らす設定：霞は出したまま、筆の線は描き終わった状態で見せる
+  @include reduced-motion {
+    .fude .stroke {
+      clip-path: none !important;
+    }
+
+    .kasumi {
+      opacity: 1 !important;
+    }
+  }
+}

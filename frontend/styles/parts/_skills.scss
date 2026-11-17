@@ -1,0 +1,278 @@
+@use "../mixins" as *;
+
+// 技能：いま注力している Python を主役に、ほかは土台として並べる
+@layer parts {
+  .focus {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    border: 1.5px solid var(--sumi);
+    background: var(--kami);
+
+    // 左：Python の説明と関連ライブラリ
+    .f-l {
+      padding: clamp(24px, 3vw, 40px);
+      border-right: 1.5px solid var(--sumi);
+      display: grid;
+      gap: 22px;
+      align-content: space-between;
+      position: relative;
+      overflow: hidden;
+
+      p {
+        margin: 0;
+        max-width: 34em;
+        font-size: 14px;
+        color: #3f3e3a;
+      }
+    }
+
+    .f-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font: 700 13px/1 var(--min);
+      letter-spacing: .14em;
+
+      i {
+        width: 10px;
+        height: 10px;
+        background: var(--shu);
+      }
+    }
+
+    h3 {
+      margin: 0 0 .12em;
+      font: 800 clamp(72px, 9.4vw, 150px)/.82 var(--min);
+      letter-spacing: -.04em;
+
+      span {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--sumi);
+      }
+    }
+
+    .kw {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font: 700 clamp(15px, 1.4vw, 19px)/1.6 var(--min);
+
+      li::after {
+        content: "／";
+        margin-left: 14px;
+        color: var(--shu);
+        font-weight: 500;
+      }
+
+      li:last-child::after {
+        content: none;
+      }
+    }
+
+    // 右：Python で作ったもの
+    .f-r {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+
+      h4 {
+        margin: 0;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        font: 700 13px/1 var(--go);
+        color: var(--nezumi);
+        letter-spacing: .06em;
+      }
+
+      ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li a {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: baseline;
+        padding: 14px 22px;
+        border-bottom: 1px solid var(--line);
+        transition: background .3s, padding .4s var(--ease);
+
+        b {
+          font: 700 15.5px/1.4 var(--min);
+          overflow-wrap: anywhere;
+        }
+
+        small {
+          font-size: 12px;
+          color: var(--nezumi);
+          white-space: nowrap;
+        }
+
+        &:hover {
+          background: var(--shiro);
+          padding-left: 30px;
+
+          b {
+            color: var(--shu);
+          }
+        }
+      }
+
+      .go {
+        padding: 16px 22px;
+        font: 700 13px/1 var(--go);
+        background: var(--sumi);
+        color: var(--kami);
+        display: flex;
+        justify-content: space-between;
+        transition: background .3s;
+
+        &:hover {
+          background: var(--shu);
+        }
+      }
+    }
+  }
+
+  // 土台にある技術（4列）
+  .base-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin: 56px 0 0;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid var(--sumi);
+
+    h3 {
+      margin: 0;
+      font: 800 24px/1 var(--min);
+      letter-spacing: .06em;
+    }
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--nezumi);
+    }
+  }
+
+  .base {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 22px 20px 24px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      position: relative;
+      transition: background .35s;
+
+      &:nth-child(4n) {
+        border-right: 0;
+      }
+
+      b {
+        font: 700 19px/1.3 var(--min);
+      }
+
+      span {
+        font: 400 11.5px/1 var(--mono);
+        color: var(--nezumi);
+      }
+
+      // 説明は3行まで。ホバーで全文を出す
+      p {
+        margin: 0;
+        font-size: 12.5px;
+        line-height: 1.75;
+        color: #4a4944;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -1px;
+        height: 2px;
+        width: 100%;
+        background: var(--shu);
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        transition: transform .5s var(--ease);
+      }
+
+      &:hover {
+        background: var(--kami);
+
+        &::before {
+          transform: scaleX(1);
+        }
+
+        p {
+          -webkit-line-clamp: unset;
+          line-clamp: unset;
+        }
+      }
+    }
+  }
+
+  .extra {
+    margin: 28px 0 0;
+    max-width: 48em;
+    font-size: 14px;
+    color: var(--nezumi);
+  }
+
+  @include down(lg) {
+    .focus {
+      grid-template-columns: minmax(0, 1fr);
+
+      .f-l {
+        border-right: 0;
+        border-bottom: 1.5px solid var(--sumi);
+      }
+    }
+
+    .base {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      li:nth-child(4n) {
+        border-right: 1px solid var(--line);
+      }
+
+      li:nth-child(2n) {
+        border-right: 0;
+      }
+    }
+  }
+
+  @include down(sm) {
+    .base {
+      grid-template-columns: minmax(0, 1fr);
+
+      li {
+        border-right: 0 !important;
+      }
+    }
+
+    .base-h {
+      flex-direction: column;
+    }
+  }
+}

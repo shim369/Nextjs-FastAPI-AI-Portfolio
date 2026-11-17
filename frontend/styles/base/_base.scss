@@ -1,0 +1,106 @@
+@use "../mixins" as *;
+
+// 配色・書体などのトークンは CSS 変数で持つ（黒漆の帯は、この変数を差し替えて色を反転させる）
+$washi-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .12 0 0 0 0 .11 0 0 0 0 .09 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23p)'/%3E%3C/svg%3E");
+
+// カスケードレイヤーの順番（後ろほど強い）
+@layer base, layout, parts;
+
+@layer base {
+  :root {
+    --shiro: #eeeeea; // 白練
+    --kami: #f7f7f4; // 紙
+    --sumi: #1d1d1b; // 墨
+    --nezumi: #74736d; // 鼠
+    --line: rgba(29, 29, 27, .14);
+    --shu: #c23a2b; // 朱
+    --shu-soft: rgba(194, 58, 43, .1);
+    --min: var(--font-min), "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
+    --go: var(--font-go), "Zen Kaku Gothic New", system-ui, sans-serif;
+    --mono: var(--font-mono), "IBM Plex Mono", ui-monospace, monospace;
+    --rail: 84px;
+    --bar: 46px;
+    --ease: cubic-bezier(.7, 0, .2, 1);
+    color-scheme: light;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--bar) + 16px);
+  }
+
+  // ページ全体に、ごく薄い和紙のノイズを敷く
+  body {
+    margin: 0;
+    background: var(--shiro) $washi-noise;
+    color: var(--sumi);
+    font: 400 15px/1.9 var(--go);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "palt" 1;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--shu);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--sumi);
+    color: var(--shiro);
+  }
+
+  // 画面には出さず、読み上げだけに使う
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  // 動きを減らす設定：すべてのアニメーションを止める（描き終わった状態は各 partial で指定）
+  @include reduced-motion {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after,
+    ::view-transition-group(*) {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}

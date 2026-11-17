@@ -1,0 +1,325 @@
+@use "../mixins" as *;
+
+// 黒漆の帯の金
+$gold: #d4b06a;
+$gold-line: rgba(201, 168, 98, .6);
+// 右上に撒く金砂子（丸と四角の小片）
+$kinsunago: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23d4b06a' fill-opacity='.55'%3E%3Ccircle cx='71.2' cy='33.2' r='1.2'/%3E%3Ccircle cx='10.6' cy='180.7' r='0.5'/%3E%3Ccircle cx='80.5' cy='12.8' r='1'/%3E%3Ccircle cx='47.2' cy='18.9' r='0.8'/%3E%3Ccircle cx='15.4' cy='20.0' r='0.8'/%3E%3Ccircle cx='13.0' cy='124.4' r='0.6'/%3E%3Ccircle cx='138.7' cy='128.3' r='0.5'/%3E%3Ccircle cx='127.0' cy='87.3' r='0.6'/%3E%3Ccircle cx='10.2' cy='188.9' r='0.7'/%3E%3Ccircle cx='92.2' cy='119.0' r='1'/%3E%3Ccircle cx='67.9' cy='179.5' r='0.6'/%3E%3Ccircle cx='22.7' cy='125.7' r='0.6'/%3E%3Ccircle cx='81.9' cy='120.5' r='0.5'/%3E%3Ccircle cx='124.2' cy='136.2' r='0.8'/%3E%3Ccircle cx='149.7' cy='94.1' r='0.7'/%3E%3Ccircle cx='102.4' cy='203.2' r='0.7'/%3E%3Ccircle cx='65.9' cy='174.8' r='1.2'/%3E%3Ccircle cx='171.6' cy='18.0' r='0.7'/%3E%3Ccircle cx='115.5' cy='192.5' r='1.2'/%3E%3Ccircle cx='98.7' cy='134.0' r='0.5'/%3E%3Ccircle cx='26.0' cy='92.0' r='1.5'/%3E%3Ccircle cx='75.3' cy='205.3' r='0.8'/%3E%3Ccircle cx='8.6' cy='147.0' r='1.5'/%3E%3Ccircle cx='122.8' cy='173.6' r='1.5'/%3E%3Ccircle cx='69.0' cy='153.0' r='1'/%3E%3Ccircle cx='109.3' cy='175.3' r='0.5'/%3E%3Ccircle cx='184.8' cy='207.8' r='0.8'/%3E%3Ccircle cx='153.3' cy='14.3' r='1.2'/%3E%3Ccircle cx='154.3' cy='142.4' r='1.2'/%3E%3Ccircle cx='180.8' cy='62.6' r='0.8'/%3E%3Ccircle cx='195.1' cy='76.3' r='0.8'/%3E%3Ccircle cx='78.2' cy='134.4' r='0.8'/%3E%3Ccircle cx='13.0' cy='169.0' r='0.6'/%3E%3Ccircle cx='162.4' cy='87.5' r='1.5'/%3E%3Ccircle cx='109.2' cy='36.6' r='0.8'/%3E%3Ccircle cx='120.9' cy='194.3' r='1.5'/%3E%3Ccircle cx='94.7' cy='121.0' r='1.2'/%3E%3Ccircle cx='91.4' cy='78.9' r='0.8'/%3E%3Ccircle cx='210.7' cy='33.2' r='0.6'/%3E%3Ccircle cx='33.3' cy='144.9' r='0.5'/%3E%3Ccircle cx='106.7' cy='129.6' r='0.7'/%3E%3Ccircle cx='62.0' cy='32.0' r='1'/%3E%3Ccircle cx='81.2' cy='124.6' r='0.6'/%3E%3Ccircle cx='151.9' cy='113.4' r='1'/%3E%3Ccircle cx='144.1' cy='162.8' r='0.8'/%3E%3Ccircle cx='197.9' cy='171.6' r='1.5'/%3E%3Ccircle cx='149.7' cy='123.0' r='0.8'/%3E%3Ccircle cx='87.8' cy='22.8' r='1.2'/%3E%3Ccircle cx='88.1' cy='41.9' r='0.6'/%3E%3Ccircle cx='96.9' cy='24.2' r='1'/%3E%3Ccircle cx='11.6' cy='0.1' r='0.6'/%3E%3Ccircle cx='118.1' cy='208.8' r='1'/%3E%3Ccircle cx='5.6' cy='192.4' r='1'/%3E%3Ccircle cx='82.8' cy='139.6' r='0.7'/%3E%3Ccircle cx='132.5' cy='104.3' r='0.5'/%3E%3Ccircle cx='186.8' cy='218.5' r='0.8'/%3E%3Ccircle cx='105.7' cy='68.6' r='0.6'/%3E%3Ccircle cx='22.5' cy='75.4' r='0.7'/%3E%3Ccircle cx='105.3' cy='152.3' r='1'/%3E%3Ccircle cx='5.1' cy='209.2' r='1'/%3E%3Ccircle cx='79.6' cy='151.8' r='0.5'/%3E%3Ccircle cx='166.8' cy='65.6' r='1.2'/%3E%3Ccircle cx='189.9' cy='153.2' r='0.7'/%3E%3Ccircle cx='114.0' cy='199.8' r='0.7'/%3E%3Ccircle cx='169.8' cy='117.2' r='1.5'/%3E%3Ccircle cx='110.6' cy='140.0' r='1'/%3E%3Ccircle cx='178.5' cy='216.7' r='1.5'/%3E%3Ccircle cx='42.9' cy='52.7' r='0.8'/%3E%3Ccircle cx='162.8' cy='49.9' r='1'/%3E%3Ccircle cx='108.4' cy='160.8' r='0.5'/%3E%3Crect x='173.8' y='103.9' width='2.5' height='2.1' transform='rotate(44 173.8 103.9)'/%3E%3Crect x='98.4' y='206.1' width='4.5' height='4.4' transform='rotate(46 98.4 206.1)'/%3E%3Crect x='17.7' y='22.5' width='3.2' height='2.3' transform='rotate(61 17.7 22.5)'/%3E%3Crect x='137.3' y='198.1' width='4.1' height='3.2' transform='rotate(83 137.3 198.1)'/%3E%3Crect x='75.7' y='141.5' width='4.1' height='2.6' transform='rotate(49 75.7 141.5)'/%3E%3Crect x='172.1' y='165.0' width='3.2' height='2.1' transform='rotate(81 172.1 165.0)'/%3E%3Crect x='73.2' y='176.2' width='4.4' height='3.4' transform='rotate(51 73.2 176.2)'/%3E%3Crect x='163.5' y='18.7' width='2.4' height='2.4' transform='rotate(3 163.5 18.7)'/%3E%3Crect x='33.3' y='199.1' width='4.0' height='2.6' transform='rotate(76 33.3 199.1)'/%3E%3C/g%3E%3C/svg%3E");
+
+@layer parts {
+  // ===== 黒漆の帯：Jamstack だけを漆と金で仕立てる（配色の変数を差し替えて反転させる） =====
+  #jamstack.urushi {
+    --shiro: #1b1a18;
+    --kami: #24221f;
+    --sumi: #ece7dc;
+    --nezumi: #a39d90;
+    --line: rgba(236, 231, 220, .13);
+    color: var(--sumi);
+    background: radial-gradient(120% 90% at 85% 0%, #2c2925 0, #1a1917 62%);
+    padding-bottom: clamp(100px, 10vw, 150px);
+    margin-top: clamp(96px, 11vw, 168px);
+    border-block: 1px solid $gold-line;
+
+    // 右上の金砂子
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: $kinsunago 0 0 / 220px auto;
+      -webkit-mask-image: radial-gradient(90% 80% at 100% 0%, #000 0, transparent 70%);
+      mask-image: radial-gradient(90% 80% at 100% 0%, #000 0, transparent 70%);
+    }
+
+    // 上下の金の二重線（外側は border-block、内側はこの線）
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 7px 0;
+      border-block: 1px solid rgba(201, 168, 98, .28);
+      pointer-events: none;
+    }
+  }
+
+  #jamstack {
+    .jam-info p {
+      color: #cfc8ba;
+    }
+
+    .jam-list button[aria-selected="true"] {
+      small {
+        color: #6d685e;
+      }
+
+      em {
+        border-color: rgba(27, 26, 24, .25);
+      }
+    }
+
+    .jam-lead {
+      color: #e2dccf;
+    }
+
+    .jam {
+      box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .7);
+    }
+
+    .jam-shot .open:hover,
+    .jam-list button[aria-selected="true"]::before {
+      background: var(--shu);
+    }
+
+    .lane.on {
+      border-color: rgba(201, 168, 98, .7);
+
+      b {
+        color: $gold;
+      }
+    }
+
+    ::selection {
+      background: $gold;
+      color: #1b1a18;
+    }
+  }
+
+  // ===== 切り替えて比べる =====
+  .jam-lead {
+    margin: 0 0 36px;
+    max-width: 40em;
+    font: 500 clamp(16px, 1.4vw, 19px)/2 var(--min);
+  }
+
+  .jam {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    border: 1.5px solid var(--sumi);
+    background: var(--kami);
+  }
+
+  // 左：サイトのリスト（タブ）
+  .jam-list {
+    border-right: 1.5px solid var(--sumi);
+    display: grid;
+    align-content: start;
+
+    button {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 4px 12px;
+      align-items: baseline;
+      text-align: left;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      transition: background .3s;
+
+      b {
+        font: 700 19px/1.2 var(--min);
+      }
+
+      small {
+        grid-column: 1;
+        font-size: 12px;
+        color: var(--nezumi);
+      }
+
+      // 方式（SSG / ISR / SSR）の札
+      em {
+        grid-row: 1 / 3;
+        grid-column: 2;
+        align-self: center;
+        font: 400 11px/1 var(--mono);
+        font-style: normal;
+        padding: 5px 7px;
+        border: 1px solid var(--line);
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--shu);
+        transform: scaleY(0);
+        transition: transform .4s var(--ease);
+      }
+
+      &:hover {
+        background: var(--shiro);
+      }
+
+      &[aria-selected="true"] {
+        background: var(--sumi);
+        color: var(--kami);
+
+        small {
+          color: #b9b8b2;
+        }
+
+        em {
+          border-color: rgba(255, 255, 255, .3);
+        }
+
+        &::before {
+          transform: scaleY(1);
+        }
+      }
+    }
+  }
+
+  // 右：スクリーンショットと説明
+  .jam-view {
+    display: grid;
+    grid-template-rows: auto auto;
+    min-width: 0;
+  }
+
+  .jam-shot {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--sumi);
+    background: var(--shiro);
+    view-transition-name: jamshot;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .open {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      background: var(--sumi);
+      color: var(--kami);
+      font: 700 13px/1 var(--go);
+      padding: 12px 16px;
+      transition: background .3s;
+
+      &:hover {
+        background: var(--shu);
+      }
+    }
+  }
+
+  .jam-info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    padding: 26px 28px 30px;
+    view-transition-name: jaminfo;
+
+    h3 {
+      margin: 0 0 6px;
+      font: 800 30px/1.1 var(--min);
+    }
+
+    .fw {
+      font: 500 13px/1.5 var(--min);
+      color: var(--shu);
+    }
+
+    p {
+      margin: 12px 0 14px;
+      font-size: 14px;
+      color: #3f3e3a;
+    }
+  }
+
+  // 記事の更新がサイトに届くまで（当てはまる方式が光る）
+  .lanes {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+
+    h4 {
+      margin: 0 0 4px;
+      font: 700 13px/1 var(--go);
+      color: var(--nezumi);
+    }
+  }
+
+  .lane {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    opacity: .38;
+    transition: opacity .4s, border-color .4s, background .4s;
+
+    b {
+      font: 500 12px/1 var(--mono);
+    }
+
+    span {
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    &.on {
+      opacity: 1;
+      border-color: var(--sumi);
+      background: var(--shiro);
+
+      b {
+        color: var(--shu);
+      }
+    }
+  }
+
+  // View Transition：古い画面は薄れ、新しい画面が右から拭うように入る
+  ::view-transition-old(jamshot) {
+    animation: .35s var(--ease) both wipe-out;
+  }
+
+  ::view-transition-new(jamshot) {
+    animation: .55s var(--ease) both wipe-in;
+  }
+
+  @keyframes wipe-out {
+    to {
+      opacity: .3;
+    }
+  }
+
+  @keyframes wipe-in {
+    from {
+      clip-path: inset(0 0 0 100%);
+    }
+  }
+
+  @include down(lg) {
+    .jam {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .jam-list {
+      border-right: 0;
+      border-bottom: 1.5px solid var(--sumi);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .jam-info {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @include down(sm) {
+    .jam-list {
+      grid-template-columns: minmax(0, 1fr);
+
+      button {
+        padding: 12px 16px;
+      }
+    }
+  }
+}

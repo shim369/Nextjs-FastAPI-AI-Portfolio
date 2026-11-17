@@ -1,0 +1,124 @@
+@use "../mixins" as *;
+
+// 記録：TECH BLOG の最新3件（読み込み中はスケルトン）
+@layer parts {
+  .blog {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1.5px solid var(--sumi);
+
+    li {
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr) auto;
+      gap: 28px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .sk {
+      &.t {
+        height: 18px;
+        width: 80%;
+        margin-bottom: 10px;
+      }
+
+      &.s {
+        width: 55%;
+      }
+
+      &.d {
+        width: 90px;
+      }
+    }
+
+    time {
+      font: 400 12px/1 var(--mono);
+      color: var(--nezumi);
+      letter-spacing: .06em;
+    }
+
+    h3 {
+      margin: 0;
+      font: 700 clamp(16px, 1.5vw, 20px)/1.5 var(--min);
+      overflow-wrap: anywhere;
+    }
+
+    .b-cat {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--nezumi);
+    }
+
+    a.b-read {
+      font: 700 13px/1 var(--go);
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    li:has(a.b-read:hover) h3,
+    a.b-read:hover {
+      color: var(--shu);
+    }
+
+    // 取得できなかったとき
+    .b-msg {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-size: 14px;
+      color: var(--nezumi);
+    }
+  }
+
+  // スケルトン
+  .sk {
+    display: block;
+    height: 12px;
+    background: linear-gradient(90deg, rgba(29, 29, 27, .06), rgba(29, 29, 27, .12), rgba(29, 29, 27, .06)) 0 0 / 200% 100%;
+    animation: sk 1.6s linear infinite;
+  }
+
+  @keyframes sk {
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  .blog-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    .btn-line {
+      margin-top: 18px;
+      white-space: nowrap;
+    }
+  }
+
+  .blog-note {
+    margin: 18px 0 0;
+    font-size: 13px;
+    color: var(--nezumi);
+  }
+
+  @include down(md) {
+    .blog li {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px 16px;
+
+      > :first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .blog-foot {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+  }
+}

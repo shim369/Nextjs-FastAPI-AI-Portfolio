@@ -1,0 +1,51 @@
+@use "../mixins" as *;
+
+// 画面の端に出る小さな部品：送信完了のトーストと「本文へ移動」
+@layer parts {
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    translate: -50% 20px;
+    background: var(--sumi);
+    color: var(--kami);
+    padding: 13px 20px;
+    font-size: 13px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: 70;
+    border-left: 4px solid var(--shu);
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      translate: -50% 0;
+    }
+  }
+
+  // スマホでは画面下のナビの上に出す
+  @include down(tab) {
+    #toast {
+      bottom: 76px;
+    }
+  }
+
+  // 本文へ移動（キーボード操作の最初に出る）
+  .skip {
+    position: fixed;
+    left: 12px;
+    top: 8px;
+    z-index: 80;
+    padding: 10px 14px;
+    background: var(--sumi);
+    color: var(--kami);
+    font: 700 13px/1 var(--go);
+    translate: 0 -200%;
+    transition: translate .2s;
+
+    &:focus {
+      translate: 0 0;
+    }
+  }
+}

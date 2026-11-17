@@ -1,0 +1,73 @@
+@use "../mixins" as *;
+
+// セクションの枠：左に縦書きの見出し、右に本文
+@layer layout {
+  main {
+    margin-left: var(--rail);
+  }
+
+  .sec {
+    padding: clamp(96px, 11vw, 168px) clamp(24px, 5vw, 80px) 0;
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 64px);
+  }
+
+  .sec-h {
+    .stick {
+      position: sticky;
+      top: calc(var(--bar) + 40px);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    h2 {
+      margin: 0;
+      writing-mode: vertical-rl;
+      font: 800 clamp(48px, 5vw, 76px)/1 var(--min);
+      letter-spacing: .12em;
+    }
+
+    // 英語の小見出し（頭に朱の線）
+    p {
+      margin: 4px 0 0;
+      writing-mode: vertical-rl;
+      font: 400 11.5px/1 var(--mono);
+      letter-spacing: .14em;
+      color: var(--nezumi);
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 36px;
+        background: var(--shu);
+        margin-bottom: 14px;
+      }
+    }
+  }
+
+  @include down(tab) {
+    .sec {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .sec-h {
+      .stick {
+        position: static;
+        align-items: baseline;
+      }
+
+      h2,
+      p {
+        writing-mode: horizontal-tb;
+      }
+
+      p::before {
+        display: none;
+      }
+    }
+  }
+}

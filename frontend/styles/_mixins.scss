@@ -1,0 +1,32 @@
+@use "sass:map";
+
+// ブレークポイント（デザイン案の @media の値）。いずれも max-width で「この幅以下」を表す
+$breakpoints: (
+  xs: 480px, // 縦書きナビの項目を減らす・柱を詰める
+  sm: 520px, // 1列にする
+  md: 760px, // 制作の行を開いたままにする・ブログの行を2段にする
+  tab: 860px, // 縦書きナビを画面下のバーにする（スマホ）
+  hero: 900px, // ヒーローを1列にする
+  bar: 960px, // 柱の中央の2枠を隠す
+  lg: 1000px, // 技能・実装のパネルを縦に積む
+);
+
+@mixin down($name) {
+  @media (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// タッチ端末（ホバーできない）か、指定の幅以下
+@mixin touch-or-down($name) {
+  @media (hover: none), (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// 「動きを減らす」設定
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

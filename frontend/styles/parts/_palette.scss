@@ -1,0 +1,81 @@
+// ⌘K パレット：移動とAIへの質問
+@layer parts {
+  dialog#cmd {
+    border: 1.5px solid var(--sumi);
+    padding: 0;
+    width: min(620px, calc(100vw - 32px));
+    margin-top: 14vh;
+    background: var(--kami);
+    color: var(--sumi);
+    box-shadow: 10px 10px 0 var(--sumi);
+
+    &::backdrop {
+      background: rgba(29, 29, 27, .3);
+      backdrop-filter: blur(3px);
+    }
+  }
+
+  #cmd {
+    input {
+      width: 100%;
+      border: 0;
+      border-bottom: 1.5px solid var(--sumi);
+      background: transparent;
+      padding: 20px 22px;
+      font: 500 18px/1 var(--min);
+      outline: none;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 6px;
+      max-height: 50vh;
+      overflow: auto;
+    }
+
+    li a {
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      font-size: 14px;
+      cursor: pointer;
+
+      i {
+        font: 800 13px/1 var(--min);
+        color: var(--shu);
+        font-style: normal;
+      }
+
+      small {
+        font: 400 11px/1 var(--mono);
+        color: var(--nezumi);
+      }
+
+      &[aria-selected="true"] {
+        background: var(--sumi);
+        color: var(--kami);
+
+        small {
+          color: #b9b8b2;
+        }
+      }
+    }
+
+    .hint {
+      padding: 10px 22px 12px;
+      border-top: 1px solid var(--line);
+      font: 400 11px/1 var(--mono);
+      color: var(--nezumi);
+    }
+
+    // 結果なし
+    .none {
+      padding: 14px;
+      font-size: 13px;
+      color: var(--nezumi);
+    }
+  }
+}
