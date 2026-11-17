@@ -1,0 +1,289 @@
+/*
+ * ページに載せるデータ。経験年数や制作物はここを書き換えるだけで反映されます。
+ * 言語によって変わる値は { ja: "...", en: "..." } の形で書きます。
+ * （AIチャットが参照する経歴データは backend/app/data/profile.json です。内容を変えたら両方そろえてください）
+ */
+export type Localized = { ja: string; en: string };
+
+export type Skill = { name: string; years: Localized; note: Localized };
+export type Project = {
+  title: string;
+  summary: Localized;
+  /** 目録の左に出る分類 */
+  category: Localized;
+  tech: string[];
+  url: string;
+  /** 公開しているデモがあるときだけ */
+  demo?: string;
+};
+export type JamSite = {
+  name: string;
+  fw: string;
+  /** 記事の更新の届け方。LANES のキー（SSG / ISR / SSR）を含む文字列 */
+  render: string;
+  repo: string;
+  demo: string;
+  /** public/images/jamstack/ のファイル名（拡張子なし） */
+  img: string;
+  /** 画像の縦横（next/image に渡す）。各デモのファーストビューを 1440×647 で撮影したもの */
+  size: [number, number];
+  tech: string[];
+  note: Localized;
+};
+
+export const GITHUB_URL = "https://github.com/shim369";
+// 技術ブログ「TECH BLOG」（Astro + microCMS）。記事の取得は lib/microcms.ts
+export const BLOG_URL = "https://astro-microcms-blogs.vercel.app/";
+
+// 先頭の Python を「いま、いちばん力を入れている技術」として大きく見せ、残りを「土台にある技術」に並べる
+export const SKILLS: Skill[] = [
+  {
+    name: "Python",
+    years: { ja: "5ヶ月", en: "5 mos" },
+    note: {
+      ja: "実務では業務効率化ツール2件（PHPバージョンアップ支援、Webサイト調査）をスクラッチで設計・開発・運用。個人開発では2023年からFastAPI・Streamlit・Djangoなどで継続的に開発",
+      en: "At work: designed, built and operate two automation tools from scratch (PHP upgrade support, website survey). Personal projects with FastAPI, Streamlit, Django and more since 2023",
+    },
+  },
+  {
+    name: "TypeScript / React",
+    years: { ja: "5ヶ月", en: "5 mos" },
+    note: {
+      ja: "生産管理システムのWebアプリ機能追加（端末設定・表示設定）、結合テスト",
+      en: "New features (device and display settings) for a production management web app, integration testing",
+    },
+  },
+  {
+    name: "C# / .NET (ASP.NET)",
+    years: { ja: "11ヶ月", en: "11 mos" },
+    note: {
+      ja: ".NETバージョンアップ、社内業務ツール（採用管理・給与計算・従業員情報）の解析・改修、ECサイト改修",
+      en: ".NET upgrades, analysis and improvement of internal tools (recruiting, payroll, employee data), e-commerce site changes",
+    },
+  },
+  {
+    name: "JavaScript / jQuery",
+    years: { ja: "8年6ヶ月", en: "8 yrs 6 mos" },
+    note: {
+      ja: "Webサイト制作・改修全般、Electron / Node.jsのデスクトップアプリ開発、ASP.NET ECサイトのフロントエンド対応",
+      en: "Website development and maintenance, Electron / Node.js desktop apps, frontend work on an ASP.NET e-commerce site",
+    },
+  },
+  {
+    name: "PHP",
+    years: { ja: "6年8ヶ月", en: "6 yrs 8 mos" },
+    note: {
+      ja: "WordPressテーマ制作・改修、CakePHP 2系 / Smartyの改修、PHP 5〜7系サイトのPHP 8.4移行対応",
+      en: "WordPress themes, CakePHP 2 / Smarty maintenance, migrating PHP 5–7 sites to PHP 8.4",
+    },
+  },
+  {
+    name: "HTML / CSS (Sass)",
+    years: { ja: "8年3ヶ月", en: "8 yrs 3 mos" },
+    note: {
+      ja: "コーポレート・EC・LP・イントラサイトのデザイン / コーディング、cshtml / aspxへの組み込み",
+      en: "Design and coding of corporate, e-commerce, landing and intranet sites; integration into cshtml / aspx",
+    },
+  },
+  {
+    name: "WordPress",
+    years: { ja: "5年7ヶ月", en: "5 yrs 7 mos" },
+    note: {
+      ja: "テーマ制作・サイト構築、本体・プラグインの改修（開発停止プラグインを含む）",
+      en: "Theme development and site builds, core and plugin maintenance (including discontinued plugins)",
+    },
+  },
+  {
+    name: "MySQL / MariaDB",
+    years: { ja: "7年6ヶ月", en: "7 yrs 6 mos" },
+    note: { ja: "Webサイト・CMSのデータベース", en: "Databases behind websites and CMSs" },
+  },
+  {
+    name: "Git (GitHub / GitLab)",
+    years: { ja: "3年9ヶ月", en: "3 yrs 9 mos" },
+    note: {
+      ja: "ブランチ戦略に基づくマージ・リリース調整、フルリモートでのチーム開発",
+      en: "Merges and release coordination under a branching strategy, fully remote team development",
+    },
+  },
+];
+
+// Python の主役パネルに並べる関連ライブラリの候補。Python の制作物で使っているもの（と Django）だけを表示する
+export const PYTHON_LIBRARIES = [
+  "FastAPI", "Streamlit", "Django", "Pydantic", "SQLAlchemy", "pytest", "Mypy",
+  "Playwright", "PyTorch", "LightGBM", "OpenCV", "Gemini API",
+];
+
+// 制作物（Jamstack のサイトは JAMSTACK に載せ、ここには重複して載せない）
+export const PROJECTS: Project[] = [
+  {
+    title: "Python-Web-Analyzer",
+    category: { ja: "調査ツール", en: "Analysis tool" },
+    summary: {
+      ja: "Excelのドメイン一覧からSSL対応・CMS・ページ数を並列クロールで解析し、評価を付けるStreamlitアプリ。状態をSQLiteに保存し、強制終了後も復旧します。",
+      en: "A Streamlit app that crawls a list of domains in parallel to detect SSL, CMS and page count, then rates each site. State is saved in SQLite and survives a forced shutdown.",
+    },
+    tech: ["Python", "Streamlit", "SQLite", "Playwright"],
+    url: "https://github.com/shim369/Python-Web-Analyzer",
+  },
+  {
+    title: "Python-Health-Insight-Agent",
+    category: { ja: "AIエージェント", en: "AI agent" },
+    summary: {
+      ja: "食事・運動・睡眠ログを分析するAIエージェント。Gemini が説明し、統計は型付きツールで計算して根拠つきで回答します。RAGやMCPサーバーも備えます。",
+      en: "An AI agent that analyzes meal, workout and sleep logs. Gemini explains, typed tools compute the statistics, and answers cite evidence. Includes RAG and MCP.",
+    },
+    tech: ["Python", "FastAPI", "Gemini API", "PostgreSQL", "LightGBM", "React", "Docker"],
+    url: "https://github.com/shim369/Python-Health-Insight-Agent",
+  },
+  {
+    title: "Python-AI-Chat-Portfolio",
+    category: { ja: "AI", en: "AI" },
+    summary: {
+      ja: "AIチャットの制作物。Gemini の function calling を使った手動エージェントループのAIチャットを、Vercel 上の FastAPI と Next.js で動かしています。このサイトのチャットの仕組みも、ここから引き継いでいます。",
+      en: "An AI chat project: a hand-written agent loop with Gemini function calling, running on FastAPI and Next.js on Vercel. The chat on this site is built on the same foundation.",
+    },
+    tech: ["Python", "FastAPI", "Gemini API", "Next.js", "TypeScript"],
+    url: "https://github.com/shim369/Python-AI-Chat-Portfolio",
+    demo: "https://python-ai-chat-portfolio.vercel.app",
+  },
+  {
+    title: "Python-Defect-Hunter-Game",
+    category: { ja: "画像認識", en: "Computer vision" },
+    summary: {
+      ja: "表面欠陥データセット KolektorSDD2 を使った「人間 vs AI」のブラウザゲーム。CPUで学習した小さな U-Net と人間が同じ画像の欠陥をなぞり、IoU で比較します。",
+      en: "A Human vs AI browser game on the KolektorSDD2 surface-defect dataset. You and a small CPU-trained U-Net trace the same defect, and both are scored by IoU.",
+    },
+    tech: ["Python", "PyTorch", "FastAPI", "OpenCV", "Docker"],
+    url: "https://github.com/shim369/Python-Defect-Hunter-Game",
+  },
+  {
+    title: "Python-Smart-Health-Intelligence-Platform",
+    category: { ja: "ヘルスケア", en: "Healthcare" },
+    summary: {
+      ja: "開発中のマルチユーザー向け健康管理Webアプリ。ルールベースの提案、Gemini によるレシピ生成、LightGBM による体重予測、Google認証を備えます。",
+      en: "A multi-user health tracking web app (in progress) with rule-based recommendations, Gemini recipe generation, LightGBM weight prediction and Google sign-in.",
+    },
+    tech: ["Python", "Streamlit", "PostgreSQL", "SQLAlchemy", "LightGBM", "Gemini API"],
+    url: "https://github.com/shim369/Python-Smart-Health-Intelligence-Platform",
+  },
+  {
+    title: "Python-Budget-Tracker-App",
+    category: { ja: "業務アプリ", en: "Business app" },
+    summary: {
+      ja: "オフラインで動く家計簿・サブスク管理アプリ。FastAPI と Pydantic で作り、設計書とトレーサビリティを整備し、336件のテストでカバレッジ99.9%。",
+      en: "An offline budget and subscription tracker built with FastAPI and Pydantic, backed by design docs, traceability, and 336 tests at 99.9% coverage.",
+    },
+    tech: ["Python", "FastAPI", "Pydantic", "Alpine.js", "pytest"],
+    url: "https://github.com/shim369/Python-Budget-Tracker-App",
+  },
+  {
+    title: "Python-Encryption-Tool",
+    category: { ja: "セキュリティ", en: "Security" },
+    summary: {
+      ja: "ファイル・フォルダを一括で暗号化 / 復号するデスクトップツール。ソルトとストレッチングによる鍵の強化、Mypy Strict 準拠の型付け、GitHub Actions での CI。",
+      en: "A desktop tool that encrypts and decrypts files and whole folders, with salted, stretched keys, Mypy-strict typing and CI on GitHub Actions.",
+    },
+    tech: ["Python", "cryptography", "CustomTkinter", "Mypy", "GitHub Actions"],
+    url: "https://github.com/shim369/Python-Encryption-Tool",
+  },
+  {
+    title: "Nextjs-TypeScript-AspNetCore-Todo-App",
+    category: { ja: "Webアプリ", en: "Web app" },
+    summary: {
+      ja: "Next.js（TypeScript）のフロントエンドと ASP.NET Core（MVC）のバックエンドを分離したフルスタックの Todo アプリ。データは SQLite に保存します。",
+      en: "A full-stack Todo app with a Next.js (TypeScript) frontend decoupled from an ASP.NET Core (MVC) backend, storing its data in SQLite.",
+    },
+    tech: ["TypeScript", "Next.js", "C#", "ASP.NET Core", "SQLite"],
+    url: "https://github.com/shim369/Nextjs-TypeScript-AspNetCore-Todo-App",
+  },
+];
+
+// 同じ microCMS を、フレームワークを変えて組み上げた Jamstack サイト
+export const JAMSTACK: JamSite[] = [
+  {
+    name: "Nuxt Base", fw: "Nuxt 3", render: "SSR", repo: "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
+    demo: "https://nuxtbase-gsap.vercel.app", img: "nuxt", size: [1440, 647],
+    tech: ["Nuxt 3", "TypeScript", "GSAP", "AOS", "reCAPTCHA v3"],
+    note: {
+      ja: "Nuxt の Server API を間に挟み、microCMS の APIキーをブラウザに出さない構成。GSAP と AOS のスクロール演出つき。",
+      en: "Nuxt's server API sits in between so the microCMS API key never reaches the browser. Scroll effects with GSAP and AOS.",
+    },
+  },
+  {
+    name: "Astro Base", fw: "Astro", render: "SSG", repo: "Astro-MicroCMS-Site",
+    demo: "https://astrobase.vercel.app", img: "astro", size: [1440, 647],
+    tech: ["Astro", "microCMS", "Vercel"],
+    note: {
+      ja: "記事をビルド時に取得して静的HTMLとして書き出す最小構成。JavaScriptをほとんど送らないので表示が速い。",
+      en: "A minimal setup that fetches posts at build time and writes them out as static HTML. Almost no JavaScript is shipped, so pages load fast.",
+    },
+  },
+  {
+    name: "Svelte Base", fw: "SvelteKit", render: "SSG", repo: "SvelteKit-TypeScript-MicroCMS-Site",
+    demo: "https://sveltebase-phi.vercel.app", img: "sveltekit", size: [1440, 647],
+    tech: ["SvelteKit", "TypeScript", "microCMS"],
+    note: {
+      ja: "+page.server.ts でデータを取得し、prerender でビルド時にページを生成。APIキーは $env/static/private から読む。",
+      en: "Data is loaded in +page.server.ts and pages are generated at build time with prerender. The API key is read from $env/static/private.",
+    },
+  },
+  {
+    name: "NEXT TECH", fw: "Next.js App Router", render: "ISR", repo: "Nextjs-TypeScript-MicroCMS-Site2",
+    demo: "https://next-tech-trigger.vercel.app", img: "nextjs-app", size: [1440, 647],
+    tech: ["Next.js", "App Router", "TypeScript", "microCMS"],
+    note: {
+      ja: "コーポレートサイト。記事は ISR で配信し、microCMS で更新すると最大60秒でサイトに反映される。",
+      en: "A corporate site. Posts are served with ISR, so an update in microCMS reaches the site within 60 seconds.",
+    },
+  },
+  {
+    name: "NEXT BASE", fw: "Next.js Pages Router", render: "SSG + ISR", repo: "Nextjs-TypeScript-MicroCMS-Site",
+    demo: "https://nextbase-gsap.vercel.app", img: "nextjs-pages", size: [1440, 647],
+    tech: ["Next.js", "Pages Router", "TypeScript", "GSAP"],
+    note: {
+      ja: "Pages Router の getStaticProps と ISR で記事ページを生成。前後の記事リンクまでビルド時に用意する。",
+      en: "Post pages are generated with getStaticProps and ISR on the Pages Router, including links to the previous and next posts.",
+    },
+  },
+  {
+    name: "GATSBY BASE", fw: "Gatsby 5", render: "SSG", repo: "Gatsby-TypeScript-Threejs-MicroCMS-Site",
+    demo: "https://gatsbybase.vercel.app", img: "gatsby", size: [1440, 647],
+    tech: ["Gatsby 5", "TypeScript", "Three.js", "GraphQL"],
+    note: {
+      ja: "microCMS のデータを GraphQL のデータ層に取り込み、File System Route API で記事ページを自動生成。ヒーローは Three.js。",
+      en: "microCMS data is pulled into Gatsby's GraphQL data layer, and post pages are generated with the File System Route API. The hero uses Three.js.",
+    },
+  },
+];
+
+// 「記事の更新がサイトに届くまで」の3方式（文言は messages.ts の jam.lane.*）
+export const LANES = ["SSG", "ISR", "SSR"] as const;
+
+export const SAMPLE_QUESTIONS: Record<"ja" | "en", string[]> = {
+  ja: ["得意なスキルを教えてください", "これまでの制作物を紹介してください", "このチャットはどんな仕組みですか？"],
+  en: ["What are his main skills?", "Tell me about his projects.", "How does this chat work?"],
+};
+
+// ページ内の移動先（目次・⌘K パレット）。kan は見出しと縦書きナビの漢字、en は見出しの英語の小見出し、
+// nav は英語表示のときのナビの文言、mark は ⌘K パレットの頭に付く1文字
+export const SECTIONS = [
+  { id: "skills", kan: "技能", en: "Skills", nav: "Skills", mark: "技" },
+  { id: "works", kan: "制作", en: "Works", nav: "Works", mark: "制" },
+  { id: "jamstack", kan: "実装", en: "Jamstack", nav: "Jamstack", mark: "実" },
+  { id: "blog", kan: "記録", en: "Blog", nav: "Blog", mark: "記" },
+  { id: "arch", kan: "仕組", en: "How this site works", nav: "Architecture", mark: "仕" },
+  { id: "contact", kan: "連絡", en: "Contact", nav: "Contact", mark: "連" },
+] as const;
+export type SectionId = (typeof SECTIONS)[number]["id"];
+
+// reCAPTCHA v3 のサイトキー（公開して問題ない値）。空のときは reCAPTCHA を読み込まない。
+// サーバー側には対になるシークレットキーを環境変数 RECAPTCHA_SECRET_KEY で設定する。
+// 既定値は既存リポジトリと同じキー（reCAPTCHA の管理画面で、このサイトのドメインを追加しておくこと）。
+// 別のキーを使うときは、ビルド時の環境変数 NEXT_PUBLIC_RECAPTCHA_SITE_KEY で上書きする（空なら既定値）
+export const RECAPTCHA_SITE_KEY =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeoiwUuAAAAABGP5A1GwYA98CffONhuEQZbAI7J";
+
+// サーバー側の上限と揃える
+export const MAX_INPUT_LENGTH = 500;
+export const MAX_HISTORY = 10;
