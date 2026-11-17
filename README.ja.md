@@ -56,7 +56,7 @@ Vercel（1プロジェクト）
 cd backend
 cp .env.example .env        # 値を書き込む（下の「環境変数」）
 uv sync
-uv run uvicorn app.main:app --reload --port 8000
+uv run --env-file .env uvicorn app.main:app --reload --port 8000
 
 # 2. frontend（http://127.0.0.1:3000）。開発中は /api/* を 8000 番の FastAPI へ転送する
 cd frontend
@@ -74,7 +74,7 @@ cd frontend && npm run lint && npm run typecheck && npm run build
 
 ## 環境変数
 
-値はコードやコミットに入れず、ローカルでは `.env` / `.env.local`、本番では Vercel の Environment Variables に設定します（`.env.example` には項目名だけを書いています）。
+値はコードやコミットに入れず、ローカルでは `backend/.env` と `frontend/.env.local`、本番では Vercel の Environment Variables に設定します（`.env.example` には項目名だけを書いています）。backend は `.env` を自動では読まないため、`uv run --env-file .env` で起動します。値に空白を含めないでください（Gmail のアプリパスワードは空白を取って書きます）。
 
 | 変数 | 使う場所 | 必須 | 内容 |
 |---|---|---|---|

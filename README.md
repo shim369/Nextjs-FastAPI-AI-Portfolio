@@ -56,7 +56,7 @@ Requirements: [uv](https://docs.astral.sh/uv/) (it provides Python 3.14) and Nod
 cd backend
 cp .env.example .env        # fill in the values (see "Environment variables")
 uv sync
-uv run uvicorn app.main:app --reload --port 8000
+uv run --env-file .env uvicorn app.main:app --reload --port 8000
 
 # 2. frontend (http://127.0.0.1:3000). In development, /api/* is proxied to FastAPI on port 8000
 cd frontend
@@ -74,7 +74,7 @@ cd frontend && npm run lint && npm run typecheck && npm run build
 
 ## Environment variables
 
-Never put the values in code or commits. Use `.env` / `.env.local` locally and Vercel's Environment Variables in production (`.env.example` lists the names only).
+Never put the values in code or commits. Use `backend/.env` and `frontend/.env.local` locally and Vercel's Environment Variables in production (`.env.example` lists the names only). The backend does not read `.env` by itself, so start it with `uv run --env-file .env`. Do not put spaces in values (write a Gmail app password without its spaces).
 
 | Variable | Used by | Required | Purpose |
 |---|---|---|---|
