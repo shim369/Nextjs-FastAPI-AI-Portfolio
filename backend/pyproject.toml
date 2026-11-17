@@ -1,0 +1,28 @@
+[project]
+name = "python-ai-chat-portfolio"
+version = "0.1.0"
+description = "Python-AI-Chat-Portfolio: 自己紹介ページ + Gemini関数呼び出しエージェントのAIチャット"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.162.0",
+    "google-genai>=2.33.0",
+    "httpx>=0.28.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "uvicorn>=0.54.0",
+]
+
+[tool.vercel]
+entrypoint = "app.main:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# 依存ライブラリ側の非推奨警告（テストの動作には影響しない）
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+    "ignore:'_UnionGenericAlias' is deprecated",
+]
