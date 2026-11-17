@@ -692,6 +692,6 @@
     "note": "お問い合わせはお問い合わせフォームまたは GitHub からお願いします。"
   },
   "site": {
-    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は TECH BLOG の最新記事を FastAPI が取得して表示しています。ページには、microCMS と6つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js App Router・Next.js Pages Router・Gatsby）で作った Jamstack サイトを比べる欄もあります。"
+    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は、技術ブログ「TECH BLOG」（Astro + microCMS、https://astro-microcms-blogs.vercel.app/）の最新記事を、Next.js のサーバー側で microCMS の API から取得し、ISR（最長60秒）で表示しています。ページには、microCMS と6つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js App Router・Next.js Pages Router・Gatsby）で作った Jamstack サイトを比べる欄もあります。"
   }
 }

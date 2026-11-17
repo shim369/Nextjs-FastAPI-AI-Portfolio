@@ -93,7 +93,7 @@ TOOL_SPECS: list[ToolSpec] = [
     ),
     ToolSpec(
         name="get_blog_posts",
-        description="技術ブログ「TECH BLOG」の最新記事（タイトル・URL・投稿日）を新しい順に返す。",
+        description="技術ブログ「TECH BLOG」（Astro + microCMS）の最新記事（タイトル・URL・公開日・カテゴリ・概要）を新しい順に返す。",
         parameters={
             "type": "object",
             "properties": {

@@ -49,6 +49,9 @@ class Settings:
     contact_rate_limit_per_ip_per_minute: int
     contact_rate_limit_per_ip_per_day: int
     contact_rate_limit_global_per_minute: int
+    # ブログ欄・get_blog_posts の取得元（TECH BLOG の microCMS）。サービスドメインは xxx.microcms.io の xxx
+    microcms_service_domain: str
+    microcms_api_key: str
 
     @property
     def contact_enabled(self) -> bool:
@@ -79,4 +82,6 @@ def get_settings() -> Settings:
         contact_rate_limit_per_ip_per_minute=_int_env("CONTACT_RATE_LIMIT_PER_IP_PER_MINUTE", 2),
         contact_rate_limit_per_ip_per_day=_int_env("CONTACT_RATE_LIMIT_PER_IP_PER_DAY", 10),
         contact_rate_limit_global_per_minute=_int_env("CONTACT_RATE_LIMIT_GLOBAL_PER_MINUTE", 10),
+        microcms_service_domain=os.environ.get("MICROCMS_SERVICE_DOMAIN", "").strip(),
+        microcms_api_key=os.environ.get("MICROCMS_API_KEY", "").strip(),
     )
