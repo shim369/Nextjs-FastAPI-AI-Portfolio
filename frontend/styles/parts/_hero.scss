@@ -92,6 +92,19 @@
       display: block;
     }
 
+    // 日本語は2行（「Webシステムの改修から、」「AIチャットまで。」）のまま組む。
+    // 1行は約12字 ×（1 + 字間 .14em）≒ 13.7em なので、62vh に収まるよう文字の大きさの上限を 4.5vh にする
+    // （縦書きのときだけ。900px 以下は横書きで、文字の大きさと折り返しは下の @include down(hero) のまま）
+    @media (min-width: 901px) {
+      &:not(:lang(en)) {
+        font-size: min(clamp(22px, 2.3vw, 36px), 4.5vh);
+
+        span {
+          white-space: nowrap;
+        }
+      }
+    }
+
     &:lang(en) {
       letter-spacing: .04em;
       line-height: 1.35;
