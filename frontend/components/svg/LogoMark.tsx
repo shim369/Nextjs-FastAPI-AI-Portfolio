@@ -1,19 +1,15 @@
-/** ロゴマーク：細い円の中に、朱の日の出と墨の霞2本 */
+/** ロゴマーク：朱の梅の花（五弁）。中心に白練の輪と金のしべ */
 export default function LogoMark() {
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      <defs>
-        <clipPath id="logo-clip">
-          <circle cx="24" cy="24" r="21.5" />
-        </clipPath>
-      </defs>
-      <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" strokeWidth="1" />
-      <g clipPath="url(#logo-clip)">
-        <circle cx="27" cy="23" r="9" fill="#c23a2b" />
-        <rect x="-4" y="25.5" width="36" height="5" rx="2.5" fill="#eeeeea" />
-        <rect x="-4" y="26.5" width="34" height="3" rx="1.5" />
-        <rect x="16" y="33" width="40" height="5" rx="2.5" fill="#eeeeea" />
-        <rect x="18" y="34" width="38" height="3" rx="1.5" />
+      <g transform="translate(24 24.8) scale(1.45)">
+        <g fill="#c23a2b">
+          {[0, 72, 144, 216, 288].map((angle) => (
+            <circle key={angle} cx="0" cy="-8.4" r="5.6" transform={`rotate(${angle})`} />
+          ))}
+        </g>
+        <circle r="3.2" fill="#eeeeea" />
+        <circle r="1.6" fill="#d8b46a" />
       </g>
     </svg>
   );
