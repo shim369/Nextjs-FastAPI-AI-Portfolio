@@ -28,8 +28,16 @@ export default function Section({ id, children, className = "" }: { id: SectionI
 }
 
 /** 画面に入ったらふわっと出す要素（[data-reveal]） */
-export function Reveal({ children, className, as: Tag = "div" }: { children: ReactNode; className?: string; as?: "div" | "ul" }) {
-  const [ref, inView] = useInView<HTMLDivElement & HTMLUListElement>({ rootMargin: "0px 0px -12% 0px" });
+export function Reveal({
+  children,
+  className,
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  as?: "div" | "ul" | "article";
+}) {
+  const [ref, inView] = useInView<HTMLDivElement & HTMLUListElement & HTMLElement>({ rootMargin: "0px 0px -12% 0px" });
   return (
     <Tag ref={ref} className={`${className ?? ""}${inView ? " in" : ""}`.trim() || undefined} data-reveal="">
       {children}

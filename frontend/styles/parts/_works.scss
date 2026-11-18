@@ -1,70 +1,109 @@
 @use "../mixins" as *;
 
-// 制作：行が開く目録。罫線は .in で上の行から順に引かれる
+// 制作：代表作3つ（仕組みの図・作った理由・工夫した点）と、その他の制作物
 @layer parts {
-  .works {
-    position: relative;
+  .ft-lead {
+    margin: 0 0 40px;
+    max-width: 40em;
+    font: 500 clamp(16px, 1.4vw, 19px)/2 var(--min);
   }
 
-  .works::before,
-  .wk::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-    transition: transform 1.1s var(--ease);
+  .feats {
+    display: grid;
+    gap: clamp(64px, 8vw, 110px);
   }
 
-  .works::before {
-    top: 0;
-    height: 1.5px;
-    background: var(--sumi);
+  // 図と文を左右に並べる（2つ目は左右を入れ替える）
+  .ft {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: center;
+
+    &.rev .ft-fig {
+      order: 2;
+    }
   }
 
-  .wk::after {
-    bottom: -1px;
-    height: 1px;
-    background: rgba(29, 29, 27, .22);
-    transition-delay: calc(.15s + var(--i, 0) * .09s);
+  // 図（components/svg/FeatureArt.tsx）：紙の枠に、墨の影を2重に落とす
+  .ft-fig {
+    margin: 0 14px 14px 0;
+    border: 1.5px solid var(--sumi);
+    background: var(--kami);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    box-shadow: 14px 14px 0 -1px var(--shiro), 14px 14px 0 0 var(--sumi);
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    // AI からツールへの呼び出し：朱の破線が流れる
+    .flow {
+      animation: dash 1.2s linear infinite;
+    }
+
+    // 人間の線（破線）はふっと出し、AI の線は画面に入ってから描く
+    .trace {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+
+      &:not(.ai) {
+        stroke-dasharray: 6 5;
+        stroke-dashoffset: 0;
+        opacity: 0;
+        transition: opacity .6s .4s;
+      }
+    }
+
+    // カバレッジの棒：画面に入ると左から伸びる
+    .cov {
+      transform-box: fill-box;
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 1.6s .5s var(--ease);
+    }
   }
 
-  .sec.in {
-    .works::before,
-    .wk::after {
+  .ft.in .ft-fig {
+    .trace:not(.ai) {
+      opacity: 1;
+    }
+
+    .trace.ai {
+      animation: draw 1.6s .8s var(--ease) forwards;
+    }
+
+    .cov {
       transform: scaleX(1);
     }
   }
 
-  .wk {
-    position: relative;
-    isolation: isolate;
-
-    // ホバー・フォーカスで紙の地が下から敷かれる
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: var(--kami);
-      z-index: -1;
-      transform: scaleY(0);
-      transform-origin: 50% 100%;
-      transition: transform .5s var(--ease);
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -16;
     }
+  }
 
-    &:hover::before,
-    &:focus-within::before {
-      transform: scaleY(1);
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
     }
+  }
 
-    .head {
-      display: grid;
-      grid-template-columns: 150px minmax(0, 1fr) auto;
-      gap: 24px;
-      align-items: baseline;
-      padding: 26px 18px;
+  // 動きを減らす設定：AI の線は描き終わった状態で見せる（デザイン案にない指定）
+  @include reduced-motion {
+    .ft-fig .trace.ai {
+      stroke-dashoffset: 0;
     }
+  }
+
+  .ft-txt {
+    display: grid;
+    gap: 14px;
+    align-content: start;
 
     .cat {
       font: 500 12.5px/1.4 var(--min);
@@ -78,7 +117,6 @@
         content: "";
         width: 6px;
         height: 6px;
-        flex: none;
         background: var(--shu);
         transform: rotate(45deg);
       }
@@ -86,59 +124,98 @@
 
     h3 {
       margin: 0;
-      font: 700 clamp(20px, 2.3vw, 32px)/1.25 var(--min);
+      font: 800 clamp(26px, 2.8vw, 40px)/1.2 var(--min);
       letter-spacing: -.01em;
       overflow-wrap: anywhere;
-      transition: letter-spacing .5s var(--ease), color .3s;
     }
 
-    &:hover h3 {
-      color: var(--shu);
-      letter-spacing: .01em;
-    }
-
-    .go {
-      font: 400 12px/1 var(--mono);
-      color: var(--nezumi);
-    }
-
-    // 開く部分（grid-template-rows を 0fr → 1fr にして高さを動かす）
-    .body {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows .55s var(--ease);
-
-      > div {
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1fr);
-        gap: 24px;
-        padding-inline: 18px;
-      }
-
-      p {
-        grid-column: 2;
-        margin: 0 0 24px;
-        font-size: 14px;
-        color: #3f3e3a;
-      }
-
-      .r {
-        grid-column: 3;
-        display: grid;
-        gap: 14px;
-        align-content: start;
-        padding-bottom: 24px;
-      }
-    }
-
-    &:hover .body,
-    &:focus-within .body {
-      grid-template-rows: 1fr;
+    // 作った理由
+    .why {
+      margin: 4px 0 0;
+      font: 500 15px/2 var(--min);
+      color: #3f3e3a;
     }
   }
 
-  // 技術タグとリンク（制作・実装で共通）
+  // 工夫した点（01・02・03 の番号付き）
+  .pts {
+    list-style: none;
+    margin: 4px 0 6px;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    counter-reset: pt;
+
+    li {
+      counter-increment: pt;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 4px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13.5px;
+      line-height: 1.75;
+
+      &::before {
+        content: counter(pt, decimal-leading-zero);
+        font: 500 11px/2.2 var(--mono);
+        color: var(--shu);
+      }
+    }
+  }
+
+  // その他の制作物（2列の一覧）
+  .others {
+    margin-top: clamp(64px, 8vw, 100px);
+    border-top: 1.5px solid var(--sumi);
+    padding-top: 22px;
+
+    h3 {
+      margin: 0 0 12px;
+      font: 800 20px/1 var(--min);
+      letter-spacing: .06em;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0 0 24px;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 40px;
+    }
+
+    li a {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+      transition: padding .4s var(--ease);
+
+      b {
+        font: 700 15px/1.4 var(--min);
+        overflow-wrap: anywhere;
+        transition: color .3s;
+      }
+
+      small {
+        font-size: 12px;
+        color: var(--nezumi);
+        white-space: nowrap;
+      }
+
+      &:hover {
+        padding-left: 10px;
+
+        b {
+          color: var(--shu);
+        }
+      }
+    }
+  }
+
+  // 技術タグとリンク（制作・実装・モーダルで共通）
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -170,10 +247,6 @@
     }
   }
 
-  .more {
-    margin-top: 32px;
-  }
-
   .btn-line {
     display: inline-block;
     border-bottom: 1px solid var(--sumi);
@@ -187,32 +260,22 @@
     }
   }
 
-  // スマホ・タッチ端末では最初から開いておく
-  @include touch-or-down(md) {
-    .wk {
-      .head {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 8px;
-        padding: 22px 0 10px;
+  @include down(hero) {
+    .ft {
+      grid-template-columns: minmax(0, 1fr);
+
+      &.rev .ft-fig {
+        order: 0;
       }
+    }
 
-      .go {
-        display: none;
-      }
+    .others ul {
+      grid-template-columns: minmax(0, 1fr);
+    }
 
-      .body {
-        grid-template-rows: 1fr;
-
-        > div {
-          grid-template-columns: minmax(0, 1fr);
-          padding: 0;
-        }
-
-        p,
-        .r {
-          grid-column: 1;
-        }
-      }
+    .ft-fig {
+      margin: 0 8px 8px 0;
+      box-shadow: 8px 8px 0 -1px var(--shiro), 8px 8px 0 0 var(--sumi);
     }
   }
 }
