@@ -1,6 +1,6 @@
 @use "../mixins" as *;
 
-// 連絡：説明文を縦書きの明朝で大きく組み（スマホでは横書き）、下線だけの入力欄のフォームを置く
+// 連絡：説明文を縦書きの明朝で組み（スマホでは横書き）、下線だけの入力欄のフォームを置く
 @layer parts {
   .contact {
     display: grid;
@@ -11,18 +11,12 @@
     .lead {
       margin: 0;
       writing-mode: vertical-rl;
-      font: 700 clamp(22px, 2vw, 28px)/1.9 var(--min);
-      letter-spacing: .16em;
-      height: 22em;
-      max-height: 440px;
+      font: 700 clamp(19px, 1.6vw, 23px)/2 var(--min);
+      letter-spacing: .14em;
+      height: 17em;
 
       &:lang(en) {
         letter-spacing: .04em;
-      }
-
-      // 筆の線は横書きのときだけ出す
-      + .fude {
-        display: none;
       }
     }
   }
@@ -130,10 +124,6 @@
         height: auto;
         font-size: 18px;
         letter-spacing: .04em;
-
-        + .fude {
-          display: block;
-        }
       }
     }
   }

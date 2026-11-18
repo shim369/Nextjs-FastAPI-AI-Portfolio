@@ -1,12 +1,11 @@
 "use client";
 
-import Fude from "@/components/svg/Fude";
 import { useI18n } from "@/lib/i18n";
 import Section, { Reveal } from "./Section";
 
 const NOTES = ["arch.note1", "arch.note2", "arch.note3"] as const;
 
-/** 仕組：構成図（Browser → Vercel → FastAPI → Gemini API）に朱の線が流れ、その下に筆の線と設計メモ3点 */
+/** 仕組：構成図（Browser → Vercel → FastAPI → Gemini API）に朱の線が流れ、その下に設計メモ3点 */
 export default function Architecture() {
   const { t } = useI18n();
   return (
@@ -32,7 +31,6 @@ export default function Architecture() {
           <i />
         </span>
       </div>
-      <Fude className="sec-fude" />
       <div className="notes">
         {NOTES.map((key) => (
           <Reveal key={key}>

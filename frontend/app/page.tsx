@@ -11,7 +11,6 @@ import Hero from "@/components/sections/Hero";
 import Jamstack from "@/components/sections/Jamstack";
 import Skills from "@/components/sections/Skills";
 import Works from "@/components/sections/Works";
-import KasureFilter from "@/components/svg/KasureFilter";
 import { ChatProvider } from "@/lib/chat-ui";
 import { PaletteProvider } from "@/lib/palette";
 
@@ -23,7 +22,6 @@ export default function Page() {
     <ChatProvider>
       <PaletteProvider>
         <SkipLink />
-        <KasureFilter />
         <Rail />
         <TopBar />
         <main id="main" tabIndex={-1}>

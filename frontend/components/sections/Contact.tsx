@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import Fude from "@/components/svg/Fude";
 import { useI18n } from "@/lib/i18n";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import Section from "./Section";
@@ -141,7 +140,6 @@ export default function Contact() {
                 </span>
               ))}
           </p>
-          <Fude className="sec-fude" />
         </div>
         <form className="cf" noValidate onSubmit={onSubmit} onFocus={warm} aria-label={t("dest.contact")}>
           <label>

@@ -7,7 +7,8 @@
   }
 
   .sec {
-    padding: clamp(96px, 11vw, 168px) clamp(24px, 5vw, 80px) 0;
+    // 広い画面では、本文の幅を 1320px に収めて中央に寄せる
+    padding: clamp(88px, 9vw, 136px) max(clamp(24px, 5vw, 80px), calc((100% - 1320px) / 2)) 0;
     display: grid;
     grid-template-columns: 190px minmax(0, 1fr);
     gap: clamp(24px, 4vw, 64px);

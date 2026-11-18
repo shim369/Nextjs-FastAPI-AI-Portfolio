@@ -10,9 +10,9 @@
 
   footer {
     .big {
-      font: 800 clamp(64px, 15.5vw, 260px)/.82 var(--min);
+      font: 800 clamp(40px, 6.4vw, 104px)/1.05 var(--min);
       letter-spacing: -.03em;
-      padding: 40px clamp(24px, 5vw, 80px) 0;
+      padding: 48px max(clamp(24px, 5vw, 80px), calc((100% - 1320px) / 2)) 6px;
       white-space: nowrap;
       color: transparent;
       -webkit-text-stroke: 1.2px var(--sumi);

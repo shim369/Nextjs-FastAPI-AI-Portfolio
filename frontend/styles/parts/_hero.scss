@@ -1,72 +1,84 @@
 @use "../mixins" as *;
 
-// ヒーロー：組版で見せる
+// ヒーロー：左に署名・見出し・質問バー、右に墨の梅の枝。下端に「できること」3つの帯
 @layer parts {
   .hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding: clamp(36px, 5vw, 64px) clamp(24px, 5vw, 80px) 0;
+    // 広い画面では、本文の幅を 1320px に収めて中央に寄せる（セクションと同じ）
+    padding: 0 max(clamp(24px, 5vw, 80px), calc((100% - 1320px) / 2));
     min-height: calc(100vh - var(--bar));
     display: grid;
-    grid-template-rows: auto 1fr auto;
-  }
-
-  .h-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    font: 400 11.5px/1 var(--mono);
-    letter-spacing: .1em;
-    color: var(--nezumi);
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--line);
+    grid-template-rows: 1fr auto;
   }
 
   .h-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(16px, 3vw, 48px);
+    gap: clamp(40px, 6vw, 112px);
     align-items: center;
-    padding-block: clamp(16px, 3vh, 40px);
-    position: relative;
+    padding-block: clamp(40px, 6vh, 72px);
   }
 
-  // 名前：Ohtani は白抜き、末尾の「.」だけ朱
-  .h-name {
+  .h-copy {
+    display: grid;
+    gap: clamp(22px, 3vh, 34px);
+    align-content: center;
+  }
+
+  // 名前は控えめに、署名のように
+  .h-sig {
     margin: 0;
-    font: 800 clamp(64px, 14.4vw, 236px)/.8 var(--min);
-    letter-spacing: -.035em;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-left: 14px;
+    border-left: 2px solid var(--shu);
+
+    b {
+      font: 700 clamp(17px, 1.4vw, 20px)/1 var(--min);
+      letter-spacing: .14em;
+    }
+
+    span {
+      font: 400 11px/1 var(--mono);
+      letter-spacing: .14em;
+      color: var(--nezumi);
+    }
+  }
+
+  // 見出し：2行（「Webシステムの改修から、」「AIチャットまで。」）。行ごとに下からせり上がる。末尾の句点だけ朱
+  .h-state {
+    margin: 0;
+    font: 800 clamp(30px, 3.5vw, 58px)/1.4 var(--min);
+    letter-spacing: -.01em;
 
     .l {
       display: block;
       overflow: hidden;
-      padding-bottom: .16em;
-      margin-bottom: -.16em;
+      padding-bottom: .06em;
+      margin-bottom: -.06em;
+      white-space: nowrap;
 
       > span {
         display: inline-block;
         animation: up 1.2s var(--ease) both;
       }
 
-      &:nth-child(2) {
-        padding-left: .55em;
-
-        > span {
-          animation-delay: .12s;
-        }
+      &:nth-child(2) > span {
+        animation-delay: .12s;
       }
-    }
-
-    .o {
-      color: transparent;
-      -webkit-text-stroke: clamp(1px, .12vw, 2px) var(--sumi);
     }
 
     .dot {
       color: var(--shu);
-      -webkit-text-stroke: 0;
+    }
+
+    // 英語は1行が長いので折り返す（デザイン案にない状態）
+    &:lang(en) .l {
+      white-space: normal;
     }
   }
 
@@ -76,63 +88,135 @@
     }
   }
 
-  // 縦書きのキャッチ
-  .h-catch {
-    writing-mode: vertical-rl;
+  .h-copy .lead {
     margin: 0;
-    font: 800 clamp(22px, 2.3vw, 36px)/1.55 var(--min);
-    letter-spacing: .14em;
-    border-right: 2px solid var(--shu);
-    padding-right: 16px;
-    height: max-content;
-    max-height: 62vh;
-    animation: drop 1.4s .5s var(--ease) both;
+    max-width: 32em;
+    font: 500 clamp(15px, 1.25vw, 17px)/2 var(--min);
+    color: #3f3e3a;
+  }
 
-    span {
+  // ===== 右：墨の梅の枝（components/svg/UmeBranch.tsx） =====
+  .byobu {
+    margin: 0;
+    align-self: center;
+    position: relative;
+    isolation: isolate;
+
+    svg.scene {
+      position: static;
       display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+      // マウスに合わせてわずかにずらす（Hero.tsx が transform を書き換える）
+      transition: transform 1.4s cubic-bezier(.2, .7, .2, 1);
     }
 
-    // 日本語は2行（「Webシステムの改修から、」「AIチャットまで。」）のまま組む。
-    // 1行は約12字 ×（1 + 字間 .14em）≒ 13.7em なので、62vh に収まるよう文字の大きさの上限を 4.5vh にする
-    // （縦書きのときだけ。900px 以下は横書きで、文字の大きさと折り返しは下の @include down(hero) のまま）
-    @media (min-width: 901px) {
-      &:not(:lang(en)) {
-        font-size: min(clamp(22px, 2.3vw, 36px), 4.5vh);
-
-        span {
-          white-space: nowrap;
-        }
-      }
-    }
-
-    &:lang(en) {
-      letter-spacing: .04em;
-      line-height: 1.35;
+    // 縦書きの添え書き
+    .tate {
+      position: absolute;
+      right: 0;
+      top: 0;
+      writing-mode: vertical-rl;
+      font: 600 15px/1 var(--min);
+      letter-spacing: .45em;
+      color: var(--sumi);
+      white-space: nowrap;
+      animation: ume-tate 1.6s ease 2.6s backwards;
     }
   }
 
-  @keyframes drop {
+  // 枠なし。幹から枝先へ一筆で伸び、朱の花が開く
+  .byobu.ume {
+    width: clamp(380px, 38vw, 580px);
+    padding-right: 48px;
+    justify-self: end;
+  }
+
+  @keyframes ume-tate {
     from {
+      opacity: 0;
       clip-path: inset(0 0 100% 0);
     }
+  }
 
-    to {
-      clip-path: inset(0 0 0 0);
+  .ume {
+    // 枝：pathLength=1 の線を、枝ごとの遅れ（style の animation-delay）で根元から描く
+    .br {
+      animation: ume-draw 1s linear backwards;
+    }
+
+    // 花：花全体がひねりながら開き、花びらが1枚ずつふくらみ、最後に金のしべが出る
+    .pts {
+      animation: ume-twist 1.1s cubic-bezier(.2, .8, .2, 1) var(--d) backwards;
+    }
+
+    .pt {
+      animation: ume-petal .9s cubic-bezier(.2, 1.3, .4, 1) calc(var(--d) + var(--i) * .07s) backwards;
+    }
+
+    .ctr {
+      animation: ume-fade .5s ease calc(var(--d) + .45s) backwards;
+    }
+
+    // つぼみ
+    .fl {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: ume-bloom .8s cubic-bezier(.2, 1.4, .4, 1) backwards;
     }
   }
 
-  // AIに聞くバー
+  @keyframes ume-draw {
+    0% {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+
+    2% {
+      opacity: 1;
+    }
+
+    100% {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes ume-twist {
+    from {
+      transform: rotate(-70deg);
+    }
+  }
+
+  @keyframes ume-petal {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes ume-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes ume-bloom {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  // ===== AIに聞くバー =====
   .h-ask {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-    gap: 24px 48px;
-    align-items: end;
-    padding: 26px 0 36px;
-
-    .lead {
-      margin: 0;
-      font: 500 clamp(16px, 1.45vw, 19px)/2 var(--min);
-    }
+    grid-template-columns: minmax(0, 1fr);
+    padding: 4px 0 0;
+    max-width: 620px;
   }
 
   .askbar {
@@ -201,34 +285,137 @@
     }
   }
 
-  @include down(hero) {
-    .h-main {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  // ===== 下端の帯：できることを3つ、右にスクロールの合図 =====
+  .h-foot {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    border-top: 1px solid var(--sumi);
 
-    .h-catch {
-      writing-mode: horizontal-tb;
-      border: 0;
-      border-left: 2px solid var(--shu);
-      padding: 0 0 0 14px;
-      font-size: 20px;
-      max-height: none;
+    > div {
+      padding: 18px 24px 26px 0;
+      display: grid;
+      gap: 6px;
 
-      span {
-        display: inline;
+      + div {
+        padding-left: 24px;
+        border-left: 1px solid var(--line);
       }
     }
 
-    .h-name {
-      font-size: 19vw;
+    b {
+      font: 700 15px/1.4 var(--min);
+    }
+
+    small {
+      font-size: 12px;
+      color: var(--nezumi);
+      line-height: 1.6;
+    }
+
+    // 朱のしずくが縦線を流れ落ちる
+    .scroll {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-left: 24px;
+      border-left: 1px solid var(--line);
+      font: 400 11px/1 var(--mono);
+      letter-spacing: .16em;
+      color: var(--nezumi);
+
+      i {
+        width: 1px;
+        height: 34px;
+        background: var(--line);
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -40%;
+          width: 1px;
+          height: 40%;
+          background: var(--shu);
+          animation: drip 2.2s var(--ease) infinite;
+        }
+      }
+    }
+  }
+
+  @keyframes drip {
+    to {
+      top: 100%;
+    }
+  }
+
+  // ===== 900px 以下：1列にし、署名 → 見出し → 絵 → 説明 → 質問バーの順に並べる =====
+  @include down(hero) {
+    .hero {
+      min-height: 0;
+      padding-top: 28px;
+    }
+
+    .h-main {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    // .h-copy の中身を .h-main の並びに直接加え、order で絵を見出しの下に差し込む
+    .h-copy {
+      display: contents;
+    }
+
+    .h-sig {
+      order: 1;
+    }
+
+    .h-state {
+      order: 2;
+      font-size: 7.4vw;
+    }
+
+    .byobu {
+      order: 3;
+      margin-block: 6px 14px;
+    }
+
+    .h-copy .lead {
+      order: 4;
     }
 
     .h-ask {
-      grid-template-columns: minmax(0, 1fr);
+      order: 5;
     }
 
-    .hero {
-      min-height: 0;
+    .byobu.ume {
+      width: min(100%, 360px);
+      justify-self: center;
+      padding-right: 30px;
+
+      .tate {
+        font-size: 12px;
+      }
+    }
+
+    .h-foot {
+      grid-template-columns: minmax(0, 1fr);
+
+      > div {
+        padding: 14px 0;
+
+        + div {
+          padding-left: 0;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+      }
+
+      .scroll {
+        display: none;
+      }
     }
   }
 }
