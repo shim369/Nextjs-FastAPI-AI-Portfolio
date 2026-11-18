@@ -1,0 +1,15 @@
+# CLI から直接デプロイしたときにアップロードしないもの（通常は GitHub 連携でデプロイする）
+.local/
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+**/node_modules/
+**/.next/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
