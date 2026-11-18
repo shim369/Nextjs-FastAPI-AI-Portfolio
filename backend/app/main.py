@@ -10,12 +10,11 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from email.message import EmailMessage
 from functools import lru_cache
 
-from fastapi import Depends, FastAPI, Request, Response
+from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, StreamingResponse
 
 from app.agent import AgentLimits, AgentStats, run_agent
-from app.blog import BLOG_URL, fetch_latest_posts
 from app.config import Settings, get_settings
 from app.contact import ContactError, build_message, send_mail, verify_recaptcha
 from app.llm import GeminiClient, LLMClient, LLMError
@@ -198,21 +197,6 @@ async def handle_validation_error(request: Request, exc: RequestValidationError)
 @app.get("/api/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
-
-
-@app.get("/api/blog")
-async def blog(response: Response) -> dict:
-    try:
-        posts = [p.to_dict() for p in await fetch_latest_posts()]
-    except Exception as e:
-        log_event("blog_fetch_failed", level="warning", error=f"{type(e).__name__}: {e}")
-        posts = []
-    # Vercel の CDN にキャッシュさせ、関数の実行回数とブログ側への負荷を抑える
-    if posts:
-        response.headers["Cache-Control"] = "public, s-maxage=3600, stale-while-revalidate=86400"
-    else:
-        response.headers["Cache-Control"] = "public, s-maxage=300"
-    return {"blog_url": BLOG_URL, "posts": posts}
 
 
 def _sse(event: str, data: dict) -> str:

@@ -2,7 +2,8 @@
 
 ブログ本体（shim369/Astro-MicroCMS-Blog）と同じ microCMS の API（エンドポイント blogs）から、
 公開日の新しい順に記事を取る。API キーはサーバーの環境変数（MICROCMS_SERVICE_DOMAIN / MICROCMS_API_KEY）に置き、
-ブラウザには出さない。未設定・取得失敗のときは例外を送出し、/api/blog は空のリストを返す（フロントはブログへのリンクだけを表示する）。
+ブラウザには出さない。AI チャットの get_blog_posts ツールが使う（ページの記録欄は Next.js 側で同じ microCMS を読む）。
+未設定・取得失敗のときは例外を送出し、ツールはその旨を結果として AI に返す。
 """
 
 import re

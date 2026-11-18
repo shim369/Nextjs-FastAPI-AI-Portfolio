@@ -34,7 +34,6 @@ Vercel (one project)
   │             ├─ POST /api/chat     … agent loop ⇄ Gemini API
   │             │                       tools: profile.json / blog (microCMS)
   │             ├─ POST /api/contact  … verify reCAPTCHA v3 → send via SMTP
-  │             ├─ GET  /api/blog     … latest TECH BLOG posts (microCMS)
   │             └─ GET  /api/health
   └─ /*      → frontend service (Next.js, frontend/)
                 └─ Blog section: fetches microCMS (blogs) on the server, served with ISR (60s)

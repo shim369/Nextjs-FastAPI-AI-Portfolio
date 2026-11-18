@@ -34,7 +34,6 @@ Vercel（1プロジェクト）
   │             ├─ POST /api/chat     … エージェントループ ⇄ Gemini API
   │             │                       ツール：profile.json / ブログ（microCMS）
   │             ├─ POST /api/contact  … reCAPTCHA v3 の検証 → SMTP で送信
-  │             ├─ GET  /api/blog     … TECH BLOG の最新記事（microCMS）
   │             └─ GET  /api/health
   └─ /*      → frontend サービス（Next.js, frontend/）
                 └─ 記録欄：microCMS（blogs）をサーバー側で取得し、ISR（60秒）で配信
