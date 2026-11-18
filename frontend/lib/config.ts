@@ -111,30 +111,20 @@ export const SKILLS: Skill[] = [
 // Python の主役パネルに並べる関連ライブラリの候補。Python の制作物で使っているもの（と Django）だけを表示する
 export const PYTHON_LIBRARIES = [
   "FastAPI", "Streamlit", "Django", "Pydantic", "SQLAlchemy", "pytest", "Mypy",
-  "Playwright", "PyTorch", "ONNX", "LightGBM", "OpenCV", "Gemini API",
+  "Playwright", "PyTorch", "LightGBM", "OpenCV", "Gemini API",
 ];
 
-// 制作物（Jamstack のサイトは JAMSTACK に載せ、ここには重複して載せない）
+// 制作物（デザイン案のデータの順。Jamstack のサイトは JAMSTACK に載せ、ここには重複して載せない）
 export const PROJECTS: Project[] = [
   {
     title: "Python-Web-Analyzer",
     category: { ja: "調査ツール", en: "Analysis tool" },
     summary: {
       ja: "Excelのドメイン一覧からSSL対応・CMS・ページ数を並列クロールで解析し、評価を付けるStreamlitアプリ。状態をSQLiteに保存し、強制終了後も復旧します。",
-      en: "A Streamlit app that crawls a list of domains in parallel to detect SSL, CMS and page count, then rates each site. State is saved in SQLite and survives a forced shutdown.",
+      en: "A Streamlit app that crawls a list of domains in parallel to detect SSL, CMS and page count, then rates each site. State is saved in SQLite.",
     },
     tech: ["Python", "Streamlit", "SQLite", "Playwright"],
     url: "https://github.com/shim369/Python-Web-Analyzer",
-  },
-  {
-    title: "Python-PawMatch-Guard",
-    category: { ja: "画像AI・審査", en: "Content moderation" },
-    summary: {
-      ja: "犬猫の里親マッチングに、投稿のAI審査を組み込んだアプリ。PyTorch の分類・検出・セグメンテーションで「公開可 / 要確認 / 却下」を判定し、迷うものは人の確認に回します。ONNX化とAWS Lambdaの設計も。",
-      en: "A pet adoption matching app with AI moderation of posts. PyTorch classification, detection and segmentation decide publish / review / reject and send unsure cases to a human. Includes ONNX export and an AWS Lambda design.",
-    },
-    tech: ["Python", "PyTorch", "FastAPI", "ONNX", "Docker", "AWS Lambda", "Terraform"],
-    url: "https://github.com/shim369/Python-PawMatch-Guard",
   },
   {
     title: "Python-Health-Insight-Agent",
@@ -168,6 +158,16 @@ export const PROJECTS: Project[] = [
     url: "https://github.com/shim369/Python-Defect-Hunter-Game",
   },
   {
+    title: "Python-PawMatch-Guard",
+    category: { ja: "投稿審査AI", en: "AI moderation" },
+    summary: {
+      ja: "犬猫の里親マッチングアプリ。投稿画像を分類・検出・セグメンテーションの3つのモデルで審査し、「公開・要確認・却下」を判定。迷うものは人の確認に回す。",
+      en: "A pet-adoption matching app whose posts pass an AI moderation pipeline: classification, detection and segmentation models decide publish / needs review / reject, and uncertain cases go to a human.",
+    },
+    tech: ["Python", "PyTorch", "FastAPI", "ONNX", "Docker", "Terraform", "pytest"],
+    url: "https://github.com/shim369/Python-PawMatch-Guard",
+  },
+  {
     title: "Python-Smart-Health-Intelligence-Platform",
     category: { ja: "ヘルスケア", en: "Healthcare" },
     summary: {
@@ -197,7 +197,130 @@ export const PROJECTS: Project[] = [
     tech: ["Python", "cryptography", "CustomTkinter", "Mypy", "GitHub Actions"],
     url: "https://github.com/shim369/Python-Encryption-Tool",
   },
+  {
+    title: "Nextjs-TypeScript-AspNetCore-Todo-App",
+    category: { ja: "Webアプリ", en: "Web app" },
+    summary: {
+      ja: "Next.js（TypeScript）のフロントエンドと ASP.NET Core（MVC）のバックエンドを分離したフルスタックの Todo アプリ。データは SQLite に保存します。",
+      en: "A full-stack Todo app with a Next.js (TypeScript) frontend decoupled from an ASP.NET Core (MVC) backend, storing its data in SQLite.",
+    },
+    tech: ["TypeScript", "Next.js", "C#", "ASP.NET Core", "SQLite"],
+    url: "https://github.com/shim369/Nextjs-TypeScript-AspNetCore-Todo-App",
+  },
 ];
+
+// 制作欄の代表作：作った理由と工夫した点（profile.json の記述をもとに書く）。図は components/svg/FeatureArt.tsx
+export type Featured = { title: string; why: Localized; points: Localized[] };
+export const FEATURED: Featured[] = [
+  {
+    title: "Python-Health-Insight-Agent",
+    why: {
+      ja: "AIに数字を計算させると、もっともらしい間違いが混ざります。そこで「計算はコード、説明はAI」と役割を分け、答えの根拠を必ず示すデータ分析エージェントにしました。",
+      en: "When an AI does the arithmetic, plausible mistakes creep in. So I split the roles, with code doing the math and AI doing the explaining, and built a data-analysis agent that always shows the evidence behind its answers.",
+    },
+    points: [
+      {
+        ja: "統計は型付きツールで計算し、どのデータ・何件・どの統計かという根拠つきで回答",
+        en: "Statistics are computed by typed tools, and answers cite which data, how many rows and which statistic",
+      },
+      {
+        ja: "ノートへの RAG と、読み取り専用の安全な SQL でデータを参照",
+        en: "Data is read through RAG over notes and safe, read-only SQL",
+      },
+      {
+        ja: "LightGBM の予測モデルは、ベースラインを一定以上上回らなければ採用しない",
+        en: "The LightGBM model is adopted only if it beats a baseline by a set margin",
+      },
+    ],
+  },
+  {
+    title: "Python-Defect-Hunter-Game",
+    why: {
+      ja: "画像認識の精度は、数字だけ見ても実感しにくいものです。人間とAIが同じ画像で欠陥を探して比べるゲームにすれば、AIの得意・不得意を体で理解できると考えました。",
+      en: "Image-recognition accuracy is hard to feel from numbers alone. A game in which a human and an AI hunt for the same defect lets you experience first-hand what the AI is good and bad at.",
+    },
+    points: [
+      {
+        ja: "人間がなぞった欠陥と、CPU で学習した小さな U-Net の予測を IoU で並べて比較",
+        en: "Defects traced by a human and predictions from a small CPU-trained U-Net are compared side by side by IoU",
+      },
+      {
+        ja: "評価指標の IoU / F1 をライブラリに頼らず自前で実装",
+        en: "IoU and F1 are implemented from scratch instead of taken from a library",
+      },
+      {
+        ja: "固定シード・uv のロックファイル・Docker で、学習と結果の再現性を確保",
+        en: "Fixed seeds, a uv lockfile and Docker keep training and results reproducible",
+      },
+    ],
+  },
+  {
+    title: "Python-Budget-Tracker-App",
+    why: {
+      ja: "詳細設計から結合テストまで、業務の開発工程を一人で通して練習するために作りました。機能より「設計どおりに作り、テストで確かめた」と言える状態を目標にしています。",
+      en: "I built it to practise a full development process on my own, from detailed design to integration testing. The goal was less about features and more about being able to say it was built to the design and verified by tests.",
+    },
+    points: [
+      {
+        ja: "設計書と、要件からテストまでたどれるトレーサビリティを整備",
+        en: "Design documents, with traceability from requirements through to tests",
+      },
+      { ja: "336件の単体・結合テストで、カバレッジ 99.9%", en: "336 unit and integration tests at 99.9% coverage" },
+      {
+        ja: "オフラインで動作し、日本語 / 英語の UI と CSV インポートに対応",
+        en: "Works offline, with a Japanese / English UI and CSV import",
+      },
+    ],
+  },
+];
+
+// 技能欄の「Python でできること」。件数は PROJECTS の使用技術から自動で数える（match のどれかを含む制作物）
+export type Domain = { id: string; name: Localized; desc: Localized; match: string[] };
+export const DOMAINS: Domain[] = [
+  {
+    id: "ai",
+    name: { ja: "AIエージェント・LLM連携", en: "AI agents & LLM integration" },
+    desc: {
+      ja: "Gemini の function calling でツールを呼び、根拠つきで答える仕組み",
+      en: "Calling tools through Gemini function calling and answering with evidence",
+    },
+    match: ["Gemini API"],
+  },
+  {
+    id: "ml",
+    name: { ja: "データ分析・機械学習", en: "Data analysis & machine learning" },
+    desc: {
+      ja: "LightGBM での予測や、PyTorch・OpenCV での画像認識",
+      en: "Forecasting with LightGBM and image recognition with PyTorch and OpenCV",
+    },
+    match: ["PyTorch", "LightGBM", "OpenCV"],
+  },
+  {
+    id: "web",
+    name: { ja: "Web API・業務アプリ", en: "Web APIs & business apps" },
+    desc: {
+      ja: "FastAPI や Streamlit で、使える形まで仕上げて公開する",
+      en: "Finished into usable, published apps with FastAPI or Streamlit",
+    },
+    match: ["FastAPI", "Streamlit", "Django"],
+  },
+  {
+    id: "qa",
+    name: { ja: "テスト・品質管理", en: "Testing & quality" },
+    desc: {
+      ja: "pytest・Mypy・Playwright・CI で、壊れにくく保つ",
+      en: "Kept robust with pytest, Mypy, Playwright and CI",
+    },
+    match: ["pytest", "Mypy", "Playwright", "GitHub Actions"],
+  },
+];
+export const projectsInDomain = (d: Domain) => PROJECTS.filter((p) => p.tech.some((t) => d.match.includes(t)));
+
+// 「土台にある技術」を4列に収めるため、長い技術名だけ表示を短くする
+export const SHORT_SKILL_NAMES: Record<string, string> = {
+  "C# / .NET (ASP.NET)": "C# / ASP.NET",
+  "Git (GitHub / GitLab)": "Git / GitHub",
+};
 
 // 同じ microCMS を、フレームワークを変えて組み上げた Jamstack サイト
 export const JAMSTACK: JamSite[] = [
@@ -269,7 +392,7 @@ export const SAMPLE_QUESTIONS: Record<"ja" | "en", string[]> = {
 // nav は英語表示のときのナビの文言、mark は ⌘K パレットの頭に付く1文字
 export const SECTIONS = [
   { id: "skills", kan: "技能", en: "Skills", nav: "Skills", mark: "技" },
-  { id: "works", kan: "制作", en: "Works", nav: "Works", mark: "制" },
+  { id: "works", kan: "制作", en: "Selected works", nav: "Works", mark: "制" },
   { id: "jamstack", kan: "実装", en: "Jamstack", nav: "Jamstack", mark: "実" },
   { id: "blog", kan: "記録", en: "Blog", nav: "Blog", mark: "記" },
   { id: "arch", kan: "仕組", en: "How this site works", nav: "Architecture", mark: "仕" },
