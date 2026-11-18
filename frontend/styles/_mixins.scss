@@ -4,15 +4,31 @@
 $breakpoints: (
   xs: 480px, // 縦書きナビの項目を減らす・柱を詰める
   sm: 520px, // 1列にする
+  modal: 640px, // 領域のモーダルを画面下からのシートにする
   md: 760px, // 制作の行を開いたままにする・ブログの行を2段にする
   tab: 860px, // 縦書きナビを画面下のバーにする（スマホ）
   hero: 900px, // ヒーローを1列にする
   bar: 960px, // 柱の中央の2枠を隠す
   lg: 1000px, // 技能・実装のパネルを縦に積む
+  xl: 1400px, // 技能のパネルを左右同じ幅にする（lg より広い範囲）
 );
 
 @mixin down($name) {
   @media (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// 2つのブレークポイントの間（$from より広く、$to 以下）
+@mixin between($from, $to) {
+  @media (max-width: map.get($breakpoints, $to)) and (min-width: map.get($breakpoints, $from) + 1px) {
+    @content;
+  }
+}
+
+// 指定の幅より広い
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name) + 1px) {
     @content;
   }
 }
