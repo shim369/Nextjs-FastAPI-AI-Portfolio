@@ -80,6 +80,9 @@ export default function Jamstack() {
               width={site.size[0]}
               height={site.size[1]}
               sizes="(max-width: 1000px) 100vw, 60vw"
+              // Vercel Services の構成では画像最適化（/_next/image）が 404 になるため、最適化を通さずに配信する。
+              // 画像はあらかじめ 1440px の webp（40KB 前後）にしてある
+              unoptimized
             />
             <a className="open" href={site.demo} target="_blank" rel="noopener">
               {t("jam.open")}
