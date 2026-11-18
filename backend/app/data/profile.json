@@ -500,6 +500,25 @@
       "url": "https://github.com/shim369/Python-Web-Analyzer"
     },
     {
+      "title": "Python-PawMatch-Guard",
+      "summary": "犬猫の里親マッチングアプリに、投稿画像・動画のAI審査（コンテンツモデレーション）を組み込んだポートフォリオ。PyTorch の分類（ResNet50の転移学習。種別と37品種の2ヘッド）・検出（Faster R-CNN）・セグメンテーション（DeepLabV3）の3モデルで「公開可 / 要確認 / 却下」を判定し、迷うものは人の確認キューに回す。評価指標は自前実装して scikit-learn との一致をテストしている。主な結果（Oxford-IIIT Pet、1回の実行）：種別の正解率 0.9955、品種の macro-F1 0.907、セグメンテーションの IoU 0.897、頭部検出の mAP@0.5:0.95 0.723。ラベル5%を入れ替えたノイズラベル検出、前処理バグの実験、ONNX化と量子化の計測も行った。Webアプリは FastAPI（投稿・検索・確認キュー、日英UI）。AWS（S3・Lambda・DynamoDB・ECR）の構成は Terraform で設計・検証済みだが、デプロイはしていない。顔・ナンバー・文字の検出は未学習。",
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "torchvision",
+        "FastAPI",
+        "ONNX",
+        "ONNX Runtime",
+        "OpenCV",
+        "Docker",
+        "AWS Lambda",
+        "Terraform",
+        "pytest",
+        "Ruff"
+      ],
+      "url": "https://github.com/shim369/Python-PawMatch-Guard"
+    },
+    {
       "title": "Python-Health-Insight-Agent",
       "summary": "食事・運動・睡眠ログを分析するデータ分析AIエージェント。Gemini が解釈と説明を担当し、統計は型付きツールで計算して、どのデータ・何件・どの統計かという根拠つきで回答する。ノートへのRAG、読み取り専用の安全なSQL、LightGBM による小さな予測モデル（ベースラインを一定以上上回らなければ不採用）、MCPサーバー、日英UIを備える。合成データのデモで、医療的な診断ではない。",
       "technologies": [

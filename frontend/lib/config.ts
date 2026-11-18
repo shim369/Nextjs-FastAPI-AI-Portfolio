@@ -111,7 +111,7 @@ export const SKILLS: Skill[] = [
 // Python の主役パネルに並べる関連ライブラリの候補。Python の制作物で使っているもの（と Django）だけを表示する
 export const PYTHON_LIBRARIES = [
   "FastAPI", "Streamlit", "Django", "Pydantic", "SQLAlchemy", "pytest", "Mypy",
-  "Playwright", "PyTorch", "LightGBM", "OpenCV", "Gemini API",
+  "Playwright", "PyTorch", "ONNX", "LightGBM", "OpenCV", "Gemini API",
 ];
 
 // 制作物（Jamstack のサイトは JAMSTACK に載せ、ここには重複して載せない）
@@ -125,6 +125,16 @@ export const PROJECTS: Project[] = [
     },
     tech: ["Python", "Streamlit", "SQLite", "Playwright"],
     url: "https://github.com/shim369/Python-Web-Analyzer",
+  },
+  {
+    title: "Python-PawMatch-Guard",
+    category: { ja: "画像AI・審査", en: "Content moderation" },
+    summary: {
+      ja: "犬猫の里親マッチングに、投稿のAI審査を組み込んだアプリ。PyTorch の分類・検出・セグメンテーションで「公開可 / 要確認 / 却下」を判定し、迷うものは人の確認に回します。ONNX化とAWS Lambdaの設計も。",
+      en: "A pet adoption matching app with AI moderation of posts. PyTorch classification, detection and segmentation decide publish / review / reject and send unsure cases to a human. Includes ONNX export and an AWS Lambda design.",
+    },
+    tech: ["Python", "PyTorch", "FastAPI", "ONNX", "Docker", "AWS Lambda", "Terraform"],
+    url: "https://github.com/shim369/Python-PawMatch-Guard",
   },
   {
     title: "Python-Health-Insight-Agent",
@@ -186,16 +196,6 @@ export const PROJECTS: Project[] = [
     },
     tech: ["Python", "cryptography", "CustomTkinter", "Mypy", "GitHub Actions"],
     url: "https://github.com/shim369/Python-Encryption-Tool",
-  },
-  {
-    title: "Nextjs-TypeScript-AspNetCore-Todo-App",
-    category: { ja: "Webアプリ", en: "Web app" },
-    summary: {
-      ja: "Next.js（TypeScript）のフロントエンドと ASP.NET Core（MVC）のバックエンドを分離したフルスタックの Todo アプリ。データは SQLite に保存します。",
-      en: "A full-stack Todo app with a Next.js (TypeScript) frontend decoupled from an ASP.NET Core (MVC) backend, storing its data in SQLite.",
-    },
-    tech: ["TypeScript", "Next.js", "C#", "ASP.NET Core", "SQLite"],
-    url: "https://github.com/shim369/Nextjs-TypeScript-AspNetCore-Todo-App",
   },
 ];
 
