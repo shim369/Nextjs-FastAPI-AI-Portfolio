@@ -421,27 +421,77 @@
 
   // スマホでは画面下から出るシートにする
   @include down(modal) {
+    // iOS Safari でも中身がつぶれないよう、高さを決めて flex で縦に積む
     dialog#dom-modal {
-      width: 100vw;
-      max-width: 100vw;
-      max-height: 92vh;
-      margin: auto 0 0;
+      position: fixed;
+      inset: auto 0 0 0;
+      margin: 0;
+      width: 100%;
+      max-width: none;
+      // 上に 5% だけ背景を見せる
+      height: 95vh;
+      height: 95dvh;
+      max-height: none;
       box-shadow: none;
       border-width: 1.5px 0 0;
+
+      &[open] {
+        display: flex;
+        flex-direction: column;
+        animation: dm-sheet-in .4s var(--ease);
+      }
+
+      &.closing {
+        animation: dm-sheet-out .28s var(--ease) forwards;
+      }
     }
 
-    @keyframes dm-in {
+    // @media の中で dm-in を上書きせず、シート専用の名前にする
+    @keyframes dm-sheet-in {
       from {
-        translate: 0 100%;
+        transform: translateY(100%);
+      }
+    }
+
+    @keyframes dm-sheet-out {
+      to {
+        transform: translateY(100%);
       }
     }
 
     .dm-top {
-      padding: 22px 20px 18px;
+      flex: none;
+      gap: 14px;
+      padding: 18px 20px 16px;
+    }
+
+    .dm-head {
+      h2 {
+        margin: 10px 0 6px;
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+    }
+
+    .dm-close {
+      width: 40px;
+      height: 40px;
     }
 
     .dm-count {
+      flex: none;
       padding: 10px 20px;
+    }
+
+    .dm-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .dm-list {
