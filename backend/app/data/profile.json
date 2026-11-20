@@ -699,13 +699,17 @@
     },
     {
       "title": "Gatsby-TypeScript-Threejs-MicroCMS-Site",
-      "summary": "Jamstack サイト「GATSBY BASE」。Gatsby 5 とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。microCMS のデータを GraphQL のデータ層に取り込み、File System Route API で記事ページを自動生成。ヒーローは Three.js。 Vercel で公開（https://gatsbybase.vercel.app）。",
+      "summary": "Jamstack サイト「GATSBY BASE」。Gatsby 5.16・React 19・TypeScript 6・Three.js（r187）とヘッドレスCMS（microCMS）で構築したポートフォリオ兼ブログ。記事の更新の届け方は SSG。microCMS のデータを gatsby-source-microcms で GraphQL のデータ層に取り込み、File System Route API で記事ページを自動生成する（GraphQL Typegen で型を生成）。記事を公開すると microCMS の Webhook から Vercel の Deploy Hook が呼ばれ、再ビルドされる。宇宙をテーマにしたデザインで、テクスチャを貼った惑星がページの背後に浮かび、スクロールに合わせて位置と大きさが変わる。姉妹サイト（Astro・Next.js・Nuxt・SvelteKit 版）はラベル付きの衛星として惑星を周回する。Three.js は初回表示の後に別チャンクで読み込む。スマホのメニューは Popover API、読書の進捗バーは CSS のスクロールタイムライン（animation-timeline: scroll()）で作り、JavaScript を減らしている。お問い合わせは React 19 の useActionState で入力チェックし、Vercel Functions（Web 標準の Request/Response）と Nodemailer で送信、reCAPTCHA v3 にも対応。prefers-reduced-motion・キーボード操作・aria-current に対応。Vercel で公開（https://gatsbybase.vercel.app）。",
       "technologies": [
         "Gatsby",
+        "React",
         "TypeScript",
         "Three.js",
         "GraphQL",
         "microCMS",
+        "Sass",
+        "Nodemailer",
+        "reCAPTCHA v3",
         "Vercel"
       ],
       "url": "https://github.com/shim369/Gatsby-TypeScript-Threejs-MicroCMS-Site",

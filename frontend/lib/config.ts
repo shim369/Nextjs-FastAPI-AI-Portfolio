@@ -363,10 +363,10 @@ export const JAMSTACK: JamSite[] = [
   {
     name: "GATSBY BASE", fw: "Gatsby 5", render: "SSG", repo: "Gatsby-TypeScript-Threejs-MicroCMS-Site",
     demo: "https://gatsbybase.vercel.app", img: "gatsby", size: [1440, 647],
-    tech: ["Gatsby 5", "TypeScript", "Three.js", "GraphQL"],
+    tech: ["Gatsby 5", "React 19", "Three.js", "GraphQL", "microCMS"],
     note: {
-      ja: "microCMS のデータを GraphQL のデータ層に取り込み、File System Route API で記事ページを自動生成。ヒーローは Three.js。",
-      en: "microCMS data is pulled into Gatsby's GraphQL data layer, and post pages are generated with the File System Route API. The hero uses Three.js.",
+      ja: "microCMS のデータを GraphQL のデータ層に取り込み、File System Route API で記事ページを自動生成。Three.js の惑星がスクロールに合わせて動き、姉妹サイトが衛星として周回する。",
+      en: "microCMS data is pulled into Gatsby's GraphQL data layer, and post pages are generated with the File System Route API. A Three.js planet moves as you scroll, with the sister sites orbiting it as satellites.",
     },
   },
 ];
