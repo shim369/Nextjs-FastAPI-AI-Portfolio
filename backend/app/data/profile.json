@@ -621,7 +621,7 @@
     },
     {
       "title": "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
-      "summary": "Jamstack サイト「Nuxt Base」。Nuxt 4（Vue 3・TypeScript）とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSR。Nuxt の Server API（/api/blogs）を間に挟み、microCMS の APIキーをブラウザに出さない構成。Nuxt 4 の app/ ディレクトリ、shared/ に置いた app とサーバー共通の型、型付きの useFetch を使う。ヒーローは GSAP ScrollTrigger で、ローディングの文字を一筆ずつなぞったあと、マスクが拡大して中身が現れる。スクロールに合わせた文字・画像の出現、カスタムカーソル、マグネットボタン、prefers-reduced-motion への対応も備える。お問い合わせは自前のフォーム（vee-validate・reCAPTCHA v3・Nodemailer）で、reCAPTCHA はブラウザ側だけのプラグインで読み込み、お問い合わせとフッターは遅延 hydration。Vercel で公開（https://nuxtbase-gsap.vercel.app）。",
+      "summary": "Jamstack サイト「NUXT BASE」。Nuxt 4（Vue 3・TypeScript）とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSR。Nuxt の Server API（/api/blogs）を間に挟み、microCMS の APIキーをブラウザに出さない構成。Nuxt 4 の app/ ディレクトリ、shared/ に置いた app とサーバー共通の型、型付きの useFetch を使う。ヒーローは GSAP ScrollTrigger で、ローディングの文字を一筆ずつなぞったあと、マスクが拡大して中身が現れる。スクロールに合わせた文字・画像の出現、カスタムカーソル、マグネットボタン、prefers-reduced-motion への対応も備える。お問い合わせは自前のフォーム（vee-validate・reCAPTCHA v3・Nodemailer）で、reCAPTCHA はブラウザ側だけのプラグインで読み込み、お問い合わせとフッターは遅延 hydration。Vercel で公開（https://nuxtbase-gsap.vercel.app）。",
       "technologies": [
         "Nuxt",
         "Vue",
@@ -640,7 +640,7 @@
     },
     {
       "title": "Astro-MicroCMS-Site",
-      "summary": "Jamstack サイト「Astro Base」。Astro 7 とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。Content Layer で microCMS の記事をビルド時にコンテンツコレクションへ取り込み、zod のスキーマで検証して静的HTMLとして書き出す。astro:assets で microCMS の画像とローカル画像を WebP に変換して srcset 付きで出力し、ClientRouter（View Transitions）で再読み込みなしにページを切り替え、一覧のカード画像が記事の見出し画像へつながるように動く。astro:env で環境変数を型付きで検証し、Fonts API でフォントをサイト自身から配信し、prefetch でリンクにホバーした時点で次のページを読み込み始める。UI フレームワークは使わず素の JavaScript で、GSAP（ScrollTrigger）はトップページだけで読み込む。お問い合わせは Vercel Functions と nodemailer で送信し、reCAPTCHA v3 に対応。Vercel で公開（https://astrobase.vercel.app）。",
+      "summary": "Jamstack サイト「ASTRO BASE」。Astro 7 とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。Content Layer で microCMS の記事をビルド時にコンテンツコレクションへ取り込み、zod のスキーマで検証して静的HTMLとして書き出す。astro:assets で microCMS の画像とローカル画像を WebP に変換して srcset 付きで出力し、ClientRouter（View Transitions）で再読み込みなしにページを切り替え、一覧のカード画像が記事の見出し画像へつながるように動く。astro:env で環境変数を型付きで検証し、Fonts API でフォントをサイト自身から配信し、prefetch でリンクにホバーした時点で次のページを読み込み始める。UI フレームワークは使わず素の JavaScript で、GSAP（ScrollTrigger）はトップページだけで読み込む。お問い合わせは Vercel Functions と nodemailer で送信し、reCAPTCHA v3 に対応。Vercel で公開（https://astrobase.vercel.app）。",
       "technologies": [
         "Astro",
         "TypeScript",
@@ -660,7 +660,7 @@
     },
     {
       "title": "SvelteKit-TypeScript-MicroCMS-Site",
-      "summary": "Jamstack サイト「Svelte Base」。SvelteKit とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。+page.server.ts でデータを取得し、prerender でビルド時にページを生成。APIキーは $env/static/private から読む。 Vercel で公開（https://sveltebase-phi.vercel.app）。",
+      "summary": "Jamstack サイト「SVELTE BASE」。SvelteKit とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。+page.server.ts でデータを取得し、prerender でビルド時にページを生成。APIキーは $env/static/private から読む。 Vercel で公開（https://sveltebase-phi.vercel.app）。",
       "technologies": [
         "SvelteKit",
         "TypeScript",

@@ -325,7 +325,7 @@ export const SHORT_SKILL_NAMES: Record<string, string> = {
 // 同じ microCMS を、フレームワークを変えて組み上げた Jamstack サイト
 export const JAMSTACK: JamSite[] = [
   {
-    name: "Nuxt Base", fw: "Nuxt 4", render: "SSR", repo: "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
+    name: "NUXT BASE", fw: "Nuxt 4", render: "SSR", repo: "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
     demo: "https://nuxtbase-gsap.vercel.app", img: "nuxt", size: [1440, 647],
     tech: ["Nuxt 4", "TypeScript", "GSAP", "Nodemailer", "reCAPTCHA v3"],
     note: {
@@ -334,7 +334,7 @@ export const JAMSTACK: JamSite[] = [
     },
   },
   {
-    name: "Astro Base", fw: "Astro 7", render: "SSG", repo: "Astro-MicroCMS-Site",
+    name: "ASTRO BASE", fw: "Astro 7", render: "SSG", repo: "Astro-MicroCMS-Site",
     demo: "https://astrobase.vercel.app", img: "astro", size: [1440, 647],
     tech: ["Astro 7", "Content Layer", "View Transitions", "GSAP", "microCMS"],
     note: {
@@ -343,7 +343,7 @@ export const JAMSTACK: JamSite[] = [
     },
   },
   {
-    name: "Svelte Base", fw: "SvelteKit", render: "SSG", repo: "SvelteKit-TypeScript-MicroCMS-Site",
+    name: "SVELTE BASE", fw: "SvelteKit", render: "SSG", repo: "SvelteKit-TypeScript-MicroCMS-Site",
     demo: "https://sveltebase-phi.vercel.app", img: "sveltekit", size: [1440, 647],
     tech: ["SvelteKit", "TypeScript", "microCMS"],
     note: {
