@@ -637,10 +637,18 @@
     },
     {
       "title": "Astro-MicroCMS-Site",
-      "summary": "Jamstack サイト「Astro Base」。Astro とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。記事をビルド時に取得して静的HTMLとして書き出す最小構成。JavaScriptをほとんど送らないので表示が速い。 Vercel で公開（https://astrobase.vercel.app）。",
+      "summary": "Jamstack サイト「Astro Base」。Astro 7 とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。Content Layer で microCMS の記事をビルド時にコンテンツコレクションへ取り込み、zod のスキーマで検証して静的HTMLとして書き出す。astro:assets で microCMS の画像とローカル画像を WebP に変換して srcset 付きで出力し、ClientRouter（View Transitions）で再読み込みなしにページを切り替え、一覧のカード画像が記事の見出し画像へつながるように動く。astro:env で環境変数を型付きで検証し、Fonts API でフォントをサイト自身から配信し、prefetch でリンクにホバーした時点で次のページを読み込み始める。UI フレームワークは使わず素の JavaScript で、GSAP（ScrollTrigger）はトップページだけで読み込む。お問い合わせは Vercel Functions と nodemailer で送信し、reCAPTCHA v3 に対応。Vercel で公開（https://astrobase.vercel.app）。",
       "technologies": [
         "Astro",
+        "TypeScript",
         "microCMS",
+        "Content Layer",
+        "astro:assets",
+        "View Transitions",
+        "GSAP",
+        "Sass",
+        "nodemailer",
+        "reCAPTCHA v3",
         "Vercel"
       ],
       "url": "https://github.com/shim369/Astro-MicroCMS-Site",

@@ -334,12 +334,12 @@ export const JAMSTACK: JamSite[] = [
     },
   },
   {
-    name: "Astro Base", fw: "Astro", render: "SSG", repo: "Astro-MicroCMS-Site",
+    name: "Astro Base", fw: "Astro 7", render: "SSG", repo: "Astro-MicroCMS-Site",
     demo: "https://astrobase.vercel.app", img: "astro", size: [1440, 647],
-    tech: ["Astro", "microCMS", "Vercel"],
+    tech: ["Astro 7", "Content Layer", "View Transitions", "GSAP", "microCMS"],
     note: {
-      ja: "記事をビルド時に取得して静的HTMLとして書き出す最小構成。JavaScriptをほとんど送らないので表示が速い。",
-      en: "A minimal setup that fetches posts at build time and writes them out as static HTML. Almost no JavaScript is shipped, so pages load fast.",
+      ja: "Content Layer で microCMS の記事をビルド時に取り込み、zod で検証して静的HTMLに。astro:assets で画像を WebP に変換し、ClientRouter で一覧の画像が記事の見出し画像へつながる。",
+      en: "Posts are loaded from microCMS into a Content Layer collection at build time, validated with zod and rendered as static HTML. astro:assets converts images to WebP, and the ClientRouter carries each card image into the article.",
     },
   },
   {
