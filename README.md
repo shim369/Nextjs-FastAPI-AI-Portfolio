@@ -16,7 +16,7 @@ The portfolio site of Shinpei Ohtani. One page brings together his background, s
 | Hero | Signature, headline and a question bar for the AI, beside an ink plum branch that grows and blossoms; a band of three things I do |
 | Skills | Python as the featured panel with "what I do with Python" (four areas; each opens a dialog of matching projects); the rest as a four-column "foundations" grid |
 | Works | Three featured projects with a diagram, why I built them and what I worked on, followed by the other projects |
-| Jamstack | A black-lacquer band comparing six microCMS sites built with different frameworks, switched with View Transitions |
+| Jamstack | A black-lacquer band comparing five microCMS sites built with different frameworks, switched with View Transitions |
 | Blog | The latest three posts from the TECH BLOG (fetched from microCMS, ISR) |
 | Architecture | Diagram and design notes for this site |
 | Contact | Contact form protected by reCAPTCHA v3 |

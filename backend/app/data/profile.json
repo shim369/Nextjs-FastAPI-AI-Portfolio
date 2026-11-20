@@ -673,31 +673,23 @@
     },
     {
       "title": "Nextjs-TypeScript-MicroCMS-Site2",
-      "summary": "Jamstack サイト「NEXT TECH」。Next.js App Router とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は ISR。コーポレートサイト。記事は ISR で配信し、microCMS で更新すると最大60秒でサイトに反映される。 Vercel で公開（https://next-tech-trigger.vercel.app）。",
+      "summary": "Jamstack サイト「NEXT BASE」。Next.js 16（App Router）・React 19・TypeScript とヘッドレスCMS（microCMS）で構築したコーポレートサイト。記事の更新の届け方は ISR（オンデマンドの再検証）。microCMS の記事は Cache Components の \"use cache\"・cacheLife('hours')・cacheTag('blogs') で1時間キャッシュし、microCMS の Webhook から /api/revalidate を呼んで revalidateTag('blogs') でキャッシュを作り直すので、記事を更新するとすぐにサイトへ反映される。既存の記事ページはビルド時に用意し、新しい記事は最初のアクセスで生成する。お問い合わせは Server Action と nodemailer で送信し、reCAPTCHA v3 に対応。Jest と Testing Library のテストを備える。Vercel で公開（https://next-tech-trigger.vercel.app）。",
       "technologies": [
         "Next.js",
-        "App Router",
+        "React",
         "TypeScript",
+        "App Router",
+        "Cache Components",
+        "Server Actions",
         "microCMS",
+        "Sass",
+        "nodemailer",
+        "reCAPTCHA v3",
+        "Jest",
         "Vercel"
       ],
       "url": "https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site2",
       "demo": "https://next-tech-trigger.vercel.app",
-      "category": "Jamstack"
-    },
-    {
-      "title": "Nextjs-TypeScript-MicroCMS-Site",
-      "summary": "Jamstack サイト「NEXT BASE」。Next.js Pages Router とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG + ISR。Pages Router の getStaticProps と ISR で記事ページを生成。前後の記事リンクまでビルド時に用意する。 Vercel で公開（https://nextbase-gsap.vercel.app）。",
-      "technologies": [
-        "Next.js",
-        "Pages Router",
-        "TypeScript",
-        "GSAP",
-        "microCMS",
-        "Vercel"
-      ],
-      "url": "https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site",
-      "demo": "https://nextbase-gsap.vercel.app",
       "category": "Jamstack"
     },
     {
@@ -722,6 +714,6 @@
     "note": "お問い合わせはお問い合わせフォームまたは GitHub からお願いします。"
   },
   "site": {
-    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は、技術ブログ「TECH BLOG」（Astro + microCMS、https://astro-microcms-blogs.vercel.app/）の最新記事を、Next.js のサーバー側で microCMS の API から取得し、ISR（最長60秒）で表示しています。ページには、microCMS と6つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js App Router・Next.js Pages Router・Gatsby）で作った Jamstack サイトを比べる欄もあります。"
+    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は、技術ブログ「TECH BLOG」（Astro + microCMS、https://astro-microcms-blogs.vercel.app/）の最新記事を、Next.js のサーバー側で microCMS の API から取得し、ISR（最長60秒）で表示しています。ページには、microCMS と5つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js・Gatsby）で作った Jamstack サイトを比べる欄もあります。"
   }
 }
