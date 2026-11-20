@@ -325,12 +325,12 @@ export const SHORT_SKILL_NAMES: Record<string, string> = {
 // 同じ microCMS を、フレームワークを変えて組み上げた Jamstack サイト
 export const JAMSTACK: JamSite[] = [
   {
-    name: "Nuxt Base", fw: "Nuxt 3", render: "SSR", repo: "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
+    name: "Nuxt Base", fw: "Nuxt 4", render: "SSR", repo: "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
     demo: "https://nuxtbase-gsap.vercel.app", img: "nuxt", size: [1440, 647],
-    tech: ["Nuxt 3", "TypeScript", "GSAP", "AOS", "reCAPTCHA v3"],
+    tech: ["Nuxt 4", "TypeScript", "GSAP", "Nodemailer", "reCAPTCHA v3"],
     note: {
-      ja: "Nuxt の Server API を間に挟み、microCMS の APIキーをブラウザに出さない構成。GSAP と AOS のスクロール演出つき。",
-      en: "Nuxt's server API sits in between so the microCMS API key never reaches the browser. Scroll effects with GSAP and AOS.",
+      ja: "Nuxt の Server API を間に挟み、microCMS の APIキーをブラウザに出さない構成。GSAP ScrollTrigger でマスクが広がって現れるヒーローと、遅延 hydration のお問い合わせフォーム。",
+      en: "Nuxt's server API sits in between so the microCMS API key never reaches the browser. A GSAP ScrollTrigger hero revealed by a zooming mask, and a lazily hydrated contact form.",
     },
   },
   {

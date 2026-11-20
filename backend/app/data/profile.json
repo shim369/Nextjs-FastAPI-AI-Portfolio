@@ -621,13 +621,16 @@
     },
     {
       "title": "Nuxtjs-TypeScript-Gsap-MicroCMS-Site",
-      "summary": "Jamstack サイト「Nuxt Base」。Nuxt 3 とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSR。Nuxt の Server API を間に挟み、microCMS の APIキーをブラウザに出さない構成。GSAP と AOS のスクロール演出つき。 Vercel で公開（https://nuxtbase-gsap.vercel.app）。",
+      "summary": "Jamstack サイト「Nuxt Base」。Nuxt 4（Vue 3・TypeScript）とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSR。Nuxt の Server API（/api/blogs）を間に挟み、microCMS の APIキーをブラウザに出さない構成。Nuxt 4 の app/ ディレクトリ、shared/ に置いた app とサーバー共通の型、型付きの useFetch を使う。ヒーローは GSAP ScrollTrigger で、ローディングの文字を一筆ずつなぞったあと、マスクが拡大して中身が現れる。スクロールに合わせた文字・画像の出現、カスタムカーソル、マグネットボタン、prefers-reduced-motion への対応も備える。お問い合わせは自前のフォーム（vee-validate・reCAPTCHA v3・Nodemailer）で、reCAPTCHA はブラウザ側だけのプラグインで読み込み、お問い合わせとフッターは遅延 hydration。Vercel で公開（https://nuxtbase-gsap.vercel.app）。",
       "technologies": [
         "Nuxt",
+        "Vue",
         "TypeScript",
         "microCMS",
         "GSAP",
-        "AOS",
+        "Sass",
+        "vee-validate",
+        "Nodemailer",
         "reCAPTCHA v3",
         "Vercel"
       ],
