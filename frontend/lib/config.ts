@@ -343,12 +343,12 @@ export const JAMSTACK: JamSite[] = [
     },
   },
   {
-    name: "SVELTE BASE", fw: "SvelteKit", render: "SSG", repo: "SvelteKit-TypeScript-MicroCMS-Site",
-    demo: "https://sveltebase-phi.vercel.app", img: "sveltekit", size: [1440, 647],
-    tech: ["SvelteKit", "TypeScript", "microCMS"],
+    name: "SVELTE BASE", fw: "SvelteKit 3", render: "SSG", repo: "SvelteKit-TypeScript-MicroCMS-Site",
+    demo: "https://sveltebase-phi.vercel.app", img: "sveltekit", size: [1400, 694],
+    tech: ["SvelteKit 3", "Svelte 5", "TypeScript", "felte", "microCMS"],
     note: {
-      ja: "+page.server.ts でデータを取得し、prerender でビルド時にページを生成。APIキーは $env/static/private から読む。",
-      en: "Data is loaded in +page.server.ts and pages are generated at build time with prerender. The API key is read from $env/static/private.",
+      ja: "+page.server.ts で記事を取得し、prerender でビルド時に静的HTMLに。山登りに見立てたデザインで、スクロールに合わせて山へズームするヒーローと高度計を備える。",
+      en: "Posts are loaded in +page.server.ts and prerendered as static HTML at build time. Designed as a mountain climb, with a scroll-driven hero that zooms into the mountain and an altimeter.",
     },
   },
   {

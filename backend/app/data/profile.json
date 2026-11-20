@@ -660,11 +660,16 @@
     },
     {
       "title": "SvelteKit-TypeScript-MicroCMS-Site",
-      "summary": "Jamstack サイト「SVELTE BASE」。SvelteKit とヘッドレスCMS（microCMS）で構築。記事の更新の届け方は SSG。+page.server.ts でデータを取得し、prerender でビルド時にページを生成。APIキーは $env/static/private から読む。 Vercel で公開（https://sveltebase-phi.vercel.app）。",
+      "summary": "Jamstack サイト「SVELTE BASE」。SvelteKit 3・Svelte 5（Runes）・TypeScript 6 とヘッドレスCMS（microCMS）で構築したポートフォリオ兼ブログ。記事の更新の届け方は SSG。トップページと記事ページは +page.server.ts で microCMS から記事を取得し、prerender でビルド時に静的HTMLとして書き出す。環境変数は src/env.ts で定義・検証し、$app/env/private から読む。ページは山登りに見立てたデザインで、ふもと（ヒーロー）から山頂（お問い合わせ）へスクロールで登る。ヒーローはスクロールに合わせて山へズームし、タイトルが割れて霧の中へ上がっていく。山の稜線の形に上がるローディング、現在地を示す高度計、カテゴリで絞り込めるスキル一覧を備える。お問い合わせは felte の入力チェック・reCAPTCHA v3・Nodemailer で送信する。キーボード操作・aria 属性・prefers-reduced-motion に対応。Vercel で公開（https://sveltebase-phi.vercel.app）。",
       "technologies": [
         "SvelteKit",
+        "Svelte",
         "TypeScript",
         "microCMS",
+        "Sass",
+        "felte",
+        "Nodemailer",
+        "reCAPTCHA v3",
         "Vercel"
       ],
       "url": "https://github.com/shim369/SvelteKit-TypeScript-MicroCMS-Site",

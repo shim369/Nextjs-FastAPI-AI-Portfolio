@@ -31,7 +31,7 @@ Shinpei Ohtani の総合ポートフォリオサイトです。経歴・スキ�
 |---|---|---|---|
 | NUXT BASE | Nuxt 4 | SSR | [Nuxtjs-TypeScript-Gsap-MicroCMS-Site](https://github.com/shim369/Nuxtjs-TypeScript-Gsap-MicroCMS-Site) |
 | ASTRO BASE | Astro 7 | SSG | [Astro-MicroCMS-Site](https://github.com/shim369/Astro-MicroCMS-Site) |
-| SVELTE BASE | SvelteKit | SSG | [SvelteKit-TypeScript-MicroCMS-Site](https://github.com/shim369/SvelteKit-TypeScript-MicroCMS-Site) |
+| SVELTE BASE | SvelteKit 3 | SSG | [SvelteKit-TypeScript-MicroCMS-Site](https://github.com/shim369/SvelteKit-TypeScript-MicroCMS-Site) |
 | NEXT BASE | Next.js 16 | ISR（Webhook で再検証） | [Nextjs-TypeScript-MicroCMS-Site2](https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site2) |
 | GATSBY BASE | Gatsby 5 | SSG | [Gatsby-TypeScript-Threejs-MicroCMS-Site](https://github.com/shim369/Gatsby-TypeScript-Threejs-MicroCMS-Site) |
 
