@@ -677,8 +677,8 @@
       "category": "Jamstack"
     },
     {
-      "title": "Nextjs-TypeScript-MicroCMS-Site2",
-      "summary": "Jamstack サイト「NEXT BASE」。Next.js 16（App Router）・React 19・TypeScript とヘッドレスCMS（microCMS）で構築したコーポレートサイト。記事の更新の届け方は ISR（オンデマンドの再検証）。microCMS の記事は Cache Components の \"use cache\"・cacheLife('hours')・cacheTag('blogs') で1時間キャッシュし、microCMS の Webhook から /api/revalidate を呼んで revalidateTag('blogs') でキャッシュを作り直すので、記事を更新するとすぐにサイトへ反映される。既存の記事ページはビルド時に用意し、新しい記事は最初のアクセスで生成する。お問い合わせは Server Action と nodemailer で送信し、reCAPTCHA v3 に対応。Jest と Testing Library のテストを備える。Vercel で公開（https://next-tech-trigger.vercel.app）。",
+      "title": "Nextjs-TypeScript-MicroCMS-Site",
+      "summary": "Jamstack サイト「NEXT BASE」。Next.js 16（App Router・Turbopack）・React 19・TypeScript とヘッドレスCMS（microCMS）・GSAP で構築したポートフォリオ兼ブログ。もとは Pages Router で作ったサイトを App Router に移行し、バージョンも最新にした。記事の更新の届け方は ISR（オンデマンドの再検証）。microCMS の記事は Cache Components の \"use cache\"・cacheLife('minutes')・cacheTag でキャッシュしてページを静的に書き出し、microCMS の Webhook から /api/revalidate（署名を HMAC で検証）を呼んで revalidateTag でキャッシュを作り直すので、記事を更新するとすぐにサイトへ反映される（Webhook がなくても1分ほどで更新）。GSAP の ScrollTrigger と @gsap/react の useGSAP で、ローディング・見出しの文字ごとのアニメーション・ブログの横スクロール・パララックスを付けている。ブログはカテゴリで絞り込める記事一覧と、目次と読了時間を自動で出す記事ページを備える。お問い合わせは useActionState と Server Action、nodemailer（Gmail）で送信し、reCAPTCHA v3 に対応。Metadata API・next/og で生成する OG 画像・sitemap.xml・robots.txt、React Compiler・型付きルート・next/font・next/image を使う。スタイルは SCSS の partial に分けている。Vercel で公開（https://nextbase-gsap.vercel.app）。",
       "technologies": [
         "Next.js",
         "React",
@@ -686,15 +686,15 @@
         "App Router",
         "Cache Components",
         "Server Actions",
+        "GSAP",
         "microCMS",
         "Sass",
         "nodemailer",
         "reCAPTCHA v3",
-        "Jest",
         "Vercel"
       ],
-      "url": "https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site2",
-      "demo": "https://next-tech-trigger.vercel.app",
+      "url": "https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site",
+      "demo": "https://nextbase-gsap.vercel.app",
       "category": "Jamstack"
     },
     {

@@ -352,12 +352,12 @@ export const JAMSTACK: JamSite[] = [
     },
   },
   {
-    name: "NEXT BASE", fw: "Next.js 16", render: "ISR", repo: "Nextjs-TypeScript-MicroCMS-Site2",
-    demo: "https://next-tech-trigger.vercel.app", img: "nextjs-app", size: [1440, 637],
-    tech: ["Next.js 16", "App Router", "Cache Components", "Server Actions", "microCMS"],
+    name: "NEXT BASE", fw: "Next.js 16", render: "ISR", repo: "Nextjs-TypeScript-MicroCMS-Site",
+    demo: "https://nextbase-gsap.vercel.app", img: "nextjs", size: [1440, 647],
+    tech: ["Next.js 16", "App Router", "Cache Components", "GSAP", "microCMS"],
     note: {
-      ja: "コーポレートサイト。記事は Cache Components（\"use cache\"）で1時間キャッシュし、microCMS の Webhook でキャッシュを作り直してすぐに反映。お問い合わせは Server Action で送信。",
-      en: "A corporate site. Posts are cached for an hour with Cache Components (\"use cache\"), and a microCMS webhook rebuilds the cache so edits go live right away. The contact form is sent through a Server Action.",
+      ja: "記事は Cache Components（\"use cache\"）でキャッシュして静的に配信し、microCMS の Webhook で revalidateTag を呼んですぐに反映。GSAP の ScrollTrigger でスクロールアニメーションを付け、お問い合わせは Server Action で送信。",
+      en: "Posts are cached with Cache Components (\"use cache\") and served as static pages, and a microCMS webhook calls revalidateTag so edits go live right away. Scroll animations use GSAP ScrollTrigger, and the contact form is sent through a Server Action.",
     },
   },
   {

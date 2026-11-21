@@ -32,7 +32,7 @@ All five use the same microCMS (`blogs` endpoint), so you can compare how a cont
 | NUXT BASE | Nuxt 4 | SSR | [Nuxtjs-TypeScript-Gsap-MicroCMS-Site](https://github.com/shim369/Nuxtjs-TypeScript-Gsap-MicroCMS-Site) |
 | ASTRO BASE | Astro 7 | SSG | [Astro-MicroCMS-Site](https://github.com/shim369/Astro-MicroCMS-Site) |
 | SVELTE BASE | SvelteKit 3 | SSG | [SvelteKit-TypeScript-MicroCMS-Site](https://github.com/shim369/SvelteKit-TypeScript-MicroCMS-Site) |
-| NEXT BASE | Next.js 16 | ISR (webhook revalidation) | [Nextjs-TypeScript-MicroCMS-Site2](https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site2) |
+| NEXT BASE | Next.js 16 | ISR (webhook revalidation) | [Nextjs-TypeScript-MicroCMS-Site](https://github.com/shim369/Nextjs-TypeScript-MicroCMS-Site) |
 | GATSBY BASE | Gatsby 5 | SSG | [Gatsby-TypeScript-Threejs-MicroCMS-Site](https://github.com/shim369/Gatsby-TypeScript-Threejs-MicroCMS-Site) |
 
 The list and copy live in `JAMSTACK` in `frontend/lib/config.ts`, the screenshots (each demo's first view) in `frontend/public/images/jamstack/`, and the AI chat data in `backend/app/data/profile.json`. Keep all three in sync when a site changes.
