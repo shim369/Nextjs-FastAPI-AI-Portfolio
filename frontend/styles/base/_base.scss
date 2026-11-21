@@ -44,6 +44,7 @@ $washi-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     font: 400 15px/1.9 var(--go);
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "palt" 1;
+    word-break: break-all;
   }
 
   a {
