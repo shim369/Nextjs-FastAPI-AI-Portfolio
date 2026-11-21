@@ -42,7 +42,10 @@ export default function Works() {
                 <FeatureArt title={f.title} lang={lang} />
               </figure>
               <div className="ft-txt">
-                <span className="cat">{pick(p.category)}</span>
+                <span className="cat">
+                  {pick(p.category)}
+                  {f.atWork && <b>{t("works.atWork")}</b>}
+                </span>
                 <h3>{p.title.replace(/^Python-/, "")}</h3>
                 <p className="why">{pick(f.why)}</p>
                 <ol className="pts">

@@ -118,12 +118,12 @@ export const PYTHON_LIBRARIES = [
 export const PROJECTS: Project[] = [
   {
     title: "Python-Web-Analyzer",
-    category: { ja: "調査ツール", en: "Analysis tool" },
+    category: { ja: "業務ツール", en: "Work tool" },
     summary: {
       ja: "Excelのドメイン一覧からSSL対応・CMS・ページ数を並列クロールで解析し、評価を付けるStreamlitアプリ。状態をSQLiteに保存し、強制終了後も復旧します。",
       en: "A Streamlit app that crawls a list of domains in parallel to detect SSL, CMS and page count, then rates each site. State is saved in SQLite.",
     },
-    tech: ["Python", "Streamlit", "SQLite", "Playwright"],
+    tech: ["Python", "Streamlit", "SQLite", "Playwright", "HTTPX", "Gemini API"],
     url: "https://github.com/shim369/Python-Web-Analyzer",
   },
   {
@@ -210,8 +210,31 @@ export const PROJECTS: Project[] = [
 ];
 
 // 制作欄の代表作：作った理由と工夫した点（profile.json の記述をもとに書く）。図は components/svg/FeatureArt.tsx
-export type Featured = { title: string; why: Localized; points: Localized[] };
+/** atWork：実務で使っている制作物に「実務で使用」の札を付ける */
+export type Featured = { title: string; why: Localized; points: Localized[]; atWork?: boolean };
 export const FEATURED: Featured[] = [
+  {
+    title: "Python-Web-Analyzer",
+    atWork: true,
+    why: {
+      ja: "リニューアルの提案先を決めるために、多くのサイトを1件ずつ開いて、SSL・CMS・ページ数を調べていました。この作業をExcelのドメイン一覧から自動で調べ、評価まで付けるツールにして、実務で使っています。",
+      en: "To choose which companies to pitch a site renewal to, I used to open site after site and check its SSL, CMS and page count by hand. I turned that into a tool that works through an Excel list of domains and rates each site, and I use it at work.",
+    },
+    points: [
+      {
+        ja: "ThreadPoolExecutor で最大5並列に巡回。1件で失敗しても、ほかのドメインとジョブ全体は止めない",
+        en: "Crawls up to five domains in parallel with ThreadPoolExecutor. A failure on one domain stops neither the others nor the job",
+      },
+      {
+        ja: "結果は1件ごとに SQLite（WAL）へ保存し、強制終了しても次の起動で処理状態を復旧",
+        en: "Each result is saved to SQLite (WAL) as it finishes, so the next launch restores the job even after a forced quit",
+      },
+      {
+        ja: "ボット対策のブロックページ・移転案内・無限リンクを検知して「要確認」に回し、取り損ねは Gemini で補完",
+        en: "Bot-blocking pages, moved-site notices and infinite link traps are detected and flagged for review, and anything missed is filled in with Gemini",
+      },
+    ],
+  },
   {
     title: "Python-Health-Insight-Agent",
     why: {
@@ -251,24 +274,6 @@ export const FEATURED: Featured[] = [
       {
         ja: "固定シード・uv のロックファイル・Docker で、学習と結果の再現性を確保",
         en: "Fixed seeds, a uv lockfile and Docker keep training and results reproducible",
-      },
-    ],
-  },
-  {
-    title: "Python-Budget-Tracker-App",
-    why: {
-      ja: "詳細設計から結合テストまで、業務の開発工程を一人で通して練習するために作りました。機能より「設計どおりに作り、テストで確かめた」と言える状態を目標にしています。",
-      en: "I built it to practise a full development process on my own, from detailed design to integration testing. The goal was less about features and more about being able to say it was built to the design and verified by tests.",
-    },
-    points: [
-      {
-        ja: "設計書と、要件からテストまでたどれるトレーサビリティを整備",
-        en: "Design documents, with traceability from requirements through to tests",
-      },
-      { ja: "336件の単体・結合テストで、カバレッジ 99.9%", en: "336 unit and integration tests at 99.9% coverage" },
-      {
-        ja: "オフラインで動作し、日本語 / 英語の UI と CSV インポートに対応",
-        en: "Works offline, with a Japanese / English UI and CSV import",
       },
     ],
   },

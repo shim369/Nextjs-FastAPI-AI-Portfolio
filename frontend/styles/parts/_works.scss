@@ -58,12 +58,9 @@
       }
     }
 
-    // カバレッジの棒：画面に入ると左から伸びる
-    .cov {
-      transform-box: fill-box;
-      transform-origin: 0 50%;
-      transform: scaleX(0);
-      transition: transform 1.6s .5s var(--ease);
+    // Web-Analyzer の結果の行：画面に入ると1件ずつ確定していく（遅れは行ごとに style で指定）
+    .row {
+      opacity: 0;
     }
   }
 
@@ -76,8 +73,8 @@
       animation: draw 1.6s .8s var(--ease) forwards;
     }
 
-    .cov {
-      transform: scaleX(1);
+    .row {
+      animation: rowin .5s var(--ease) forwards;
     }
   }
 
@@ -93,10 +90,20 @@
     }
   }
 
-  // 動きを減らす設定：AI の線は描き終わった状態で見せる（デザイン案にない指定）
+  @keyframes rowin {
+    to {
+      opacity: 1;
+    }
+  }
+
+  // 動きを減らす設定：AI の線は描き終わった状態、結果の行はすべて出た状態で見せる
   @include reduced-motion {
     .ft-fig .trace.ai {
       stroke-dashoffset: 0;
+    }
+
+    .ft-fig .row {
+      opacity: 1;
     }
   }
 
@@ -119,6 +126,15 @@
         height: 6px;
         background: var(--shu);
         transform: rotate(45deg);
+      }
+
+      // 実務で使っている制作物の札
+      b {
+        font: 500 11px/1 var(--go);
+        letter-spacing: .08em;
+        color: var(--shu);
+        border: 1px solid var(--shu);
+        padding: 4px 7px;
       }
     }
 

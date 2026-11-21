@@ -2,11 +2,10 @@ import type { CSSProperties } from "react";
 import type { Lang } from "@/lib/messages";
 
 /*
- * 制作欄の代表作に添える図。仕組み（Health-Insight-Agent）・比べ方（Defect-Hunter-Game）・数字（Budget-Tracker-App）を表す。
- * 図はデザイン案の SVG のまま。文字だけ表示言語に合わせ、書体は next/font の CSS 変数（--mono / --min）で指定する
+ * 制作欄の代表作に添える図。処理の流れ（Web-Analyzer）・仕組み（Health-Insight-Agent）・比べ方（Defect-Hunter-Game）を表す。
+ * 図はデザイン案の SVG のまま。文字だけ表示言語に合わせ、書体は next/font の CSS 変数（--mono）で指定する
  */
 const MONO: CSSProperties = { fontFamily: "var(--mono)" };
-const MIN: CSSProperties = { fontFamily: "var(--min)" };
 const INK = "#1d1d1b";
 const PAPER = "#f7f7f4";
 const SHU = "#c23a2b";
@@ -110,47 +109,86 @@ function DefectArt({ lang }: { lang: Lang }) {
   );
 }
 
-const BUDGET: Labels<"tests" | "coverage" | "s0" | "s1" | "s2" | "s3"> = {
-  ja: { tests: "tests — 単体・結合", coverage: "coverage", s0: "要件", s1: "設計", s2: "実装", s3: "テスト" },
-  en: { tests: "tests — unit & integration", coverage: "coverage", s0: "Spec", s1: "Design", s2: "Build", s3: "Test" },
+const ANALYZER: Labels<"parallel" | "pages" | "rating" | "check" | "save"> = {
+  ja: { parallel: "5 並列", pages: "頁", rating: "評価", check: "要確認", save: "SQLite (WAL) に1件ずつ保存 → 強制終了しても復旧" },
+  en: { parallel: "5 parallel", pages: "Pg", rating: "Rate", check: "Check", save: "Saved one by one to SQLite (WAL) → survives a crash" },
 };
 
-function BudgetArt({ lang }: { lang: Lang }) {
-  const l = BUDGET[lang];
-  const steps = [l.s0, l.s1, l.s2, l.s3];
+// 入力（Excel のドメイン一覧）と、評価つきの結果の行。ドメインは架空の例
+const DOMAINS = ["a-shoji.jp", "b-kensetsu.jp", "c-clinic.jp", "d-hotel.com", "e-school.jp"];
+const RESULTS: [string, string, "x" | "check"][] = [
+  ["WP", "48", "x"],
+  ["—", "120+", "x"],
+  ["—", "0", "check"],
+  ["MT", "36+", "x"],
+  ["EC", "82", "x"],
+];
+const ROW_LINES = "M254 80h124M254 106h124M254 132h124M254 158h124M254 184h124";
+
+function AnalyzerArt({ lang }: { lang: Lang }) {
+  const l = ANALYZER[lang];
   return (
     <svg viewBox="0 0 400 300" focusable="false">
-      <g style={MIN} fill={INK}>
-        <text x="28" y="112" fontSize="96" fontWeight="800" letterSpacing="-4">
-          336
+      <g style={MONO} fontSize="10.5" fill={INK}>
+        {/* 入力：Excel のドメイン一覧（B列） */}
+        <rect x="22" y="26" width="128" height="190" fill={PAPER} stroke={INK} strokeWidth="1.2" />
+        <rect x="22" y="26" width="128" height="26" fill={INK} />
+        <text x="86" y="43" fill={PAPER} textAnchor="middle">
+          domains.xlsx
         </text>
-        <text x="32" y="136" style={MONO} fontSize="12" fill={NEZUMI}>
-          {l.tests}
+        <path d="M44 52v164" stroke="rgba(29,29,27,.18)" />
+        <text x="30" y="72" fill={NEZUMI}>
+          B
         </text>
-        <text x="372" y="262" textAnchor="end" fontSize="60" fontWeight="800" fill="none" stroke={INK} strokeWidth="1.3" letterSpacing="-2">
-          99.9%
-        </text>
-        <text x="372" y="284" textAnchor="end" style={MONO} fontSize="12" fill={NEZUMI}>
-          {l.coverage}
-        </text>
-        {/* カバレッジの棒（画面に入ると左から伸びる） */}
-        <rect x="32" y="172" width="336" height="6" fill="rgba(29,29,27,.12)" />
-        <rect className="cov" x="32" y="172" width="335.7" height="6" fill={SHU} />
-        {steps.map((name, i) => (
-          <text key={i} x={32 + i * 104} y="198" style={MONO} fontSize="10" fill={NEZUMI}>
-            {name}
-            {i < 3 ? "  →" : ""}
+        {DOMAINS.map((d, i) => (
+          <text key={d} x="52" y={72 + i * 26}>
+            {d}
           </text>
         ))}
+        <text x="52" y="202" fill={NEZUMI}>
+          …
+        </text>
+        <path d="M22 80h128M22 106h128M22 132h128M22 158h128M22 184h128" stroke="rgba(29,29,27,.12)" />
+
+        {/* 並列クロール（5本。1本だけ朱の破線が流れる） */}
+        <text x="203" y="40" textAnchor="middle" fill={NEZUMI}>
+          {l.parallel}
+        </text>
+        <path d="M156 68h96M156 94h96M156 146h96M156 172h96" stroke={INK} strokeWidth="1.2" />
+        <path className="flow" d="M156 120h96" stroke={SHU} strokeWidth="1.6" strokeDasharray="4 4" />
+        <path d="M246 64l6 4-6 4M246 90l6 4-6 4M246 116l6 4-6 4M246 142l6 4-6 4M246 168l6 4-6 4" fill="none" stroke={INK} strokeWidth="1.2" />
+
+        {/* 出力：評価つきの結果（画面に入ると1行ずつ確定していく）。列ごとに x をそろえる */}
+        <rect x="254" y="26" width="124" height="190" fill={PAPER} stroke={INK} strokeWidth="1.2" />
+        <g fill={NEZUMI}>
+          <text x="264" y="44">CMS</text>
+          <text x="298" y="44">{l.pages}</text>
+          <text x="334" y="44">{l.rating}</text>
+        </g>
+        <path d="M254 52h124" stroke={INK} strokeWidth="1.2" />
+        {RESULTS.map(([cms, pages, rating], i) => (
+          <g key={i} className="row" style={{ animationDelay: `${0.2 + i * 0.4}s` }} fill={rating === "check" ? SHU : INK}>
+            <text x="264" y={72 + i * 26}>{cms}</text>
+            <text x="298" y={72 + i * 26}>{pages}</text>
+            <text x="334" y={72 + i * 26}>{rating === "check" ? l.check : "×"}</text>
+          </g>
+        ))}
+        <path d={ROW_LINES} stroke="rgba(29,29,27,.12)" />
+
+        {/* 状態の保存 */}
+        <rect x="22" y="236" width="356" height="40" fill={INK} />
+        <text x="200" y="260" fill={PAPER} textAnchor="middle">
+          {l.save}
+        </text>
       </g>
     </svg>
   );
 }
 
 const ARTS: Record<string, (props: { lang: Lang }) => React.JSX.Element> = {
+  "Python-Web-Analyzer": AnalyzerArt,
   "Python-Health-Insight-Agent": AgentArt,
   "Python-Defect-Hunter-Game": DefectArt,
-  "Python-Budget-Tracker-App": BudgetArt,
 };
 
 export default function FeatureArt({ title, lang }: { title: string; lang: Lang }) {

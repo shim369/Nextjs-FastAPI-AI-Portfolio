@@ -490,12 +490,14 @@
     },
     {
       "title": "Python-Web-Analyzer",
-      "summary": "Excelのドメイン一覧から、SSL対応（常時SSL判定）・CMS・総ページ数などを並列クロールで自動解析し、ビジネス評価を付ける Streamlit 製アプリ。ThreadPoolExecutor による並列処理と排他制御、SQLite（WAL）による状態永続化と強制終了後の復旧、クローラーブロックやアクセス拒否ページの検知を備える。",
+      "summary": "Excelのドメイン一覧から、SSL対応（常時SSL判定）・CMS・総ページ数などを並列クロールで自動解析し、ビジネス評価を付ける Streamlit 製の業務ツール。リニューアルの提案先を決めるために手作業で1件ずつ調べていた作業を自動化したもので、実務で使っている。ThreadPoolExecutor で最大5並列に巡回し、1件で失敗しても他のドメインとジョブ全体は止めない。結果は1件ごとに SQLite（WAL）へ保存し、強制終了しても次の起動で処理状態を復旧する。HTTPX で取得し、JS で描画するサイトやブロックされたときだけ Playwright（実ブラウザ）で取り直す。ボット対策のブロックページ・移転案内ページ・無限リンクを検知して「要確認」に回し、取り損ねた概要やメニューは Gemini API で補完する。",
       "technologies": [
         "Python",
         "Streamlit",
         "SQLite",
-        "Playwright"
+        "Playwright",
+        "HTTPX",
+        "Gemini API"
       ],
       "url": "https://github.com/shim369/Python-Web-Analyzer"
     },
