@@ -31,7 +31,7 @@ def test_get_skills_returns_all_and_filters_by_category():
 
 def test_get_projects_filters_by_technology_case_insensitively():
     projects = run(execute_tool("get_projects", {"technology": "fastapi"}))["projects"]
-    assert "Python-AI-Chat-Portfolio" in [p["title"] for p in projects]
+    assert "Python-AI-Chat" in [p["title"] for p in projects]
     assert all(any("fastapi" in t.lower() for t in p["technologies"]) for p in projects)
     assert len(projects) < len(load_profile()["projects"])
 

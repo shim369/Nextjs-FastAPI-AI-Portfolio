@@ -137,14 +137,14 @@ export const PROJECTS: Project[] = [
     url: "https://github.com/shim369/Python-Health-Insight-Agent",
   },
   {
-    title: "Python-AI-Chat-Portfolio",
+    title: "Python-AI-Chat",
     category: { ja: "AI", en: "AI" },
     summary: {
       ja: "AIチャットの制作物。Gemini の function calling を使った手動エージェントループのAIチャットを、Vercel 上の FastAPI と Next.js で動かしています。このサイトのチャットの仕組みも、ここから引き継いでいます。",
       en: "An AI chat project: a hand-written agent loop with Gemini function calling, running on FastAPI and Next.js on Vercel. The chat on this site is built on the same foundation.",
     },
     tech: ["Python", "FastAPI", "Gemini API", "Next.js", "TypeScript"],
-    url: "https://github.com/shim369/Python-AI-Chat-Portfolio",
+    url: "https://github.com/shim369/Python-AI-Chat",
     demo: "https://python-ai-chat-portfolio.vercel.app",
   },
   {

@@ -9,7 +9,7 @@ The portfolio site of Shinpei Ohtani. One page brings together his background, s
 - Frontend: Next.js (App Router, TypeScript), a single page themed on Japanese typesetting
 - API: FastAPI (Python) for the AI chat (a hand-written agent loop with Gemini function calling) and the contact form
 - Hosting: one Vercel project running two services, frontend and backend
-- The AI chat and contact form are carried over from [Python-AI-Chat-Portfolio](https://github.com/shim369/Python-AI-Chat-Portfolio)
+- The AI chat and contact form are carried over from [Python-AI-Chat](https://github.com/shim369/Python-AI-Chat)
 
 ## Page sections
 

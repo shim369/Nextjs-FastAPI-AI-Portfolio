@@ -537,7 +537,7 @@
       "url": "https://github.com/shim369/Python-Health-Insight-Agent"
     },
     {
-      "title": "Python-AI-Chat-Portfolio",
+      "title": "Python-AI-Chat",
       "summary": "AIチャットの制作物。自己紹介ページと、Gemini の function calling を使った手動エージェントループの AI チャット。画面は Next.js（TypeScript）、API は FastAPI で、Vercel の1つのプロジェクトに2つのサービスとして載せている。構造化ログ・レート制限・テスト・CI を備える。このサイト（Nextjs-FastAPI-AI-Portfolio）の AI チャット・お問い合わせ・ブログ取得の仕組みは、この制作物から引き継いでいる。",
       "technologies": [
         "Python",
@@ -549,7 +549,7 @@
         "GitHub Actions",
         "uv"
       ],
-      "url": "https://github.com/shim369/Python-AI-Chat-Portfolio",
+      "url": "https://github.com/shim369/Python-AI-Chat",
       "demo": "https://python-ai-chat-portfolio.vercel.app"
     },
     {

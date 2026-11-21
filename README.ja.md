@@ -9,7 +9,7 @@ Shinpei Ohtani の総合ポートフォリオサイトです。経歴・スキ�
 - 画面：Next.js（App Router・TypeScript）。和の組版をテーマにした1ページ構成
 - API：FastAPI（Python）。AI チャット（Gemini の function calling を使った手書きのエージェントループ）とお問い合わせ
 - ホスティング：Vercel の1つのプロジェクトに、frontend と backend の2サービスを載せる
-- AI チャット・お問い合わせの仕組みは [Python-AI-Chat-Portfolio](https://github.com/shim369/Python-AI-Chat-Portfolio) から引き継いでいる
+- AI チャット・お問い合わせの仕組みは [Python-AI-Chat](https://github.com/shim369/Python-AI-Chat) から引き継いでいる
 
 ## ページの構成
 
