@@ -179,7 +179,7 @@ export const PROJECTS: Project[] = [
   },
   {
     title: "Python-Budget-Tracker-App",
-    category: { ja: "業務アプリ", en: "Business app" },
+    category: { ja: "家計簿アプリ", en: "Budget app" },
     summary: {
       ja: "オフラインで動く家計簿・サブスク管理アプリ。FastAPI と Pydantic で作り、設計書とトレーサビリティを整備し、336件のテストでカバレッジ99.9%。",
       en: "An offline budget and subscription tracker built with FastAPI and Pydantic, backed by design docs, traceability, and 336 tests at 99.9% coverage.",
@@ -302,7 +302,7 @@ export const DOMAINS: Domain[] = [
   },
   {
     id: "web",
-    name: { ja: "Web API・業務アプリ", en: "Web APIs & business apps" },
+    name: { ja: "Web API・Webアプリ", en: "Web APIs & web apps" },
     desc: {
       ja: "FastAPI や Streamlit で、使える形まで仕上げて公開する",
       en: "Finished into usable, published apps with FastAPI or Streamlit",
