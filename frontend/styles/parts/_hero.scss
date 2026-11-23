@@ -122,7 +122,12 @@
       letter-spacing: .45em;
       color: var(--sumi);
       white-space: nowrap;
-      animation: ume-tate 1.6s ease 2.6s backwards;
+
+      // 1文字ずつ、上から順に墨がにじむように出す（遅れは UmeBranch.tsx が絵の描き終わりに合わせて入れる）
+      > span {
+        display: inline-block;
+        animation: ume-tate .8s ease-out backwards;
+      }
     }
   }
 
@@ -136,7 +141,8 @@
   @keyframes ume-tate {
     from {
       opacity: 0;
-      clip-path: inset(0 0 100% 0);
+      filter: blur(3px);
+      translate: 0 -.4em;
     }
   }
 

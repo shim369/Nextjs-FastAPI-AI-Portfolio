@@ -49,6 +49,16 @@ const SHU = "#c23a2b";
 const KIN = "#d8b46a";
 const PETAL_ANGLES = [0, 72, 144, 216, 288];
 
+// 絵を描き切る時刻(s)。_hero.scss の .pts（1.1s）/.pt（.9s + 4枚目までの遅れ .07s×4）/.fl（.8s）の長さから求める
+const DRAW_END = Math.max(
+  ...BRANCHES.map(([, , delay, duration]) => delay + duration),
+  ...BLOSSOMS.map(([delay]) => delay + Math.max(1.1, 0.9 + 0.07 * (PETAL_ANGLES.length - 1))),
+  ...BUDS.map(([delay]) => delay + 0.8),
+);
+// 添え書き：筆が入るのと同時に1文字目を出し始め、絵を描き切るのと同時に最後の1文字が出終わる
+const CAPTION_START = BRANCHES[0][2];
+const CHAR_DURATION = 0.8; // 1文字が出る長さ（_hero.scss の .tate > span と同じ）
+
 export default function UmeBranch({ caption, sceneRef }: { caption: string; sceneRef?: Ref<SVGSVGElement> }) {
   return (
     <figure className="byobu ume" aria-hidden="true">
@@ -108,7 +118,14 @@ export default function UmeBranch({ caption, sceneRef }: { caption: string; scen
         ))}
       </svg>
       <span className="tate" lang="ja">
-        {caption}
+        {[...caption].map((char, i, chars) => {
+          const step = chars.length > 1 ? (DRAW_END - CAPTION_START - CHAR_DURATION) / (chars.length - 1) : 0;
+          return (
+            <span key={i} style={{ animationDelay: `${(CAPTION_START + step * i).toFixed(3)}s` }}>
+              {char}
+            </span>
+          );
+        })}
       </span>
     </figure>
   );
