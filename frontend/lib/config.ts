@@ -138,7 +138,7 @@ export const PROJECTS: Project[] = [
   },
   {
     title: "Python-AI-Chat",
-    category: { ja: "AI", en: "AI" },
+    category: { ja: "AIチャット", en: "AI chat" },
     summary: {
       ja: "AIチャットの制作物。Gemini の function calling を使った手動エージェントループのAIチャットを、Vercel 上の FastAPI と Next.js で動かしています。このサイトのチャットの仕組みも、ここから引き継いでいます。",
       en: "An AI chat project: a hand-written agent loop with Gemini function calling, running on FastAPI and Next.js on Vercel. The chat on this site is built on the same foundation.",
