@@ -1,0 +1,583 @@
+@use "../mixins" as *;
+
+// 移行（PHP 8.4 移行支援）：見出しの一文、版の物差し、工程ごとの分担表、支援ツールの札と決まり、対応してきたサイト。
+// 部品は components/sections/Migration.tsx。ほかの欄とクラス名がぶつからないよう #migration の中に閉じる
+@layer parts {
+  #migration {
+    // ===== 見出しの一文 =====
+    .mg-state {
+      margin: 0;
+      font: 800 clamp(30px, 3.6vw, 54px)/1.42 var(--min);
+      letter-spacing: -.005em;
+
+      .l {
+        display: block;
+      }
+    }
+
+    .mg-lead {
+      margin: 22px 0 0;
+      max-width: 38em;
+      font: 500 clamp(15px, 1.25vw, 17px)/2.05 var(--min);
+      color: #3f3e3a;
+    }
+
+    // ===== 版の物差し（この欄の主役） =====
+    .ruler {
+      margin: clamp(48px, 6vw, 76px) 14px 0 0;
+      border: 1.5px solid var(--sumi);
+      background: var(--kami);
+      box-shadow: 14px 14px 0 -1px var(--shiro), 14px 14px 0 0 var(--sumi);
+    }
+
+    .r-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 18px clamp(18px, 2.4vw, 30px) 0;
+
+      h3 {
+        margin: 0;
+        font: 700 15px/1.5 var(--min);
+        letter-spacing: .06em;
+      }
+
+      p {
+        margin: 0;
+        font-size: 12.5px;
+        color: var(--nezumi);
+      }
+    }
+
+    .r-scale {
+      position: relative;
+      padding: 34px clamp(18px, 2.4vw, 30px) 8px;
+    }
+
+    // 目盛りの菱形の高さに合わせた横線。画面に入ると 5.4 から 8.4 へ墨が引かれる
+    .r-line {
+      position: absolute;
+      left: clamp(18px, 2.4vw, 30px);
+      right: clamp(18px, 2.4vw, 30px);
+      top: 66px;
+      height: 2px;
+      background: var(--line);
+    }
+
+    .r-ink {
+      position: absolute;
+      inset: 0;
+      background: var(--sumi);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1.6s var(--ease);
+    }
+
+    .ruler.on .r-ink {
+      transform: scaleX(1);
+    }
+
+    .r-vers {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+
+      button {
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+        padding: 0 0 10px;
+        width: 100%;
+
+        &:focus-visible {
+          outline-offset: 2px;
+        }
+      }
+
+      .v {
+        font: 500 clamp(18px, 2vw, 28px)/1 var(--min);
+        color: var(--nezumi);
+        transition: color .25s;
+      }
+
+      .tick {
+        width: 11px;
+        height: 11px;
+        border: 1.5px solid var(--sumi);
+        background: var(--kami);
+        transform: rotate(45deg);
+        transition: background .25s, border-color .25s;
+      }
+
+      .k {
+        font: 400 11px/1.3 var(--go);
+        color: var(--nezumi);
+        text-align: center;
+        min-height: 2.6em;
+      }
+
+      button:hover .v,
+      [aria-selected="true"] .v {
+        color: var(--sumi);
+      }
+
+      [aria-selected="true"] .tick {
+        background: var(--sumi);
+      }
+
+      // 移行先の版は朱で示す
+      .goal {
+        .v {
+          color: var(--shu);
+          font-weight: 800;
+        }
+
+        .tick {
+          border-color: var(--shu);
+          background: var(--shu);
+        }
+
+        &[aria-selected="true"] .tick {
+          box-shadow: 0 0 0 5px var(--shu-soft);
+        }
+      }
+    }
+
+    // 選んだ版で変わること
+    .r-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 15em) minmax(0, 1fr);
+      gap: clamp(18px, 3vw, 40px);
+      margin: 0 clamp(18px, 2.4vw, 30px);
+      padding: 22px 0 26px;
+      border-top: 1px solid var(--sumi);
+
+      h4 {
+        margin: 0;
+        font: 800 clamp(22px, 2.2vw, 30px)/1.3 var(--min);
+
+        small {
+          display: block;
+          margin-top: 6px;
+          font: 500 12.5px/1.6 var(--go);
+          color: var(--nezumi);
+        }
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        display: grid;
+        grid-template-columns: 5.6em minmax(0, 1fr);
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.75;
+
+        &:first-child {
+          padding-top: 0;
+        }
+
+        b {
+          font: 500 11.5px/1.9 var(--go);
+          color: var(--nezumi);
+
+          &.x {
+            color: var(--shu);
+          }
+        }
+      }
+
+      code {
+        font: 400 .92em var(--mono);
+        background: var(--shiro);
+        padding: 1px 5px;
+      }
+
+      .swap {
+        animation: mg-swap .35s var(--ease);
+      }
+    }
+
+    // ===== 進め方：工程ごとの、ツールと自分の分担 =====
+    .mg-flow-h {
+      margin: clamp(72px, 8vw, 110px) 0 22px;
+
+      h3 {
+        margin: 0;
+        font: 800 clamp(22px, 2.3vw, 32px)/1.3 var(--min);
+      }
+    }
+
+    // 表の下に添える、分担の考え方
+    .mg-flow-note {
+      margin: 16px 0 0;
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--nezumi);
+    }
+
+    // 3行（工程・ツール・自分）× 工程の数。列ごとに上から並べる
+    .mg-flow {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 7.5em repeat(6, minmax(0, 1fr));
+      grid-template-rows: auto auto auto;
+      border-block: 1.5px solid var(--sumi);
+
+      > * {
+        margin: 0;
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .rh {
+        font: 700 12.5px/1.6 var(--min);
+        color: var(--nezumi);
+        border-right: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+      }
+
+      .st {
+        border-bottom: 1.5px solid var(--sumi);
+        display: grid;
+        gap: 4px;
+
+        i {
+          font: 500 11px/1 var(--mono);
+          font-style: normal;
+          color: var(--shu);
+        }
+
+        b {
+          font: 800 clamp(17px, 1.5vw, 21px)/1.2 var(--min);
+        }
+      }
+
+      .tool,
+      .rh.tool-h {
+        background: var(--kami);
+      }
+
+      .me,
+      .rh.me-h {
+        border-bottom: 0;
+      }
+
+      // 広い画面では列の見出しがあるので、各欄の「ツール：」「自分：」は読み上げだけにする
+      .who {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+    }
+
+    // ===== 支援ツールの札と、守っている決まり =====
+    .tool-row {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: clamp(28px, 4vw, 64px);
+      margin-top: clamp(72px, 8vw, 110px);
+      align-items: start;
+    }
+
+    // 墨の札（文字は紙の色に反転）
+    .mg-card {
+      border: 1.5px solid var(--sumi);
+      padding: clamp(22px, 2.6vw, 32px);
+      background: var(--sumi);
+      color: var(--kami);
+
+      .cat {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font: 500 12.5px/1.4 var(--min);
+        letter-spacing: .16em;
+        color: #b9b8b1;
+
+        &::before {
+          content: "";
+          width: 6px;
+          height: 6px;
+          background: var(--shu);
+          transform: rotate(45deg);
+        }
+
+        b {
+          font: 500 11px/1 var(--go);
+          letter-spacing: .08em;
+          color: var(--kami);
+          border: 1px solid rgba(247, 247, 244, .45);
+          padding: 4px 7px;
+        }
+      }
+
+      h3 {
+        margin: 14px 0 10px;
+        font: 800 clamp(24px, 2.5vw, 34px)/1.3 var(--min);
+      }
+
+      p {
+        margin: 0;
+        font: 500 14.5px/2 var(--min);
+        color: #d9d8d2;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin: 24px 0 0;
+        border-top: 1px solid rgba(247, 247, 244, .25);
+
+        div {
+          padding: 14px 0 0;
+        }
+      }
+
+      dt {
+        font-size: 11.5px;
+        color: #b9b8b1;
+      }
+
+      dd {
+        margin: 2px 0 0;
+        font: 800 clamp(20px, 2vw, 26px)/1.3 var(--min);
+
+        small {
+          font: 500 12px var(--go);
+          margin-left: 2px;
+        }
+      }
+
+      .stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        list-style: none;
+        margin: 22px 0 0;
+        padding: 0;
+
+        li {
+          font: 500 11.5px/1 var(--go);
+          padding: 6px 9px;
+          border: 1px solid rgba(247, 247, 244, .3);
+        }
+      }
+
+      .note {
+        margin-top: 18px;
+        font: 400 12px/1.8 var(--go);
+        color: #b9b8b1;
+      }
+    }
+
+    .rules {
+      h3 {
+        margin: 0 0 6px;
+        font: 700 15px/1.5 var(--min);
+        letter-spacing: .06em;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--sumi);
+      }
+
+      li {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 4px;
+      }
+
+      b {
+        font: 800 17px/1.5 var(--min);
+      }
+
+      span {
+        font-size: 13.5px;
+        line-height: 1.85;
+        color: #3f3e3a;
+      }
+    }
+
+    // ===== 対応してきたサイト =====
+    .cases {
+      margin-top: clamp(64px, 7vw, 96px);
+
+      h3 {
+        margin: 0 0 14px;
+        font: 700 15px/1.5 var(--min);
+        letter-spacing: .06em;
+      }
+
+      ul {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--sumi);
+      }
+
+      li {
+        padding: 16px 16px 18px 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 6px;
+        align-content: start;
+
+        &:not(:nth-child(3n + 1)) {
+          padding-left: 16px;
+          border-left: 1px solid var(--line);
+        }
+      }
+
+      code {
+        font: 500 .92em/1 var(--mono);
+      }
+
+
+      b {
+        font: 800 17px/1.45 var(--min);
+      }
+
+      .ver {
+        font: 500 12px/1.5 var(--mono);
+        font-style: normal;
+        color: var(--shu);
+      }
+
+      span {
+        font-size: 13px;
+        line-height: 1.75;
+        color: #3f3e3a;
+      }
+
+    }
+  }
+
+  @keyframes mg-swap {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  // ===== 1100px 以下：札と決まりを縦に積み、分担表を工程ごとの縦の並びにする =====
+  @include down(mig) {
+    #migration {
+      .tool-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .mg-flow {
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+
+        .rh {
+          display: none;
+        }
+
+        .st {
+          grid-template-columns: auto 1fr;
+          align-items: baseline;
+          gap: 10px;
+          padding-block: 18px 4px;
+          border-bottom: 0;
+          border-top: 1px solid var(--sumi);
+        }
+
+        .rh + .st {
+          border-top: 0;
+        }
+
+        .tool,
+        .me {
+          background: none;
+          border-bottom: 0;
+          padding: 6px 12px;
+        }
+
+        .me {
+          padding-bottom: 18px;
+        }
+
+        .who {
+          position: static;
+          width: auto;
+          height: auto;
+          clip: auto;
+          font-weight: 700;
+          color: var(--nezumi);
+        }
+
+        .me .who {
+          color: var(--shu);
+        }
+      }
+    }
+  }
+
+  // ===== スマホ：物差しは横にスクロール、サイトの例は1列 =====
+  @include down(tab) {
+    #migration {
+      .ruler {
+        margin-right: 8px;
+        box-shadow: 8px 8px 0 -1px var(--shiro), 8px 8px 0 0 var(--sumi);
+      }
+
+      .r-top {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .r-scale {
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .r-vers {
+        min-width: 560px;
+      }
+
+      .r-line {
+        right: auto;
+        left: 18px;
+        width: 560px;
+      }
+
+      .r-panel {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .cases {
+        ul {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        li,
+        li:not(:nth-child(3n + 1)) {
+          padding-left: 0;
+          border-left: 0;
+        }
+      }
+    }
+  }
+}

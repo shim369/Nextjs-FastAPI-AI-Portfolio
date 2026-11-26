@@ -376,6 +376,324 @@ export const JAMSTACK: JamSite[] = [
   },
 ];
 
+// ===== 移行（PHP 8.4 移行支援）：components/sections/Migration.tsx =====
+// 文中の `...` はコードとして表示する
+
+/** 変更の種類。版の数字（"8.2" など）は、そのまま見出しに出す */
+export type MigrationTag = "base" | "deprecated" | "changed" | "removed" | "goal" | `${number}.${number}`;
+export type MigrationVersion = {
+  v: string;
+  /** 物差しの目盛りの下に出す短い注記 */
+  note?: Localized;
+  /** 移行先の版（朱で示す） */
+  goal?: boolean;
+  sub: Localized;
+  items: { tag: MigrationTag; text: Localized }[];
+};
+
+// 版ごとの主な変更（PHP の公式の移行ガイドから、移行の作業でよく出会うものを抜粋）
+export const MIGRATION_VERSIONS: MigrationVersion[] = [
+  {
+    v: "5.4",
+    note: { ja: "移行元に多い", en: "Common source" },
+    sub: { ja: "多くのレガシーサイトの出発点", en: "Where many legacy sites start" },
+    items: [
+      {
+        tag: "base",
+        text: {
+          ja: "`mysql_*` 関数・`ereg` 系・`each()` など、後の版でなくなる書き方がまだ普通に使える",
+          en: "`mysql_*` functions, the `ereg` family and `each()` still work here, though later versions remove them",
+        },
+      },
+      {
+        tag: "base",
+        text: {
+          ja: "短い配列の書き方 `[]` が使えるようになった版。これより前のコードは `array()` だけ",
+          en: "The short array syntax `[]` arrives in this version. Older code uses only `array()`",
+        },
+      },
+    ],
+  },
+  {
+    v: "5.6",
+    sub: { ja: "5 系の最後", en: "The last of PHP 5" },
+    items: [
+      { tag: "deprecated", text: { ja: "`$HTTP_RAW_POST_DATA` が非推奨に", en: "`$HTTP_RAW_POST_DATA` is deprecated" } },
+      {
+        tag: "changed",
+        text: {
+          ja: "既定の文字コードが UTF-8 に。`htmlspecialchars()` などの結果が変わることがある",
+          en: "The default charset becomes UTF-8, which can change the output of `htmlspecialchars()` and similar functions",
+        },
+      },
+    ],
+  },
+  {
+    v: "7.0",
+    note: { ja: "大きな区切り", en: "Major break" },
+    sub: { ja: "古い関数がまとめて削除", en: "Old functions removed in bulk" },
+    items: [
+      {
+        tag: "removed",
+        text: { ja: "`mysql_*` 関数。`mysqli` か PDO への置き換えが必要", en: "The `mysql_*` functions. Code must move to `mysqli` or PDO" },
+      },
+      { tag: "removed", text: { ja: "`ereg`・`split` などの POSIX 正規表現", en: "POSIX regular expressions such as `ereg` and `split`" } },
+      {
+        tag: "deprecated",
+        text: {
+          ja: "PHP 4 形式のコンストラクタ（クラス名と同じメソッド）は非推奨に",
+          en: "PHP 4 style constructors (a method named after the class) are deprecated",
+        },
+      },
+    ],
+  },
+  {
+    v: "7.2",
+    sub: { ja: "8.0 で消えるものの予告", en: "Warnings of what 8.0 removes" },
+    items: [
+      { tag: "deprecated", text: { ja: "`each()` と `create_function()`", en: "`each()` and `create_function()`" } },
+      { tag: "changed", text: { ja: "数えられない値を `count()` に渡すと警告", en: "Passing an uncountable value to `count()` raises a warning" } },
+      { tag: "removed", text: { ja: "`mcrypt` 拡張（暗号化の関数）", en: "The `mcrypt` extension (encryption functions)" } },
+    ],
+  },
+  {
+    v: "7.4",
+    note: { ja: "移行元に多い", en: "Common source" },
+    sub: { ja: "7 系の最後", en: "The last of PHP 7" },
+    items: [
+      { tag: "deprecated", text: { ja: "文字列の波カッコでの添字 `$s{0}`", en: "Curly-brace string offsets such as `$s{0}`" } },
+      { tag: "deprecated", text: { ja: "かっこの無い三項演算子の入れ子", en: "Nested ternary operators without parentheses" } },
+    ],
+  },
+  {
+    v: "8.0",
+    note: { ja: "大きな区切り", en: "Major break" },
+    sub: { ja: "いちばん壊れやすい区切り", en: "Where sites break most often" },
+    items: [
+      {
+        tag: "removed",
+        text: { ja: "`each()`・`create_function()`・`$s{0}` の書き方", en: "`each()`, `create_function()` and the `$s{0}` syntax" },
+      },
+      {
+        tag: "changed",
+        text: {
+          ja: "多くの警告がエラーに。未定義の関数や型の合わない引数で、ページ全体が止まる",
+          en: "Many warnings become errors. An undefined function or a mistyped argument now stops the whole page",
+        },
+      },
+      {
+        tag: "changed",
+        text: {
+          ja: "文字列と数値の比較の結果が変わる（`0 == \"abc\"` が false に）",
+          en: "String-to-number comparisons change (`0 == \"abc\"` is now false)",
+        },
+      },
+    ],
+  },
+  {
+    v: "8.1",
+    sub: { ja: "null の扱いが厳しく", en: "Stricter about null" },
+    items: [
+      {
+        tag: "deprecated",
+        text: {
+          ja: "組み込み関数に null を渡すこと（`trim(null)` など）。ログが警告で埋まる",
+          en: "Passing null to built-in functions (`trim(null)` and so on). Logs fill up with warnings",
+        },
+      },
+      { tag: "deprecated", text: { ja: "`strftime()` などの日付の関数", en: "Date functions such as `strftime()`" } },
+    ],
+  },
+  {
+    v: "8.4",
+    note: { ja: "移行先", en: "Target" },
+    goal: true,
+    sub: { ja: "移行先の版", en: "The target version" },
+    items: [
+      {
+        tag: "8.2",
+        text: {
+          ja: "クラスに宣言していないプロパティを動的に作ることが非推奨に",
+          en: "Creating properties a class does not declare is deprecated",
+        },
+      },
+      {
+        tag: "8.4",
+        text: {
+          ja: "既定値 null で型を暗黙に null 許容にする書き方が非推奨に",
+          en: "Making a type implicitly nullable with a null default is deprecated",
+        },
+      },
+      {
+        tag: "goal",
+        text: {
+          ja: "これらの警告とエラーが出ない状態で、すべてのページと機能が動くこと",
+          en: "Every page and feature works with none of these warnings or errors",
+        },
+      },
+    ],
+  },
+];
+
+// 進め方：工程ごとの、ツールと自分の分担
+export const MIGRATION_STEPS: { name: Localized; tool: Localized; me: Localized }[] = [
+  {
+    name: { ja: "取得", en: "Fetch" },
+    tool: {
+      ja: "本番から読み取り専用で取得し、取得した時の状態を記録",
+      en: "Pulls the site from production read-only and records its state at that moment",
+    },
+    me: { ja: "対象の範囲と、移行先の環境を確認する", en: "Confirm the scope and the target environment" },
+  },
+  {
+    name: { ja: "診断", en: "Diagnose" },
+    tool: {
+      ja: "CMS・ライブラリの版の一覧と、静的解析で非互換の箇所を洗い出す",
+      en: "Lists CMS and library versions, and finds incompatible code with static analysis",
+    },
+    me: {
+      ja: "本体・プラグインを最新へ上げるか、直すか、止めるかを決める",
+      en: "Decide whether to update, fix or disable the core and each plugin",
+    },
+  },
+  {
+    name: { ja: "実機確認", en: "Run" },
+    tool: {
+      ja: "PHP 8.4 の Docker でページを開き、エラーと表示を記録。フォーム送信・管理画面・cron も",
+      en: "Opens pages in PHP 8.4 on Docker and records errors and rendering, including forms, the admin screens and cron",
+    },
+    me: { ja: "エラーの原因を読み、直す順番を決める", en: "Read the causes of the errors and decide the order of fixes" },
+  },
+  {
+    name: { ja: "修正", en: "Fix" },
+    tool: { ja: "機械的に直せる書き方はツールでまとめて直す", en: "Fixes mechanical patterns in bulk" },
+    me: { ja: "残った箇所を Claude Code と対話しながら直す", en: "Fix what remains, working through it with Claude Code" },
+  },
+  {
+    name: { ja: "比較", en: "Compare" },
+    tool: {
+      ja: "直す前と後のページを比べ、表示の変化を一覧にする",
+      en: "Compares pages before and after the fixes and lists every visual change",
+    },
+    me: {
+      ja: "崩れた箇所を見て、版を戻すか直すかを判断する",
+      en: "Review the broken spots and decide whether to roll back a version or fix it",
+    },
+  },
+  {
+    name: { ja: "納品", en: "Deliver" },
+    tool: {
+      ja: "変えたファイルをまとめ、本番から変わっていないかを照合",
+      en: "Packages the changed files and checks production has not changed in the meantime",
+    },
+    me: {
+      ja: "お客様向け・技術者向けの診断レポートと、反映の手順を書く",
+      en: "Write diagnostic reports for the client and for engineers, plus the deployment steps",
+    },
+  },
+];
+
+// 支援ツール（非公開）の数字と、使っている技術
+export const MIGRATION_TOOL = {
+  stats: [
+    { label: { ja: "テスト", en: "Tests" }, value: "584", unit: { ja: "件", en: "" } },
+    { label: { ja: "移行先の PHP", en: "Target PHP" }, value: "8.4" },
+    { label: { ja: "検証用の MariaDB", en: "MariaDB for testing" }, value: "10.11" },
+  ] as { label: Localized; value: string; unit?: Localized }[],
+  stack: ["Python", "Docker", "phpcs / PHPCompatibility", "PHPStan", "Rector", "Claude Code", "pytest"],
+};
+
+// 移行で守っていること
+export const MIGRATION_RULES: { title: Localized; body: Localized }[] = [
+  {
+    title: { ja: "本番には書き込まない", en: "Never write to production" },
+    body: {
+      ja: "取得は読み取り専用。直すのは手元の作業用のコピーだけで、すべて git で元に戻せます。",
+      en: "Fetching is read-only. Fixes happen only on a local working copy, and every change can be undone with git.",
+    },
+  },
+  {
+    title: { ja: "移行先と同じ環境で、実際に開く", en: "Open every page in the target environment" },
+    body: {
+      ja: "静的解析は目安にとどめ、移行先と同じ PHP・DB の版の Docker でページを開いて、エラーと表示を確かめます。",
+      en: "Static analysis is only a guide. Pages are opened on Docker with the same PHP and database versions as the target, to check errors and rendering.",
+    },
+  },
+  {
+    title: { ja: "まず最新へ、残ったものだけ直す", en: "Update first, then fix what remains" },
+    body: {
+      ja: "WordPress 本体やプラグインは、原因を1つずつ追う前に公式の最新版へ上げ、それでも残るエラーだけを直します。",
+      en: "WordPress core and plugins are updated to their latest official releases before chasing individual errors, and only the errors that remain get fixed.",
+    },
+  },
+  {
+    title: { ja: "判断できる形で伝える", en: "Report in a form clients can decide on" },
+    body: {
+      ja: "レポートでは、プラグインやライブラリを1つずつ「更新」「停止」に分け、ファイル数と工数の目安を添えます。反映は、FTP と管理画面だけで行える手順書にまとめます。",
+      en: "Reports sort each plugin and library into update or disable, with file counts and effort estimates. Deployment steps need nothing more than FTP and the admin screens.",
+    },
+  },
+  {
+    title: { ja: "メールは、届くところまで確かめる", en: "Check mail all the way to the inbox" },
+    body: {
+      ja: "フォームは送信できるかだけでなく、件名の文字化けや迷惑メールの判定まで、受信したメールで確かめます。",
+      en: "Forms are checked beyond a successful submit: received mail is checked for garbled subjects and spam flags.",
+    },
+  },
+];
+
+// 対応してきたサイトの種類（社名・URL は出さない）
+export const MIGRATION_CASES: { name: Localized; ver: Localized; body: Localized }[] = [
+  {
+    name: { ja: "本体が古い WordPress", en: "WordPress on a very old core" },
+    ver: { ja: "WordPress 3.1〜4.9 → 7.1", en: "WordPress 3.1–4.9 → 7.1" },
+    body: {
+      ja: "配布の終わったプラグインは直接修正",
+      en: "Discontinued plugins fixed by hand",
+    },
+  },
+  {
+    name: { ja: "WordPress のメールとフォーム", en: "WordPress mail and forms" },
+    ver: { ja: "MW WP Form / Contact Form 7 ほか", en: "MW WP Form, Contact Form 7 and others" },
+    body: {
+      ja: "件名の文字化け・二重エンコードを修正",
+      en: "Fixed garbled and double-encoded subjects",
+    },
+  },
+  {
+    name: { ja: "WordPress と同居する検索アプリ", en: "A search app beside WordPress" },
+    ver: { ja: "Smarty 3.1 → 4.5", en: "Smarty 3.1 → 4.5" },
+    body: {
+      ja: "呼び出し側のコードも合わせて修正",
+      en: "Calling code updated to match",
+    },
+  },
+  {
+    name: { ja: "EC-CUBE 2 系", en: "EC-CUBE 2" },
+    ver: { ja: "EC-CUBE 2.13 → 2.25", en: "EC-CUBE 2.13 → 2.25" },
+    body: {
+      ja: "独自の改修を残したまま更新",
+      en: "Upgraded with the customizations kept",
+    },
+  },
+  {
+    name: { ja: "Movable Type", en: "Movable Type" },
+    ver: { ja: "MT 5.2 / 7.9", en: "MT 5.2 / 7.9" },
+    body: {
+      ja: "新しい DB で入れなくなった管理画面を復旧",
+      en: "Restored admin logins broken by the new database",
+    },
+  },
+  {
+    name: { ja: "独自の PHP CMS", en: "A custom PHP CMS" },
+    ver: { ja: "PHP 5 系の書き方 → 8.4", en: "PHP 5-era code → 8.4" },
+    body: {
+      ja: "`mysql_*` など PHP 8.4 で動かない書き方を修正",
+      en: "Fixed `mysql_*` and other code PHP 8.4 rejects",
+    },
+  },
+];
+
 // 「記事の更新がサイトに届くまで」の3方式（文言は messages.ts の jam.lane.*）
 export const LANES = ["SSG", "ISR", "SSR"] as const;
 
@@ -388,6 +706,7 @@ export const SAMPLE_QUESTIONS: Record<"ja" | "en", string[]> = {
 // nav は英語表示のときのナビの文言、mark は ⌘K パレットの頭に付く1文字
 export const SECTIONS = [
   { id: "skills", kan: "技能", en: "Skills", nav: "Skills", mark: "技" },
+  { id: "migration", kan: "移行", en: "PHP 8.4 migration", nav: "Migration", mark: "移" },
   { id: "works", kan: "制作", en: "Selected works", nav: "Works", mark: "制" },
   { id: "jamstack", kan: "実装", en: "Jamstack", nav: "Jamstack", mark: "実" },
   { id: "blog", kan: "記録", en: "Blog", nav: "Blog", mark: "記" },

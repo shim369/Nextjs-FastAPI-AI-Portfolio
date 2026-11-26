@@ -44,7 +44,8 @@ $washi-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     font: 400 15px/1.9 var(--go);
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "palt" 1;
-    word-break: break-all;
+    // はみ出しそうなときだけ単語の途中でも折り返す（普段は英単語を割らない）
+    overflow-wrap: anywhere;
   }
 
   a {

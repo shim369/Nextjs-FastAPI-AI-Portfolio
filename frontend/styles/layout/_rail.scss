@@ -96,17 +96,44 @@
       border-top: 1px solid var(--sumi);
       align-items: center;
 
+      // 項目が収まらないときは横にスクロールさせる（全項目を残す）。
+      // 隠れている側だけ端をぼかす（Rail.tsx が data-more-l / data-more-r を付ける）
       nav {
-        grid-auto-flow: column;
-        justify-self: end;
+        position: relative;
+        display: flex;
+        min-width: 0;
         gap: 0;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        --fade-l: 0px;
+        --fade-r: 0px;
+        mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        &[data-more-l] {
+          --fade-l: 28px;
+        }
+
+        &[data-more-r] {
+          --fade-r: 28px;
+        }
       }
 
       nav a {
+        flex: none;
         writing-mode: horizontal-tb;
         letter-spacing: .08em;
         font-size: 13px;
         padding: 10px 9px;
+
+        // 収まるときは右に寄せる（justify-content と違い、はみ出しても左端までスクロールできる）
+        &:first-child {
+          margin-left: auto;
+        }
 
         &::after {
           left: 9px;
@@ -129,11 +156,6 @@
     }
   }
 
-  @include down(xs) {
-    .rail nav a:nth-child(n+5) {
-      display: none;
-    }
-  }
 }
 
 // 英語表示：縦書きの欧文は等幅の小さめの文字で詰めて組む（デザイン案にない状態）

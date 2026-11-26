@@ -9,6 +9,7 @@ import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero";
 import Jamstack from "@/components/sections/Jamstack";
+import Migration from "@/components/sections/Migration";
 import Skills from "@/components/sections/Skills";
 import Works from "@/components/sections/Works";
 import { ChatProvider } from "@/lib/chat-ui";
@@ -27,6 +28,7 @@ export default function Page() {
         <main id="main" tabIndex={-1}>
           <Hero />
           <Skills />
+          <Migration />
           <Works />
           <Jamstack />
           <Blog />

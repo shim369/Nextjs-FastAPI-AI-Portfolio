@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LogoMark from "@/components/svg/LogoMark";
 import { SECTIONS } from "@/lib/config";
 import { useI18n } from "@/lib/i18n";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /** 左の縦書きナビ：ロゴ・セクション名・読み進めた割合。スマホでは画面下のバーになる（CSS） */
 export default function Rail() {
   const { t, lang } = useI18n();
   const [active, setActive] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const navRef = useRef<HTMLElement>(null);
 
   // 読み進めた割合（％）
   useEffect(() => {
@@ -44,12 +46,39 @@ export default function Rail() {
     return () => spy.disconnect();
   }, []);
 
+  // スマホの下のバー：横にはみ出す側の端をぼかす印を付ける（CSS の data-more-l / data-more-r）
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const update = () => {
+      const max = nav.scrollWidth - nav.clientWidth;
+      nav.toggleAttribute("data-more-l", max > 1 && nav.scrollLeft > 1);
+      nav.toggleAttribute("data-more-r", max > 1 && nav.scrollLeft < max - 1);
+    };
+    update();
+    nav.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(nav);
+    return () => {
+      nav.removeEventListener("scroll", update);
+      ro.disconnect();
+    };
+  }, [lang]);
+
+  // 今いるセクションの項目が、横にスクロールするバーの中央に来るようにする（縦書きのときははみ出さないので動かない）
+  useEffect(() => {
+    const nav = navRef.current;
+    const link = active ? nav?.querySelector<HTMLElement>(`a[href="#${active}"]`) : null;
+    if (!nav || !link || nav.scrollWidth <= nav.clientWidth) return;
+    nav.scrollTo({ left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  }, [active, lang]);
+
   return (
     <aside className="rail">
       <a className="mark" href="#top" aria-label={t("a11y.toTop")}>
         <LogoMark />
       </a>
-      <nav aria-label={t("a11y.nav")}>
+      <nav aria-label={t("a11y.nav")} ref={navRef}>
         {SECTIONS.map((s) => (
           <a
             key={s.id}

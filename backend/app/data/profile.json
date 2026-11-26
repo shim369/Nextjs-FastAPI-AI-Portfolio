@@ -122,10 +122,10 @@
       "details": "pytestでのテスト作成、GitHub Actionsでの静的解析・テストの自動実行"
     },
     {
-      "name": "PHPCompatibility / Rector",
+      "name": "PHPCompatibility / PHPStan",
       "category": "テスト / CI",
       "years": "5ヶ月",
-      "details": "PHP 8.4互換性の静的解析と修正"
+      "details": "PHP 8.4互換性の静的解析（phpcsでは拾えない未定義変数・引数の数なども検出）"
     },
     {
       "name": "Git (GitHub / GitLab)",
@@ -502,6 +502,27 @@
       "url": "https://github.com/shim369/Python-Web-Analyzer"
     },
     {
+      "title": "PHP 移行の支援ツール（非公開）",
+      "summary": "実務で使っている業務ツール。PHP 5.x〜7.x で作られたコーポレートサイトや EC サイトを PHP 8.4 へ移す案件ごとに繰り返していた「取得・確認・記録」を、コマンド1つずつにまとめた Python 製の CLI。phpcs / PHPCompatibility・PHPStan・Rector などの既存の解析ツールを束ね、AI（Claude Code）には、それらで解決できない箇所だけを任せる。テストは584件で、検証には移行先と同じ PHP 8.4・MariaDB 10.11 の Docker 環境を使う。お客様のサイトを扱うため、ソースコードは公開していない。進め方は6つの工程で、ツールと本人が分担する。(1) 取得：ツールが本番から読み取り専用で取得し、取得時の状態を記録／本人が対象の範囲と移行先の環境を確認。(2) 診断：ツールが CMS・ライブラリの版の一覧と静的解析で非互換の箇所を洗い出す／本人が本体・プラグインを最新へ上げるか、直すか、止めるかを決める。(3) 実機確認：ツールが PHP 8.4 の Docker でページを開き、エラーと表示を記録（フォーム送信・管理画面・cron も）／本人がエラーの原因を読み、直す順番を決める。(4) 修正：機械的に直せる書き方はツールでまとめて直し、残った箇所は本人が Claude Code と対話しながら直す。(5) 比較：ツールが直す前と後のページを比べて表示の変化を一覧にする／本人が崩れた箇所を見て、版を戻すか直すかを判断する。(6) 納品：ツールが変えたファイルをまとめ、本番から変わっていないかを照合／本人がお客様向け・技術者向けの診断レポートと反映の手順を書く。移行で守っていること：本番には書き込まない（取得は読み取り専用で、直すのは手元の作業用コピーだけ。すべて git で元に戻せる）、移行先と同じ環境で実際にページを開いて確かめる（静的解析は目安にとどめる）、WordPress 本体やプラグインはまず公式の最新版へ上げ、それでも残るエラーだけを直す、レポートではプラグインやライブラリを1つずつ「更新」「停止」に分け、ファイル数と工数の目安を添え、反映は FTP と管理画面だけで行える手順書にまとめる、フォームは件名の文字化けや迷惑メールの判定まで、受信したメールで確かめる。対応してきたサイトの例（社名・URL は非公開）：本体が古い WordPress（3.1〜4.9 → 7.1。配布の終わったプラグインは直接修正）、WordPress のメールとフォーム（件名の文字化け・二重エンコードを修正）、WordPress と同居する検索アプリ（Smarty 3.1 → 4.5。呼び出し側のコードも合わせて修正）、EC-CUBE 2 系（2.13 → 2.25。独自の改修を残したまま更新）、Movable Type（5.2 / 7.9。新しい DB で入れなくなった管理画面を復旧）、独自の PHP CMS（mysql_* など PHP 8.4 で動かない書き方を修正）。",
+      "technologies": [
+        "Python",
+        "Docker",
+        "PHP",
+        "phpcs",
+        "PHPCompatibility",
+        "PHPStan",
+        "Rector",
+        "Claude Code",
+        "pytest",
+        "WordPress",
+        "EC-CUBE",
+        "Smarty",
+        "MariaDB",
+        "Movable Type"
+      ],
+      "url": "（非公開。お客様のサイトを扱うため、ソースコードは公開していない）"
+    },
+    {
       "title": "Python-PawMatch-Guard",
       "summary": "犬猫の里親マッチングアプリに、投稿画像・動画のAI審査（コンテンツモデレーション）を組み込んだポートフォリオ。PyTorch の分類（ResNet50の転移学習。種別と37品種の2ヘッド）・検出（Faster R-CNN）・セグメンテーション（DeepLabV3）の3モデルで「公開可 / 要確認 / 却下」を判定し、迷うものは人の確認キューに回す。評価指標は自前実装して scikit-learn との一致をテストしている。主な結果（Oxford-IIIT Pet、1回の実行）：種別の正解率 0.9955、品種の macro-F1 0.907、セグメンテーションの IoU 0.897、頭部検出の mAP@0.5:0.95 0.723。ラベル5%を入れ替えたノイズラベル検出、前処理バグの実験、ONNX化と量子化の計測も行った。Webアプリは FastAPI（投稿・検索・確認キュー、日英UI）。AWS（S3・Lambda・DynamoDB・ECR）の構成は Terraform で設計・検証済みだが、デプロイはしていない。顔・ナンバー・文字の検出は未学習。",
       "technologies": [
@@ -725,6 +746,6 @@
     "note": "お問い合わせはお問い合わせフォームまたは GitHub からお願いします。"
   },
   "site": {
-    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は、技術ブログ「TECH BLOG」（Astro + microCMS、https://astro-microcms-blogs.vercel.app/）の最新記事を、Next.js のサーバー側で microCMS の API から取得し、ISR（最長60秒）で表示しています。ページには、microCMS と5つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js・Gatsby）で作った Jamstack サイトを比べる欄もあります。"
+    "description": "このサイト（Nextjs-FastAPI-AI-Portfolio）の画面は Next.js（App Router・React・TypeScript）で作っている。このチャットは、ブラウザから Vercel 上の FastAPI (Python) に会話履歴を送り、サーバー側で Gemini API の function calling を使ったエージェントループを回して回答しています。ツール (get_skills など) は profile.json からデータを返します。サーバーはステートレスで、会話履歴はブラウザ側で保持しています。お問い合わせフォームは reCAPTCHA v3 で検証してからメールで送り、ブログ欄は、技術ブログ「TECH BLOG」（Astro + microCMS、https://astro-microcms-blogs.vercel.app/）の最新記事を、Next.js のサーバー側で microCMS の API から取得し、ISR（最長60秒）で表示しています。ページには、microCMS と5つのフレームワーク（Nuxt・Astro・SvelteKit・Next.js・Gatsby）で作った Jamstack サイトを比べる欄もあります。ページには、PHP 5.x〜7.x のサイトを PHP 8.4 へ移す仕事（版ごとに何が動かなくなるか、工程ごとのツールとの分担、移行の支援ツール、対応してきたサイトの例）を紹介する「移行」欄もあります。"
   }
 }
